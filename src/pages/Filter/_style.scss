@@ -162,6 +162,12 @@
 
         .by_popular {
           margin-left: 30px;
+
+          i {
+            margin-right: 8px;
+            font-size   : 20px;
+            color       : var(--color_black2);
+          }
         }
       }
 
@@ -173,6 +179,7 @@
 
           &:last-child {
             margin-left: 5px;
+
           }
         }
       }

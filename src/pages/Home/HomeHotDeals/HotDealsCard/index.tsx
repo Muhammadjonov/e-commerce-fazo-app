@@ -1,5 +1,6 @@
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';
+import { useT } from '../../../../custom/hooks/useT';
 // import Countdown from 'react-countdown';
 import "./_style.scss";
 
@@ -23,7 +24,7 @@ function HotDealsCard(props: IHotDealsCard) {
     old_price,
     imageUrl,
   } = props;
-
+  const { t, lang } = useT();
 
   // Random component
   const Completionist = () => <div>You are good to go!</div>;
@@ -89,7 +90,7 @@ function HotDealsCard(props: IHotDealsCard) {
           </figure>
         </Link>
         <p className="price title18_bold">
-          <del className='old_price p14_regular'>{old_price} сум</del>{price} сум
+          <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>{price} {t(`sum.${lang}`)}
         </p>
         <Link className='product_view_link' to={"#"}>
           <h5 className="product_name">

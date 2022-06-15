@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import "./_style.scss";
 import AddCartBtn from '../Buttons/AddCartBtn';
 import { ProductType } from '../../types';
+import { useT } from '../../custom/hooks/useT';
 
 
 
 function ProductCardCol(props: ProductType) {
-
   const {
     imageUrl,
     price,
@@ -17,12 +17,14 @@ function ProductCardCol(props: ProductType) {
     brandName
   } = props;
 
+  const { t, lang } = useT();
+
   return (
     <Card className="product_card_col" bordered={false} hoverable>
       <div className="card_body">
         <Row gutter={[20, 20]}>
           <Col md={6}>
-            <Link className="product_view_link" to={"#"}>
+            <Link className="product_view_link card_left" to={"#"}>
               <figure>
                 <img src={imageUrl ?? ""} alt="watch" className="product_card_img" />
               </figure>
@@ -51,10 +53,10 @@ function ProductCardCol(props: ProductType) {
           <Col md={6}>
             <div className="card_right">
               <h5 className="title18_bold per_month">
-                {price} сум
+                {price} {t(`sum.${lang}`)}
               </h5>
               <p className="price">
-                {old_price} сум
+                {old_price} {t(`sum.${lang}`)}
               </p>
               <AddCartBtn />
               <div className="card_footer">

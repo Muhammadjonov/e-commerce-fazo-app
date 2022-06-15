@@ -7,12 +7,12 @@ import favoriteCardData from "./favoriteCardData.json";
 
 const breadcrumbs = [
   {
-    id: "!",
+    id: 1,
     toUrl: "/",
     text: "Главная",
   },
   {
-    id: "2",
+    id: 2,
     toUrl: "#",
     text: "Изброанное",
   }

@@ -4,21 +4,26 @@ import { AudioOutlined } from '@ant-design/icons';
 import "./_style.scss";
 import { CategoriesInfoType } from "../../types";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useT } from "../../custom/hooks/useT";
 
 const { Search } = Input;
 const { Option } = Select;
 
-const enterButton = (
-  <>
-    <img src="/assets/icons/search.svg" alt="search" />
-    <span className="search_btn_text">Search</span>
-  </>
-);
+
 interface ISearchComp {
   categories: CategoriesInfoType
 }
 
 function SearchComp(props: ISearchComp) {
+  const { t, lang } = useT();
+
+  const enterButton = (
+    <>
+      <img src="/assets/icons/search.svg" alt="search" />
+      <span className="search_btn_text">{t(`search.${lang}`)}</span>
+    </>
+  );
+
   const [searchValues, setSearchValues] = useState({
     category: "all",
     key: ""

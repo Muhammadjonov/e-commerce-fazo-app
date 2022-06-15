@@ -27,12 +27,12 @@ type GridType = {
 
 const breadcrumbs = [
   {
-    id: "!",
+    id: 1,
     toUrl: "/",
     text: "Главная",
   },
   {
-    id: "2",
+    id: 2,
     toUrl: "#",
     text: "Результаты поиска",
   },

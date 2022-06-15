@@ -32,6 +32,8 @@ function Filter() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(24);
+  const [priceSort, setPriceSort] = useState<number>(3);
+  const [nameSort, setNameSort] = useState<number>(3);
 
   const [grid, setGrid] = useState<GridType>({
     multiple: true,
@@ -79,12 +81,12 @@ function Filter() {
   category_slug = category_slug!.slice(1);
   const getProducts = useCallback(() => {
     setIsLoading(true);
-    baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId }, per_page: perPage })
+    baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })
       .then((res) => {
         setByCategoryProducts(res.data.data);
         setIsLoading(false);
       })
-  }, [page, category_slug, filter, perPage]);
+  }, [page, category_slug, filter, perPage, priceSort, nameSort]);
 
   useEffect(() => {
     getProducts();
@@ -133,6 +135,10 @@ function Filter() {
   const handleChangePerPage = () => {
     setPerPage(prev => prev + 24);
   }
+
+
+
+
 
   // generate breadcrumbs
 
@@ -283,19 +289,24 @@ function Filter() {
                 <Col sm={24} xs={24}>
                   <div className="right_top">
                     <div className="right_top_filter">
-                      <button type="button" className="by_money">
+                      <button
+                        onClick={() => setPriceSort(prev => prev === 3 ? 4 : 3)}
+                        type="button"
+                        className="by_money"
+                      >
                         <img
                           src="/assets/icons/money_filter.svg"
                           alt="monoy_filter"
                         />{" "}
                         <span className="p16_regular">По цене</span>
                       </button>
-                      <button type="button" className="by_popular">
-                        <img
-                          src="/assets/icons/filter_bars.svg"
-                          alt="filter_bars"
-                        />
-                        <span className="p16_regular">По популярности</span>
+                      <button
+                        onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
+                        type="button"
+                        className="by_popular"
+                      >
+                        <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
+                        <span className="p16_regular">По алфавиту</span>
                       </button>
                     </div>
 

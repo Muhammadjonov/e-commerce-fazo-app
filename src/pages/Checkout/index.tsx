@@ -13,12 +13,12 @@ import DatePickerComp from '../../components/Form/DatePickerComp';
 
 const breadcrumbs = [
   {
-    id: "!",
+    id: 1,
     toUrl: "/",
     text: "Главная",
   },
   {
-    id: "2",
+    id: 2,
     toUrl: "#",
     text: "Оформить покупку",
   }

@@ -6,10 +6,7 @@
     padding: 0;
 
     .card_body {
-      padding        : 25px;
-      display        : flex;
-      justify-content: space-between;
-      align-items    : center;
+      padding: 25px;
 
       .card_left {
         display    : flex;
@@ -24,21 +21,25 @@
 
           margin-bottom: 0;
         }
+      }
 
-        .desc {
-          margin-left: 59px;
+      .desc {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        height         : 100%;
 
-          .product_name {}
+        .product_name {}
 
-          .desc_body {
-            margin-top: 20px;
+        .desc_body {
+          margin-top: 20px;
 
-            p {
-              color: var(--brand_color_black);
-            }
+          p {
+            color: var(--brand_color_black);
           }
         }
       }
+
 
       .card_right {
         text-align: center;

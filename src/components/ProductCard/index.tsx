@@ -1,13 +1,13 @@
+import React from 'react';
 import { Card } from 'antd';
-import React from 'react'
 import { Link } from 'react-router-dom';
+import { useT } from '../../custom/hooks/useT';
 import { ProductType } from '../../types';
 import "./_style.scss";
 
 
 
 function ProductCard(props: ProductType) {
-
   const {
     name,
     brandName,
@@ -17,6 +17,7 @@ function ProductCard(props: ProductType) {
     imageUrl,
   } = props;
 
+  const { t, lang } = useT();
 
   return (
     <Card className="product_card" bordered={false} hoverable>
@@ -27,9 +28,9 @@ function ProductCard(props: ProductType) {
           </figure>
         </Link>
         <p className="price title18_bold">
-          {price} сум
+          {price} {t(`sum.${lang}`)}
         </p>
-        <del className='old_price p14_regular'>{old_price} сум</del>
+        <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>
         <Link className="product_view_link" to={"#"}>
           <h5 className="product_name">
             {name}
