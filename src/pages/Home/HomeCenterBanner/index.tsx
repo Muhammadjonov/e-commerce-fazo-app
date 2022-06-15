@@ -8,27 +8,6 @@ import { PromotionInfoType, PromotionsResType } from '../../../types';
 import baseAPI from '../../../api/baseAPI';
 import { promotionsUrl } from '../../../api/apiUrls';
 
-const centerBannerData = [
-  {
-    id: "1",
-    title: "Apple iPhone X 64 ГБ",
-    desc: "Совершенно новый дисплей Super Retina с диагональю 5,8 дюйма, который удобно лежит в руке и потрясающие выглядит, — это и есть iPhone X.",
-    img: "/assets/img/phones.png",
-    price: 1250900,
-    old_price: 2220900,
-    toUrl: "#"
-  },
-  {
-    id: "2",
-    title: "Apple iPhone X 64 ГБ",
-    desc: "Совершенно новый дисплей Super Retina с диагональю 5,8 дюйма, который удобно лежит в руке и потрясающие выглядит, — это и есть iPhone X.",
-    img: "/assets/img/phones.png",
-    price: 1250900,
-    old_price: 2220900,
-    toUrl: "#"
-  },
-
-]
 
 function HomeCenterBanner() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -59,10 +38,10 @@ function HomeCenterBanner() {
             navigation={true}
             grabCursor={true}
             loop={true}
-            // autoplay={{
-            //   delay: 2500,
-            //   disableOnInteraction: false,
-            // }}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
             modules={[EffectFade, Navigation, Autoplay]}
           >
             {

@@ -30,6 +30,42 @@
         }
       }
     }
+
+    .home_top_banner {
+      .banner_wrapper {
+        .swiper {
+          .swiper-button-next {
+            right: 0px;
+          }
+
+          .swiper-button-prev {
+            left: 0px;
+          }
+        }
+      }
+    }
+
+    .popular_categories_slider {
+      .popular_slider_title {
+        margin: 80px 0px 30px;
+        color : var(--brand_color_black);
+      }
+
+      .slider_wrapper {
+        position: relative;
+
+        .swiper {
+          .swiper-button-next {
+            right: 0px;
+          }
+
+          .swiper-button-prev {
+            left: 0px;
+          }
+        }
+      }
+    }
+
   }
 }
 
@@ -266,6 +302,41 @@
                 width: 100%;
               }
             }
+          }
+        }
+      }
+    }
+
+    .home_top_banner {
+      .banner_wrapper {
+        .swiper {
+          .swiper-button-next {
+            display: none;
+          }
+
+          .swiper-button-prev {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .popular_categories_slider {
+      .popular_slider_title {
+        margin: 80px 0px 30px;
+        color : var(--brand_color_black);
+      }
+
+      .slider_wrapper {
+        position: relative;
+
+        .swiper {
+          .swiper-button-next {
+            display: none;
+          }
+
+          .swiper-button-prev {
+            display: none;
           }
         }
       }

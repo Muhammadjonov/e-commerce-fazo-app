@@ -39,38 +39,44 @@
       }
 
       .swiper-slide {
+        transition: .5s ease-in-out;
+
+        &:hover {
+          .ant-card .ant-card-body .popular_slider_card .popular_card_title {
+            color: var(--brand_color_yellow);
+          }
+        }
+
         .ant-card {
+          position: static;
+
           .ant-card-body {
             padding: 0;
 
-            .popular_slider_card {
-              display      : block;
-              position     : relative;
-              border       : 1px solid var(--gray6);
-              border-radius: 5px;
-              padding      : 15px 25px;
-              height       : 140px;
+            .popular__slider__card {
+              display        : flex;
+              justify-content: space-between;
+              border         : 1px solid var(--gray6);
+              border-radius  : 5px;
+              padding        : 15px 25px;
+              height         : 140px;
+              color          : var(--brand_color_black);
 
               .popular_card_title {
-                color: var(--brand_color_black);
-                width: 49%;
+                color     : var(--brand_color_black);
+                transition: .5s ease-in-out;
+                width     : 75%;
+              }
+
+
+
+              .popular__slider__card__img {
+                width     : 140px;
+                height    : 100%;
+                object-fit: contain;
 
               }
 
-              figure {
-                position     : absolute;
-                top          : -12px;
-                right        : 0;
-                margin-bottom: 0;
-                z-index      : 12;
-                width        : 45%;
-
-                img {
-                  width     : 100%;
-                  height    : 100&;
-                  object-fit: contain;
-                }
-              }
             }
           }
         }

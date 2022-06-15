@@ -9,39 +9,6 @@ import { RecommendedCategoriesInfoType, RecommendedCategoriesResType } from '../
 import baseAPI from '../../../api/baseAPI';
 import { recommendedCategoriesUrl } from '../../../api/apiUrls';
 
-const popularCardData = [
-  {
-    id: "1",
-    name: "Компьютеры",
-    img: "/assets/img/Computer.png",
-    to: "#"
-  },
-  {
-    id: "2",
-    name: "Компьютеры",
-    img: "/assets/img/Computer.png",
-    to: "#"
-  },
-  {
-    id: "3",
-    name: "Компьютеры",
-    img: "/assets/img/Computer.png",
-    to: "#"
-  },
-  {
-    id: "4",
-    name: "Компьютеры",
-    img: "/assets/img/Computer.png",
-    to: "#"
-  },
-  {
-    id: "5",
-    name: "Компьютеры",
-    img: "/assets/img/Computer.png",
-    to: "#"
-  },
-
-]
 
 function PopularCategoriesSlider() {
   const [popularCategories, setPopularCategories] = useState<RecommendedCategoriesInfoType>([]);
@@ -72,10 +39,10 @@ function PopularCategoriesSlider() {
             spaceBetween={30}
             navigation={true}
             loop={true}
-            // autoplay={{
-            //   delay: 2500,
-            //   disableOnInteraction: false,
-            // }}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
             breakpoints={{
               0: {
                 slidesPerView: 1,

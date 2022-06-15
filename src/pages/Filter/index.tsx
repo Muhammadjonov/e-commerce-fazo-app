@@ -18,6 +18,7 @@ import { byCategoriesProductUrl } from "../../api/apiUrls";
 import { useLocation, useParams } from "react-router-dom";
 import "./_style.scss";
 import { formatPrice } from "../../helpers";
+import { useT } from "../../custom/hooks/useT";
 
 const { Panel } = Collapse;
 
@@ -40,6 +41,7 @@ function Filter() {
     one: false,
   });
   let { pathname } = useLocation();
+  const { t, lang } = useT()
 
   const { brands, category, characters, maxPrice: max_price, minPrice: min_price, products, subCategory } = byCategoryProducts;
 
@@ -178,10 +180,10 @@ function Filter() {
                 <Collapse
                   defaultActiveKey={["1"]}
                   ghost
-                  expandIconPosition="right"
+                  expandIconPosition="end"
                 >
                   <Panel
-                    header={<p className="p18_regular">Цена (cум)</p>}
+                    header={<p className="p18_regular">Цена ({t(`sum.${lang}`)})</p>}
                     key="1"
                   >
                     <div className='slider_filter'>

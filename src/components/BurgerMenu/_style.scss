@@ -26,6 +26,7 @@
           width     : 357px;
           display   : block;
           height    : calc(70vh - 30px);
+          overflow-x: hidden;
 
           &::-webkit-scrollbar-thumb {
             background-color: #909090;
@@ -46,51 +47,52 @@
           ul {
             display: block;
 
-            li {
-              width: 100%;
+            /* Style the buttons inside the tab */
+            li.tablinks {
+              background-color: #fff;
+              color           : var(--brand_color_black);
+              padding         : 10px 29px 10px 20px;
+              width           : 100%;
+              border          : none;
+              outline         : none;
+              text-align      : left;
+              cursor          : pointer;
+              position        : relative;
+              transition      : transform .3s ease-in-out;
+              margin-top      : 5px;
+              width           : 96%;
 
-
-              /* Style the buttons inside the tab */
-              .tablinks {
-                background-color: #fff;
-                color           : var(--brand_color_black);
-                padding         : 10px 29px 10px 20px;
-                width           : 100%;
-                border          : none;
-                outline         : none;
-                text-align      : left;
-                cursor          : pointer;
-                border-radius   : 5px;
-                position        : relative;
-
-                .category__icon {
-                  font-size: 18px;
-                }
-
-                /* Change background color of buttons on hover */
-                &:hover {
-                  background-color   : var(--gray6);
-                  // transform       : scale(1.1);
-                }
-
-                .p18_regular {
-                  margin-left: 20px;
-                }
-
-                .right_arrow {
-                  position: absolute;
-                  top     : 35%;
-                  right   : 30px;
-                }
+              .category__icon {
+                font-size: 18px;
               }
 
-              /* Create an active/current "tab button" class */
-              .tablinks.active {
+              /* Change background color of buttons on hover */
+              &:hover {
                 background-color: var(--gray6);
               }
+
+              .p18_regular {
+                margin-left: 20px;
+              }
+
+              .right_arrow {
+                position: absolute;
+                top     : 35%;
+                right   : 30px;
+              }
+            }
+
+            /* Create an active/current "tab button" class */
+            li.tablinks.active {
+              background-color: var(--brand_color_yellow);
+              transform       : translateX(8px);
+              box-shadow      : 0px 0px 10px rgba(255, 110, 66, 0.8);
+              border-radius   : 5px;
+              color           : #fff;
             }
           }
         }
+
 
         /* Style the tab content */
         .tabcontent {
@@ -131,6 +133,7 @@
               right   : 0;
             }
 
+
             .subcategry_links {
               width: 357px;
 
@@ -140,9 +143,15 @@
                 border-radius      : 5px;
                 // background-color: #fff;
                 padding            : 10px 20px;
+                margin-top         : 5px;
+                transition         : all .3s ease-in-out;
 
                 &:hover {
-                  background-color: var(--gray6);
+                  background-color: var(--brand_color_yellow);
+                  transform       : translateX(8px);
+                  box-shadow      : 0px 0px 10px rgba(255, 110, 66, 0.8);
+                  border-radius   : 5px;
+                  color           : #fff;
                 }
 
               }

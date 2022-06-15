@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu';
 import CategoryMenus from '../../components/CategoryButton';
 import { CategoriesInfoType, MenuCategoriesInfoType } from "../../types";
@@ -12,6 +12,14 @@ interface IHeaderBottom {
 function HeaderBottom(props: IHeaderBottom) {
   const { categories, menuCategories } = props;
   const [isShowBurgerMenu, setIsShowBurgerMenu] = useState<boolean>(false);
+  let { category_slug } = useParams();
+  category_slug = category_slug?.slice(1);
+
+  // activeClassName
+
+  const createActiveClassName = (slug: string) => {
+    return category_slug === slug ? 'active' : '';
+  }
 
   return (
     <div className="header_bottom">
@@ -25,7 +33,7 @@ function HeaderBottom(props: IHeaderBottom) {
           {
             menuCategories?.map(category => (
               <li className="category" key={category.id}>
-                <NavLink to={`/category/:${category.slug}`}>
+                <NavLink className={createActiveClassName(category.slug)} to={`/category/:${category.slug}`}>
                   {category.title}
                 </NavLink>
               </li>

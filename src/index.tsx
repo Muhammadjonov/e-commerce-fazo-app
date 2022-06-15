@@ -11,7 +11,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/thumbs";
 import "swiper/css/free-mode";
 
-import "./static/styles/_style.scss";
+import "./static/css/_style.scss";
 import "./i18next/config";
 import { store } from './Store'
 import { Provider } from 'react-redux'

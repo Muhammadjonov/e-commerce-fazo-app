@@ -115,7 +115,7 @@ function HomeTopBanner() {
               // defaultActiveKey={['1']}
               accordion
               ghost
-              expandIconPosition="right"
+              expandIconPosition="end"
             >
               {
                 categories.map(category => (

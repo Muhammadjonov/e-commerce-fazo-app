@@ -13,13 +13,16 @@ function PopularSliderCard(props: IPopularSliderCard) {
   const { title, imageUrl, slug } = props;
   return (
     <Card hoverable bordered={false}>
-      <Link to={`/category/:${slug}`} className="popular_slider_card">
-        <h5 className="title20_bold popular_card_title">
+      <Link to={`/category/:${slug}`} className="popular__slider__card">
+        <h5
+          className="title20_bold popular_card_title"
+        >
           {title}
         </h5>
-        <figure>
-          <img src={imageUrl} alt={title} />
-        </figure>
+        <img
+          className="popular__slider__card__img"
+          src={imageUrl} alt={title}
+        />
       </Link>
     </Card>
   )

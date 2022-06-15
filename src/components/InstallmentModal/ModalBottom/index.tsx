@@ -14,7 +14,7 @@ const modalCollapseData = [
 ];
 const modalInstallmentData = [
   {
-    id:"1",
+    id: "1",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -23,7 +23,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"2",
+    id: "2",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -32,7 +32,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"3",
+    id: "3",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -41,7 +41,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"4",
+    id: "4",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -50,7 +50,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"5",
+    id: "5",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -59,7 +59,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"6",
+    id: "6",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -68,7 +68,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"7",
+    id: "7",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -77,7 +77,7 @@ const modalInstallmentData = [
     img: "/assets/icons/card.svg",
   },
   {
-    id:"8",
+    id: "8",
     title: "Member Military",
     prepayment: "от  0%",
     cashback: "1%",
@@ -95,12 +95,12 @@ export default function ModalBottom() {
   };
   return (
     <>
-     
-        <Collapse
-          className="installment_modal_collapse"
-          expandIconPosition={"right"}
-          accordion
-        > 
+
+      <Collapse
+        className="installment_modal_collapse"
+        expandIconPosition={"end"}
+        accordion
+      >
         {modalCollapseData.map((data) => (
           <Panel
             header={
@@ -124,67 +124,67 @@ export default function ModalBottom() {
             </p>
             <p className="modal_installment_mest_text">По карте</p>
             <Collapse
-                className="modal_nest_block"
-                expandIconPosition={"right"}
-                accordion
-              >
-            
-            {modalInstallmentData.map((data) => (
-              <Panel
-                header={
-                  <div className="modal_nestCollapse_title">
-                    <img className="modal_card_img" src={data.img} alt="" />
-                    <span>{data.title}</span>
-                  </div>
-                }
-                key={data.id}
-                className="modal_nest_panel"
-              >
-                <div className="card_info_box">
-                  <div className="card_info_item">
-                    <p className="info_card_text p14_regular">Предоплата</p>
-                    <div className="card_info_text_right">
+              className="modal_nest_block"
+              expandIconPosition={"end"}
+              accordion
+            >
+
+              {modalInstallmentData.map((data) => (
+                <Panel
+                  header={
+                    <div className="modal_nestCollapse_title">
+                      <img className="modal_card_img" src={data.img} alt="" />
+                      <span>{data.title}</span>
+                    </div>
+                  }
+                  key={data.id}
+                  className="modal_nest_panel"
+                >
+                  <div className="card_info_box">
+                    <div className="card_info_item">
+                      <p className="info_card_text p14_regular">Предоплата</p>
+                      <div className="card_info_text_right">
+                        <p className="info_card_text p14_regular">
+                          {data.prepayment}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="card_info_item">
+                      <p className="info_card_text p14_regular">Кешбэк</p>
+                      <div className="card_info_text_right">
+                        <p className="info_card_text p14_regular">
+                          {data.cashback}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="card_info_item">
                       <p className="info_card_text p14_regular">
-                        {data.prepayment}
+                        Максимальная сумма задолженности
                       </p>
+                      <div className="card_info_text_right">
+                        <p className="info_card_text p14_regular">
+                          {data.maximumAmountOwed}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="card_info_item">
+                      <p className="info_card_text p14_regular">
+                        Срок перехода на карту
+                      </p>
+                      <div className="card_info_text_right">
+                        <p className="info_card_text p14_regular">
+                          {data.transitionPeriodToTheCard}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="card_info_item">
-                    <p className="info_card_text p14_regular">Кешбэк</p>
-                    <div className="card_info_text_right">
-                      <p className="info_card_text p14_regular">
-                        {data.cashback}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="card_info_item">
-                    <p className="info_card_text p14_regular">
-                      Максимальная сумма задолженности
-                    </p>
-                    <div className="card_info_text_right">
-                      <p className="info_card_text p14_regular">
-                        {data.maximumAmountOwed}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="card_info_item">
-                    <p className="info_card_text p14_regular">
-                      Срок перехода на карту
-                    </p>
-                    <div className="card_info_text_right">
-                      <p className="info_card_text p14_regular">
-                        {data.transitionPeriodToTheCard}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Panel>
-          ))}
+                </Panel>
+              ))}
             </Collapse>
           </Panel>
-           ))}
-        </Collapse>
-    
+        ))}
+      </Collapse>
+
     </>
   );
 }

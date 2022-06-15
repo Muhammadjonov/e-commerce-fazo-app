@@ -58,14 +58,14 @@ function BurgerMenu(props: IBurgerMenu) {
               <ul>
                 {
                   categories?.map((category) => (
-                    <li key={category.id}>
-                      <div
-                        className="tablinks"
-                        onMouseOver={(e) => openCity(e, category.slug)}
-                      >
-                        <i className={category.icon + ` category__icon`}></i>
-                        <span className="p18_regular">{category.title}</span> <RightOutlined className='right_arrow' />
-                      </div>
+                    <li
+                      className="tablinks"
+                      onMouseOver={(e) => openCity(e, category.slug)}
+                      key={category.id}
+                    >
+                      <i className={category.icon + ` category__icon`}></i>
+                      <span className="p18_regular">{category.title}</span> <RightOutlined className='right_arrow' />
+
                     </li>
                   ))
                 }
