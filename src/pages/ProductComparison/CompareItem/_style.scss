@@ -1,0 +1,30 @@
+.compare_item {
+  border       : 1px solid var(--gray5);
+  border-radius: 20px;
+  padding      : 5px 20px 4px 20px;
+  color        : var(--brand_color_black);
+  display      : inline-flex;
+  align-items  : center;
+  cursor       : pointer;
+  user-select  : none;
+
+  .detete_compare_item {
+    border          : none;
+    background-color: transparent;
+    outline         : none;
+    margin-left     : 10px;
+    cursor          : pointer;
+    margin-top      : 1px;
+    font-size       : 18px;
+  }
+}
+
+.compare_item.active {
+  background-color: var(--brand_color_red);
+  color           : #fff;
+  border-color    : var(--brand_color_red);
+
+  .detete_compare_item {
+    color: #fff;
+  }
+}

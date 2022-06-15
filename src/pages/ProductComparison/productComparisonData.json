@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "img": "/assets/img/smart_watch.png",
+    "old_price": "1 520 000",
+    "price": "350 000",
+    "name": "Умные часы Haylou RT-LS05S",
+    "toUrl": ":12"
+  },
+  {
+    "id": 2,
+    "img": "/assets/img/smart_watch.png",
+    "old_price": "1 520 000",
+    "price": "350 000",
+    "name": "Умные часы Haylou RT-LS05S",
+    "toUrl": ":12"
+  },
+  {
+    "id": 3,
+    "img": "/assets/img/smart_watch.png",
+    "old_price": "1 520 000",
+    "price": "350 000",
+    "name": "Умные часы Haylou RT-LS05S",
+    "toUrl": ":12"
+  },
+  {
+    "id": 4,
+    "img": "/assets/img/smart_watch.png",
+    "old_price": "1 520 000",
+    "price": "350 000",
+    "name": "Умные часы Haylou RT-LS05S",
+    "toUrl": ":12"
+  },
+  {
+    "id": 5,
+    "img": "/assets/img/smart_watch.png",
+    "old_price": "1 520 000",
+    "price": "350 000",
+    "name": "Умные часы Haylou RT-LS05S",
+    "toUrl": ":12"
+  }
+]

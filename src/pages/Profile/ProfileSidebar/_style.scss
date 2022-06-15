@@ -1,0 +1,33 @@
+.profile_sidebar {
+
+  border-right: 1px solid #f2f2f2;
+
+  .profile_sidebar_item {
+    display    : flex;
+    align-items: center;
+    padding    : 30px 0px;
+
+    &:first-child {
+      border-bottom: 1px solid #f2f2f2;
+    }
+
+    .ant-avatar.profile_avatar {
+      text-align      : center;
+      line-height     : 45px;
+      background-color: var(--color_white2);
+
+      img {
+        width  : unset;
+        height : unset;
+        display: inline;
+
+      }
+    }
+
+    p {
+      color      : var(--brand_color_black);
+      margin-left: 10px;
+      line-height: 21px;
+    }
+  }
+}

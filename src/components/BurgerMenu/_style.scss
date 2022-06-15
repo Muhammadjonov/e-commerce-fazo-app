@@ -1,0 +1,171 @@
+.burger__menu {
+  width           : 100%;
+  background-color: #fff;
+  display         : none;
+  z-index         : 99;
+  width           : 100%;
+  position        : absolute;
+  left            : 0px;
+  top             : 100%;
+
+  .container {
+    .burger_menu_wrapper {
+
+      padding: 25px 0px 95px;
+      height : 673px;
+
+
+
+      /* Style the tab */
+      .burger_menu {
+        display: flex;
+
+        .tab {
+          min-height: 470px;
+          overflow-y: auto;
+          width     : 357px;
+          display   : block;
+          height    : calc(70vh - 30px);
+
+          &::-webkit-scrollbar-thumb {
+            background-color: #909090;
+            border-radius   : 4px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background-color: #fff;
+
+          }
+
+          &::-webkit-scrollbar {
+            width   : 6px;
+            position: absolute;
+            right   : 0;
+          }
+
+          ul {
+            display: block;
+
+            li {
+              width: 100%;
+
+
+              /* Style the buttons inside the tab */
+              .tablinks {
+                background-color: #fff;
+                color           : var(--brand_color_black);
+                padding         : 10px 29px 10px 20px;
+                width           : 100%;
+                border          : none;
+                outline         : none;
+                text-align      : left;
+                cursor          : pointer;
+                border-radius   : 5px;
+                position        : relative;
+
+                .category__icon {
+                  font-size: 18px;
+                }
+
+                /* Change background color of buttons on hover */
+                &:hover {
+                  background-color   : var(--gray6);
+                  // transform       : scale(1.1);
+                }
+
+                .p18_regular {
+                  margin-left: 20px;
+                }
+
+                .right_arrow {
+                  position: absolute;
+                  top     : 35%;
+                  right   : 30px;
+                }
+              }
+
+              /* Create an active/current "tab button" class */
+              .tablinks.active {
+                background-color: var(--gray6);
+              }
+            }
+          }
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+          padding    : 0px 0px 0px 15px;
+          width      : calc(100% - 357px);
+          border-left: none;
+          display    : none;
+          color      : var(--brand_color_black);
+
+          .title24_bold {
+            margin-left  : 20px;
+            padding-top  : 5px;
+            color        : var(--brand_color_black);
+            margin-bottom: 30px;
+
+          }
+
+
+          .tab_content_body {
+            display        : flex;
+            justify-content: space-between;
+            height         : calc(70vh - 120px);
+            overflow-y     : auto;
+
+            &::-webkit-scrollbar-thumb {
+              background-color: #909090;
+              border-radius   : 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+              background-color: #fff;
+
+            }
+
+            &::-webkit-scrollbar {
+              width   : 6px;
+              position: absolute;
+              right   : 0;
+            }
+
+            .subcategry_links {
+              width: 357px;
+
+              .subcategory_link {
+                display            : block;
+                color              : var(--brand_color_black);
+                border-radius      : 5px;
+                // background-color: #fff;
+                padding            : 10px 20px;
+
+                &:hover {
+                  background-color: var(--gray6);
+                }
+
+              }
+            }
+
+            .category_img {
+              width: calc(100vw - 360px);
+
+              img {
+                width        : 100%;
+                border-radius: 5px;
+                height       : 450px;
+                object-fit   : contain;
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
+
+.burger__menu.active {
+  display: block;
+}

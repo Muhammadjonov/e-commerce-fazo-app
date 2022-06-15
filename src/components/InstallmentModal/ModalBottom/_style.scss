@@ -1,0 +1,86 @@
+.installment_modal_collapse {
+  border: none;
+
+  // div{
+  //     right: 0;
+  //     position: absolute;
+  // }
+  // margin-top: 25px;
+  .ant-collapse-header {
+    display    : block !important;
+    user-select: none;
+  }
+
+  .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+    display: block;
+  }
+
+  .ant-collapse-item.ant-collapse-item-active.installment_modal_collapse_modal {
+    border: 1px solid var(--brand_color_red);
+  }
+
+  .installment_modal_collapse_modal {
+    // margin-top: 20px;
+    border    : 1px solid #d9d9d9;
+    margin-top: 20px;
+    background: #fafafa;
+
+    .installment_modal_text {
+      color: var(--brand_color_black);
+    }
+
+    .modal_installment_mest_text {
+      font-style : normal;
+      font-weight: 700;
+      font-size  : 16px;
+      line-height: 180%;
+      color      : var(--brand_color_black);
+    }
+
+    .modal_nest_block {
+      border: none;
+
+      .ant-collapse-content {
+        border-top: none;
+      }
+
+      .modal_card_img {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .ant-collapse-arrow {
+    padding         : 8px;
+    border          : 1px solid var(--gray6);
+    background-color: #fff;
+    border-radius   : 5px;
+  }
+
+  .modal_nest_panel {
+    .card_info_box {
+      .card_info_item {
+        height      : 45px;
+        display     : flex;
+        align-items : center;
+        padding-left: 10px;
+
+        &:hover {
+          background-color: var(--color_white2);
+        }
+
+        // justify-content: space-evenly;
+        .info_card_text {
+          width    : 278px;
+          max-width: 100%;
+          color    : var(--color_black2);
+        }
+
+        .card_info_text_right {
+          width      : 148px;
+          margin-left: 92px;
+        }
+      }
+    }
+  }
+}

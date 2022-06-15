@@ -1,0 +1,23 @@
+.tabs_comp {
+  display    : flex;
+  max-width  : 358px;
+  box-sizing : border-box;
+  padding    : 30px 50px 20px 30px;
+  text-align : left;
+  align-items: flex-start;
+
+
+  .tabs_comp_body {
+    margin-left: 10px;
+    width      : 100%;
+
+    .tabs_comp_title {
+      color        : var(--text);
+      margin-bottom: 5px;
+    }
+
+    .tabs_comp_text {
+      color: var(--color_black2);
+    }
+  }
+}

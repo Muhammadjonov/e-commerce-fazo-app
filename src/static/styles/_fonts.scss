@@ -1,0 +1,27 @@
+@import "../fonts/Gotham\ Pro/GothamPro.ttf";
+
+@font-face {
+  font-family: "GothamPro";
+  src        : local("GothamPro"),
+    url("../fonts/Gotham\ Pro/GothamPro.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@import "../fonts/Gotham\ Pro/GothamPro-Medium.ttf";
+
+@font-face {
+  font-family: "GothamPro-Medium";
+  src        : local("GothamPro-Medium"),
+    url("../fonts/Gotham\ Pro/GothamPro-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+
+
+@import "../fonts/Gotham\ Pro/GothamPro-Bold.ttf";
+
+@font-face {
+  font-family: "GothamPro-Bold";
+  src        : local("GothamPro-Bold"),
+    url("../fonts/Gotham\ Pro/GothamPro-Bold.ttf") format("truetype");
+  font-weight: 700;
+}

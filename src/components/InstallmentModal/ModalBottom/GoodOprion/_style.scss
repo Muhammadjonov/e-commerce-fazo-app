@@ -1,0 +1,46 @@
+.good_option_block {
+  display        : flex;
+  align-items    : center;
+  justify-content: start;
+
+  .good_option_installment {
+    color      : var(--brand_color_black);
+    margin-left: 40px;
+  }
+
+  .installment_radio {
+    .ant-radio-checked {
+      &::after {
+        border: 1px solid var(--brand_color_red);
+      }
+
+      .ant-radio-inner {
+        border: 1px solid var(--brand_color_red);
+
+        &::after {
+          background-color: var(--brand_color_red);
+        }
+      }
+    }
+  }
+
+  .ant-select .installment_selector_periud .ant-select-single .ant-select-show-arrow .ant-select-show-search {
+    border    : 1px solid var(--brand_color_red);
+    box-shadow: none;
+  }
+
+  .installment_selector_periud {
+    .ant-select-show-search {
+      border    : 1px solid var(--brand_color_red);
+      box-shadow: none;
+    }
+
+    .ant-select-selector {
+
+      &:hover,
+      &:focus {
+        border: 1px solid var(--brand_color_red);
+      }
+    }
+  }
+}

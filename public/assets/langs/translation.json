@@ -1,0 +1,10 @@
+{
+  "signIn": {
+    "ru": "Войти",
+    "uz": "Login"
+  },
+  "favorite": {
+    "ru": "Избранное",
+    "uz": "Sevimlilar"
+  }
+}

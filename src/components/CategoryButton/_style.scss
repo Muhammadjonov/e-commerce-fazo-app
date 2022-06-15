@@ -1,0 +1,32 @@
+.ant-btn.ant-btn-background-ghost.category_btn {
+  padding         : 12px 79px 10px;
+  height          : auto;
+  border          : none;
+  border-radius   : 5px;
+  background-color: var(--brand_color_yellow);
+  display         : flex;
+  align-items     : center;
+
+  &:hover {
+    background-color: var(--brand_color_yellow);
+    color           : #fff;
+  }
+
+  &:active {
+    background-color: var(--brand_color_yellow);
+    color           : #fff;
+  }
+
+  &:focus {
+    background-color: var(--brand_color_yellow);
+    color           : #fff;
+  }
+
+  .btn_text {
+    margin-left: 11px;
+    font-size  : 16px;
+    line-height: 29px;
+    margin-top : 2px;
+    font-family: "GothamPro-Medium", sans-serif;
+  }
+}

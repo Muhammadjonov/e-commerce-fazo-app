@@ -1,0 +1,175 @@
+.hot_deals_card {
+  color        : #000;
+  border-radius: 5px;
+  border       : 1px solid var(--gray6);
+
+  .ant-card-body {
+    padding: 0;
+
+    .card_body {
+      color     : var(--brand_color_red);
+      padding   : 5px;
+      text-align: center;
+      position  : relative;
+
+      .discount {
+        position        : absolute;
+        top             : 22px;
+        right           : 22px;
+        width           : 40px;
+        height          : 40px;
+        border-radius   : 50%;
+        background-color: var(--brand_color_red);
+        color           : #fff;
+        text-align      : center;
+        line-height     : 40px;
+      }
+
+      .product_view_link {
+        display: block;
+
+        figure {
+          text-align: center;
+
+          .product_card_img {
+            width     : 95%;
+            height    : 140px;
+            object-fit: contain;
+          }
+        }
+      }
+
+      .price {
+        .old_price {
+          color       : var(--color_black2);
+          margin-right: 20px;
+          position    : relative;
+
+          &:after {
+            background       : var(--color_black2);
+            border-right     : 1px solid var(--color_black2);
+            content          : "";
+            display          : block;
+            height           : 1px;
+            position         : absolute;
+            right            : -15px;
+            top              : 7px;
+            -webkit-transform: rotate(90deg);
+            transform        : rotate(90deg);
+            width            : 10px;
+          }
+        }
+      }
+
+      .product_view_link {
+        display: block;
+
+        .product_name {
+          font-family       : "GothamPro-Bold";
+          font-size         : 16px;
+          color             : #000;
+          line-height       : 24px;
+          margin-top        : 10px;
+          display           : -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          line-clamp        : 2;
+          overflow          : hidden;
+          max-width         : 250px;
+          margin-left       : auto;
+          margin-right      : auto;
+        }
+      }
+
+      .offer_end_title {
+        color     : var(--color_black2);
+        margin-top: 10px;
+      }
+
+      .offer_end_in {
+        display        : flex;
+        justify-content: space-around;
+        margin-top     : 10px;
+
+        .offer_end_date {
+          color         : var(--brand_color_black);
+          position      : relative;
+          display       : flex;
+          flex-direction: column;
+
+          &:after {
+            background       : var(--gray5);
+            border-right     : 1px solid var(--gray5);
+            content          : "";
+            display          : block;
+            height           : 1px;
+            position         : absolute;
+            right            : -25px;
+            top              : 12px;
+            -webkit-transform: rotate(90deg);
+            transform        : rotate(90deg);
+            width            : 23px;
+          }
+
+          &:last-child {
+            &:after {
+              display: none;
+            }
+          }
+
+          .offer_end_date_text {
+            font-size  : 8px;
+            font-weight: 400;
+            line-height: 14px;
+            color      : var(--color_black2);
+          }
+        }
+      }
+    }
+
+    .card_footer {
+      border-top: 1px solid var(--gray6);
+      padding   : 15px 0px 15px;
+
+      ul {
+        display        : flex;
+        justify-content: space-between;
+
+        li {
+          width     : 33%;
+          text-align: center;
+          position  : relative;
+
+          &:after {
+            background       : var(--gray6);
+            border-right     : 1px solid var(--gray6);
+            content          : "";
+            display          : block;
+            height           : 1px;
+            position         : absolute;
+            right            : -12px;
+            top              : 12px;
+            -webkit-transform: rotate(90deg);
+            transform        : rotate(90deg);
+            width            : 24px;
+          }
+
+          button {
+            border          : none;
+            outline         : none;
+            box-shadow      : none;
+            background-color: transparent;
+            cursor          : pointer;
+
+            i {
+              color    : var(--gray4);
+              font-size: 18px;
+            }
+          }
+
+
+        }
+      }
+    }
+  }
+}

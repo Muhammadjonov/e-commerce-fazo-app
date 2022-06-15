@@ -1,0 +1,102 @@
+.address_change {
+  .add_address_form {
+
+    .change_item {
+      width        : 100%;
+      position     : relative;
+      margin-bottom: 25px;
+
+      input {
+        width           : 100%;
+        background-color: #fff;
+        border          : 1px solid #d5d8df;
+        box-sizing      : border-box;
+        border-radius   : 6px;
+        font-size       : 14px;
+        line-height     : 24px;
+        padding         : 0 17px;
+        height          : 44px;
+        color           : #393b3f;
+
+        &:focus {
+          box-shadow: none;
+          outline   : none;
+
+          +label {
+            transform       : scale(0.95) translateY(-1.3rem) translateX(-0.1rem);
+            background-color: #fff;
+          }
+        }
+
+        &:not(:placeholder-shown) {
+          +label {
+            transform       : scale(0.95) translateY(-1.3rem) translateX(-0.1rem);
+            background-color: #fff;
+          }
+        }
+
+        &::placeholder {
+          opacity: 0;
+        }
+      }
+
+      label {
+        position        : absolute;
+        top             : 10px;
+        left            : 13px;
+        padding         : 0px 4px 0px 4px;
+        pointer-events  : none;
+        transform-origin: 0 0;
+        transition      : all 0.3s ease-in-out;
+        color           : #767676;
+        margin          : 0;
+        font-size       : 14px;
+        line-height     : 24px;
+      }
+
+      .error_message {
+        color    : var(--brand_color_red);
+        font-size: 14px;
+      }
+    }
+
+    .change_wrap {
+      display        : flex;
+      justify-content: space-between;
+
+      .change_item {
+        width: 48%;
+
+      }
+    }
+
+    .isDefaultAddress_wrap {
+      margin-bottom: 25px;
+    }
+
+    .submit_btn {
+      display: flex;
+
+      .change_save {
+        border          : none;
+        background-color: var(--brand_color_red);
+        border-radius   : 5px;
+        padding         : 12px 50px;
+        width           : auto;
+        font-size       : 16px;
+        cursor          : pointer;
+      }
+
+      .cancel_btn {
+        border       : 1px solid var(--brand_color_red);
+        border-radius: 5px;
+        color        : var(--brand_color_red);
+        margin-left  : 10px;
+        height       : auto;
+        width        : auto;
+        padding      : 12px 25px;
+        font-size    : 16px;
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.menus_tabs {
+  margin-top: 30px;
+
+  .ant-tabs {
+    .ant-tabs-nav {
+      border          : 1px solid var(--gray6);
+      border-radius   : 5px;
+      background-color: var(--color_white2);
+
+      .ant-tabs-nav-wrap {
+        white-space: normal;
+
+        .ant-tabs-nav-list {
+          .ant-tabs-tab {
+            padding: 0;
+
+            .ant-tabs-tab-btn {}
+          }
+
+          .ant-tabs-tab-active {
+            background-color: #fff;
+
+            .ant-tabs-tab-btn {}
+          }
+        }
+      }
+    }
+
+    .ant-tabs-content-holder {
+      border: none;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

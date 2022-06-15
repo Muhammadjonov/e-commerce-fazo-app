@@ -1,0 +1,106 @@
+.product_card_col {
+  border-radius: 5px;
+  border       : 1px solid var(--gray6);
+
+  .ant-card-body {
+    padding: 0;
+
+    .card_body {
+      padding        : 25px;
+      display        : flex;
+      justify-content: space-between;
+      align-items    : center;
+
+      .card_left {
+        display    : flex;
+        align-items: center;
+
+        figure {
+          .product_card_img {
+            width     : 190px;
+            height    : 190px;
+            object-fit: cover;
+          }
+
+          margin-bottom: 0;
+        }
+
+        .desc {
+          margin-left: 59px;
+
+          .product_name {}
+
+          .desc_body {
+            margin-top: 20px;
+
+            p {
+              color: var(--brand_color_black);
+            }
+          }
+        }
+      }
+
+      .card_right {
+        text-align: center;
+
+        .per_month {
+          color: var(--brand_color_red);
+        }
+
+        .price {
+          color        : var(--color_black2);
+          margin-bottom: 9px;
+        }
+
+
+        .card_footer {
+          margin-top: 25px;
+
+          ul {
+            display        : flex;
+            justify-content: space-between;
+
+            li {
+              width     : 33%;
+              text-align: center;
+              position  : relative;
+
+              &:after {
+                background       : var(--gray6);
+                border-right     : 1px solid var(--gray6);
+                content          : "";
+                display          : block;
+                height           : 1px;
+                position         : absolute;
+                right            : -70%;
+                top              : 12px;
+                -webkit-transform: rotate(90deg);
+                transform        : rotate(90deg);
+                width            : 24px;
+              }
+
+              button {
+                border          : none;
+                outline         : none;
+                box-shadow      : none;
+                background-color: transparent;
+                cursor          : pointer;
+
+                i {
+                  color    : var(--gray4);
+                  font-size: 18px;
+                }
+              }
+
+              button:hover {
+                i {
+                  color: var(--brand_color_red);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

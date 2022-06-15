@@ -1,0 +1,119 @@
+@import "variables";
+@import "globalClasses";
+// NURITO FONT
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+// GothamPro FONT
+
+@import "fonts";
+
+* {
+  margin    : 0;
+  padding   : 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size  : 14px;
+  line-height: 25px;
+  font-style : normal;
+  font-weight: 400;
+  color      : #fff;
+  font-family: 'GothamPro', sans-serif;
+  overflow-x : hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+b,
+a {
+  margin : 0;
+  padding: 0;
+}
+
+ul li,
+ol li {
+  list-style: none;
+}
+
+a {
+  color          : #fff;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+  }
+}
+
+button {
+  border          : none;
+  outline         : none;
+  background-color: transparent;
+  cursor          : pointer;
+}
+
+.ant-affix {
+  z-index: 11;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin            : 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  /* Firefox */
+}
+
+
+.ant-breadcrumb.breadcrumb_comp {
+  span {
+
+    .ant-breadcrumb-link {
+
+      .ant-breadcrumb-separator {
+        color: var(--daraja2);
+      }
+
+      .breadcrm_link {
+        color: var(--daraja2);
+      }
+
+    }
+
+    &:last-child .ant-breadcrumb-link .breadcrm_link {
+      color      : #000;
+      font-weight: 600;
+    }
+  }
+}
+
+
+.ant-switch {
+  .ant-switch-handle {
+    &::before {
+      background-color: var(--brand_color_red);
+    }
+  }
+}
+
+.ant-switch-checked {
+  // background-color: var(--brand_color_red);
+}
+
+// mobile styles
+@import "mobile";

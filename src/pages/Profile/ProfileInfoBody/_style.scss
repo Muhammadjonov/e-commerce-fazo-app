@@ -1,0 +1,178 @@
+.bordered_card {
+  border       : 1px solid #f2f2f2;
+  border-radius: 4px;
+
+  .top {
+    border-bottom  : 1px solid #f2f2f2;
+    padding        : 15px;
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+
+    .left {
+      display    : flex;
+      align-items: center;
+
+      .ant-avatar {
+        background-color: var(--color_white2);
+        border          : 1px solid #e0e0e0;
+        width           : 50px;
+        height          : 50px;
+        line-height     : 45px;
+        text-align      : center;
+
+        img {
+          width     : unset;
+          height    : unset;
+          text-align: center;
+          display   : inline;
+        }
+      }
+
+      .text {
+        margin-left: 10px;
+        color      : var(--brand_color_black);
+        font-family: "GothamPro-Medium", sans-serif;
+        line-height: 21px;
+      }
+    }
+  }
+
+  .body {
+    padding: 15px;
+  }
+}
+
+.personal_data {
+  height: 100%;
+
+  .top {
+
+
+    .change_profile_btn {
+      color        : var(--brand_color_red);
+      border       : 1px solid var(--brand_color_red);
+      border-radius: 5px;
+      padding      : 3px 20px;
+
+    }
+
+
+  }
+
+  .body {
+    .user_title {
+      color      : var(--brand_color_black);
+      font-family: "GothamPro-Medium", sans-serif;
+      line-height: 21px;
+
+    }
+
+    .tel_number {
+      color     : var(--daraja2);
+      margin-top: 15px;
+
+      span {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.notifications {
+
+
+  .body {
+    .notif_title {
+      color      : var(--brand_color_black);
+      font-family: "GothamPro-Medium", sans-serif;
+      line-height: 21px;
+    }
+
+    .switch_notif {
+      margin-top: 15px;
+
+      .notif_text {
+        color      : var(--daraja2);
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.my_cards {
+  .body {
+
+    .card_text {
+      color: var(--daraja2);
+    }
+  }
+}
+
+.add_address {
+  .top {
+
+    .add_address_btn {
+      color        : var(--brand_color_red);
+      border       : 1px solid var(--brand_color_red);
+      border-radius: 5px;
+    }
+  }
+
+  .body {
+    .address_wrap {
+      .address_item {
+        .address_top {
+          font-size    : 12px;
+          line-height  : 16px;
+          color        : #1ec04c;
+          margin-bottom: 8px;
+        }
+
+        .address_name {
+          display      : flex;
+          margin-bottom: 16px;
+
+          .title {
+            color       : var(--brand_color_black);
+            margin-right: 10px;
+          }
+
+          .address_value {
+            color: var(--brand_color_black);
+          }
+        }
+
+        .address_btn_area {
+          display        : flex;
+          justify-content: space-between;
+          align-items    : center;
+
+          .edit_address_btn {
+            font-size  : 12px;
+            line-height: 110%;
+            color      : #336fee;
+            cursor     : pointer;
+          }
+
+          .delete_address_btn {
+            border          : none;
+            outline         : none;
+            background-color: transparent;
+            cursor          : pointer;
+
+            i {
+              color    : var(--brand_color_red);
+              font-size: 16px;
+            }
+
+          }
+        }
+      }
+    }
+
+
+
+
+  }
+}

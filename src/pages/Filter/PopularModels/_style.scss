@@ -1,0 +1,28 @@
+.popular_models {
+  margin-top: 83px;
+
+  .popular_modal_title {
+    color: var(--brand_color_black);
+  }
+
+  .popular_models_content {
+    display   : flex;
+    flex-wrap : wrap;
+    margin-top: 30px;
+
+    .popular_model_nav_unselected,
+    .popular_model_nav_link {
+      border       : 1px solid var(--gray4);
+      border-radius: 17px;
+      padding      : 4px 32px;
+      margin-right : 20px;
+      margin-bottom: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      color: var(--brand_color_black);
+    }
+  }
+}

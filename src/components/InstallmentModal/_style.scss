@@ -1,0 +1,52 @@
+.installment_modal {
+  width    : 1146px !important;
+  max-width: 100%;
+
+  .installment_modal_title {
+    color: var(--brand_color_black);
+  }
+
+  .ant-modal-header {
+    border-bottom: none;
+    padding-top  : 41px;
+  }
+
+  .ant-modal-close {
+    padding-top: 26px;
+  }
+
+  // .installment_modal_collapse_modal {
+  //   &:active {
+  //     border: 1px solid $brand_color_red;
+  //   }
+  // }
+  .installment_Modal_buttons {
+    margin-top     : 30px;
+    margin-bottom  : 60px;
+    display        : flex;
+    align-items    : center;
+    justify-content: flex-end;
+
+    .modal_make_purchase {
+      background   : var(--brand_color_red);
+      border-color : var(--brand_color_red);
+      color        : #fff;
+      padding      : 8px 31px;
+      border-radius: 4px;
+      outline      : none;
+      cursor       : pointer;
+      border       : none;
+    }
+
+    .modal_continue_purchase {
+      color        : var(--brand_color_red);
+      border-color : var(--brand_color_red);
+      border-radius: 4px;
+      padding      : 8px 31px;
+      margin-right : 15px;
+      outline      : none;
+      cursor       : pointer;
+      border       : none;
+    }
+  }
+}

@@ -1,0 +1,97 @@
+.product_desc {
+  .product_name {
+    color        : var(--brand_color_black);
+    margin-bottom: 30px;
+  }
+
+  .action_area {
+    margin-bottom  : 30px;
+    display        : flex;
+    justify-content: space-between;
+
+    .product_price {
+      color: var(--brand_color_black);
+
+      img {
+        margin-left: 5px;
+      }
+
+    }
+
+    .right {
+      width: 210px;
+
+      .card_footer {
+        ul {
+          display        : flex;
+          justify-content: space-between;
+
+          li {
+            width     : 33%;
+            text-align: center;
+            position  : relative;
+
+            &:after {
+              background       : var(--gray6);
+              border-right     : 1px solid var(--gray6);
+              content          : "";
+              display          : block;
+              height           : 1px;
+              position         : absolute;
+              right            : -12px;
+              top              : 12px;
+              -webkit-transform: rotate(90deg);
+              transform        : rotate(90deg);
+              width            : 24px;
+            }
+
+            button {
+              border          : none;
+              outline         : none;
+              box-shadow      : none;
+              background-color: transparent;
+              cursor          : pointer;
+
+              i {
+                color    : var(--gray4);
+                font-size: 18px;
+              }
+            }
+
+
+          }
+        }
+      }
+    }
+  }
+
+  .vip_discount {
+    margin-bottom: 40px;
+
+    .vip_discount_text {
+      color: var(--color_black2);
+    }
+  }
+
+  .button_area {
+    margin-bottom: 55px;
+  }
+
+  .title_contact {
+    display: flex;
+
+    p {
+      width: 50%;
+    }
+
+    .left {
+      padding-left: 18px;
+      color       : var(--color_black2);
+    }
+
+    .right {
+      color: var(--brand_color_black);
+    }
+  }
+
+}

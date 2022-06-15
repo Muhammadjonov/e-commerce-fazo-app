@@ -1,0 +1,21 @@
+.ant-breadcrumb.breadcrumb_comp {
+  span {
+
+    .ant-breadcrumb-link {
+
+      .ant-breadcrumb-separator {
+        color: var(--daraja2);
+      }
+
+      .breadcrm_link {
+        color: var(--daraja2);
+      }
+
+    }
+
+    &:last-child .ant-breadcrumb-link .breadcrm_link {
+      color      : #000;
+      font-weight: 600;
+    }
+  }
+}

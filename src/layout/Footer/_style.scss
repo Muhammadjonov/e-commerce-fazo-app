@@ -1,0 +1,114 @@
+.footer {
+  background: var(--brand_color_black);
+  padding   : 40px 0px;
+  margin-top: 80px;
+
+  .social_links_box {
+    display    : flex;
+    align-items: center;
+    margin-top : 40px;
+
+    .social_btn {
+      width             : 27px;
+      height            : 27px;
+      border-radius     : 50%;
+      background        : transparent;
+      border            : 1px solid var(--gray1);
+      text-align        : center;
+      line-height       : 25px;
+      -webkit-transition: all 0.3s;
+      transition        : all 0.3s;
+      margin-right      : 10px;
+
+      .footer_social_link_icon {
+        fill: var(--gray1);
+      }
+
+      &:hover {
+        background: var(--brand_color_red);
+        border    : 1px solid var(--brand_color_red);
+      }
+
+      &:hover .footer_social_link_icon {
+        fill: #fff;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+    }
+
+  }
+
+  .footer_left_box {
+
+    .footer_logo {
+      margin-bottom: 62px;
+      width        : 140px;
+      height       : 50px;
+      object-fit   : contain;
+    }
+
+    .footer_lft_bottom {
+      p {
+        font-weight: 400;
+        font-size  : 14px;
+        line-height: 180%;
+        color      : #ffffff;
+      }
+
+      span {
+        font-weight: 400;
+        font-size  : 14px;
+        line-height: 180%;
+        color      : #ffffff;
+      }
+
+      .contact_number_footer {
+        p {
+          margin-top : 59px;
+          font-weight: 400;
+          font-size  : 14px;
+          line-height: 180%;
+          color      : #ffffff;
+        }
+
+        a {
+          font-weight    : 400;
+          font-size      : 14px;
+          line-height    : 180%;
+          color          : #ffffff;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+
+
+  .footer_right_wrapper_item {
+    h2 {
+      margin-bottom: 20px;
+      color        : #fff;
+    }
+
+
+    ul {
+      li {
+        margin-bottom: 10px;
+
+        a {
+          font-weight: 400;
+          font-size  : 18px;
+          line-height: 160%;
+          color      : #909090;
+
+          &:hover {
+            color: #a7a7a7;
+          }
+        }
+      }
+    }
+  }
+}

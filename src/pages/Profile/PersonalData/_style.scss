@@ -1,0 +1,35 @@
+.personal_data_card {
+  .back_link {
+    color: var(--brand_color_black);
+
+    i {
+      margin-left: 15px;
+    }
+  }
+
+  .personal_data_title {
+    color     : var(--brand_color_black);
+    margin-top: 40px;
+  }
+
+  .personal_form {
+    margin-top: 20px;
+
+    .change_password_wrapper {
+      .change_password_title {
+        color: var(--brand_color_black);
+
+      }
+
+      .change_password_inputes {
+        margin-top     : 20px;
+        display        : flex;
+        justify-content: space-between;
+
+        .input_wrapper {
+          width: 48%;
+        }
+      }
+    }
+  }
+}

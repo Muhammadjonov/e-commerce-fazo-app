@@ -1,0 +1,43 @@
+.new_address {
+  .add_address_form {
+
+    .change_wrap {
+      display        : flex;
+      justify-content: space-between;
+
+      .input_wrapper {
+        width: 48%;
+
+      }
+    }
+
+    .isDefaultAddress_wrap {
+      margin-bottom: 25px;
+    }
+
+    .submit_btn {
+      display: flex;
+
+      .change_save {
+        border          : none;
+        background-color: var(--brand_color_red);
+        border-radius   : 5px;
+        padding         : 12px 50px;
+        width           : auto;
+        font-size       : 16px;
+        cursor          : pointer;
+      }
+
+      .cancel_btn {
+        border       : 1px solid var(--brand_color_red);
+        border-radius: 5px;
+        color        : var(--brand_color_red);
+        margin-left  : 10px;
+        height       : auto;
+        width        : auto;
+        padding      : 12px 25px;
+        font-size    : 16px;
+      }
+    }
+  }
+}

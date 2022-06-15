@@ -1,0 +1,122 @@
+.search_wrapper.ant-input-group.ant-input-group-compact {
+  border-radius: 5px;
+  border       : 1px solid var(--brand_color_red);
+  height       : 50px;
+
+  .ant-select {
+    height: 100%;
+
+    .ant-select-selector {
+      height : 100%;
+      padding: 0 12px 0 20px;
+
+      .ant-select-selection-item {
+        line-height  : 44px;
+        font-size    : 14px;
+        padding-right: 0;
+      }
+
+      .ant-select-selection-search {
+        height: 100%;
+
+        .ant-select-selection-search-input {
+          height: 100%;
+        }
+      }
+    }
+
+
+    .ant-select-arrow {
+      right: 0;
+    }
+
+
+  }
+
+  .ant-input-search {
+    height: 100%;
+
+    .ant-input-group {
+      height  : 100%;
+      position: relative;
+
+      .ant-input {
+        height       : 100%;
+        padding      : 12px;
+        font-size    : 14px;
+        padding-right: 40px;
+
+      }
+
+      .ant-input-group-addon {
+        left  : 1px;
+        height: 100%;
+
+        .ant-input-search-button {
+          background-color: var(--brand_color_red);
+          border-color    : var(--brand_color_red);
+          text-shadow     : none;
+          box-shadow      : none;
+          height          : 100%;
+
+          .search_btn_text {
+            font-size  : 16px;
+            font-weight: 600;
+            line-height: 28px;
+            margin-left: 12px;
+          }
+
+          img {
+            margin-bottom: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  .mic_btn {
+    border          : none;
+    outline         : none;
+    cursor          : pointer;
+    background-color: transparent;
+    position        : absolute;
+    right           : 140px;
+    top             : 25%;
+    z-index         : 12;
+    color           : var(--color_black2);
+  }
+
+  .search_typewriter {
+    position: absolute;
+    left    : 32%;
+    top     : 28%;
+
+    .Typewriter {
+      .Typewriter__wrapper {
+        color: var(--color_black2);
+      }
+
+      .Typewriter__cursor {
+        color: var(--color_black2);
+      }
+    }
+  }
+
+
+  .ant-input-search .ant-input-group .ant-input:focus+.search_typewriter {
+    background-color: #0d0;
+  }
+
+
+}
+
+
+
+
+.rc-virtual-list-holder-inner {
+
+  .ant-select-item {
+    padding: 10px 20px;
+
+  }
+}

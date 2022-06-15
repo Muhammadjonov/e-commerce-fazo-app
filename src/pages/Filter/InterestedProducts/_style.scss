@@ -1,0 +1,24 @@
+.interested_products {
+  margin-top: 80px;
+
+  .top {
+    display        : flex;
+    justify-content: space-between;
+    margin-bottom  : 30px;
+    align-items    : flex-end;
+
+    .interested_products_title {
+      color: #000;
+    }
+
+    .show_more {
+      color: var(--color_black2);
+
+      i {
+        margin-left: 10px;
+      }
+    }
+
+  }
+
+}

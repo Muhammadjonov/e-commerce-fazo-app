@@ -1,0 +1,47 @@
+.ant-checkbox-wrapper.checkbox_filter {
+  user-select: none;
+  font-size  : 16px;
+
+  .ant-checkbox {
+    .ant-checkbox-inner {
+      width        : 24px;
+      height       : 24px;
+      box-shadow   : 0px 7px 64px rgba(0, 0, 0, 0.07);
+      border-radius: 6px;
+      border-color : var(--gray5);
+      top          : 2px;
+
+      &:after {
+        left: 33%;
+      }
+    }
+  }
+
+  .count {
+    color: var(--color_black2);
+  }
+
+  .ant-checkbox-checked.ant-checkbox {
+    &:after {
+      display: none;
+    }
+
+    .ant-checkbox-inner {
+      background-color: var(--brand_color_red);
+      border-color    : var(--brand_color_red);
+
+    }
+  }
+
+  .ant-checkbox-checked.ant-checkbox:hover .ant-checkbox-inner {
+    border-color: var(--brand_color_red);
+  }
+
+}
+
+.availability {
+  .ant-collapse-content-box {
+    // border       : 1px solid var(--brand_color_red);
+    // border-radius: 5px;
+  }
+}

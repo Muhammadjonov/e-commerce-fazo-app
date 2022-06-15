@@ -1,0 +1,21 @@
+.product_info_comp {
+  .product_info_title {
+    color : var(--brand_color_black);
+    margin: 55px 0px 25px;
+  }
+
+  .product_info_body {
+    display: flex;
+    padding: 18px 8px 18px 18px;
+
+    .desc_name {
+      color: var(--color_black2);
+      width: 50%;
+    }
+
+    .desc {
+      color: var(--brand_color_black);
+      width: 50%;
+    }
+  }
+}

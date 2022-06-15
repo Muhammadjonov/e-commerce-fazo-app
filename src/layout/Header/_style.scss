@@ -1,0 +1,312 @@
+.header {
+  position: relative;
+
+  .header_top {
+    background-color: var(--brand_color_red);
+    padding         : 12px 0px;
+    max-height      : 50px;
+
+    .desktop_header_top {
+      display        : flex;
+      justify-content: space-between;
+
+
+      .left {
+        ul {
+          display    : flex;
+          flex-wrap  : wrap;
+          align-items: center;
+
+          li {
+            margin-right: 40px;
+
+            &:first-child {
+              margin-right: 80px;
+            }
+
+          }
+        }
+      }
+
+      .right {
+        ul {
+          display    : flex;
+          flex-wrap  : wrap;
+          align-items: center;
+          height     : 100%;
+
+          li {
+            .lang_text {
+              font-weight: 500;
+              cursor     : pointer;
+            }
+
+            &:first-child {
+              margin-right: 59px;
+            }
+          }
+        }
+      }
+    }
+
+    .mobile_header_top {
+      display: none;
+
+      .logo {
+        .logo_img {
+          height    : 23px;
+          width     : 120px;
+          object-fit: contain;
+
+        }
+      }
+    }
+  }
+
+  .header_center {
+    background: #fff;
+
+    .header_centr {
+      padding: 25px 0px;
+
+      .header_center_left {
+        .logo {
+          .logo_img {
+            height    : 50px;
+            width     : 160px;
+            object-fit: contain;
+
+          }
+        }
+      }
+
+      .header_center_middle {
+        height     : 100%;
+        display    : flex;
+        align-items: center;
+      }
+
+      .header_center_right {
+        display        : flex;
+        justify-content: flex-end;
+
+        ul {
+          display: flex;
+
+          li {
+            margin-right: 40px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+
+            .right_item {
+              display       : flex;
+              flex-direction: column;
+              align-items   : center;
+
+              .ant-badge-count {
+                background-color: var(--brand_color_red);
+                font-weight     : bold;
+              }
+
+              img,
+              i {
+                height   : 26px;
+                color    : var(--brand_color_black);
+                font-size: 26px;
+              }
+
+              .user_nav_text {
+                display   : inline-block;
+                margin-top: 5px;
+                color     : var(--brand_color_black);
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+    .mobile_header_centr {
+      display: none;
+      padding: 20px 0px 10px;
+
+      .open_drower_btn {
+        background-color: var(--brand_color_red);
+        border          : none;
+        border-radius   : 5px;
+        padding         : 0px 5px 1px;
+        margin-right    : 10px;
+      }
+    }
+  }
+
+  .header_bottom {
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
+
+    .categories {
+      display        : flex;
+      flex-wrap      : wrap;
+      justify-content: space-between;
+      align-items    : center;
+
+      .category {
+        a {
+          color      : #000;
+          font-size  : 16px;
+          line-height: 29px;
+          font-family: 'GothamPro-Medium', sans-serif;
+        }
+      }
+    }
+  }
+}
+
+
+// drower styles
+
+.header_top_drower {
+
+  .ant-drawer-header {
+    padding: 16px;
+
+    .ant-drawer-header-title {
+      flex-direction: row-reverse;
+
+      .logo {
+        img {
+          width     : 172px;
+          height    : 33px;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+
+  .ant-drawer-body {
+    padding: 16px;
+
+    .reg_area {
+      display: flex;
+
+      .left {
+        width      : 50%;
+        display    : flex;
+        align-items: center;
+        position   : relative;
+
+        .sign_in_btn {
+
+          border          : none;
+          outline         : none;
+          background-color: transparent;
+          cursor          : pointer;
+          color           : var(--brand_color_black);
+
+          .user_wrapper {
+            border-radius   : 50%;
+            width           : 42px;
+            height          : 42px;
+            background-color: var(--gray6);
+            display         : inline-block;
+            line-height     : 38px;
+            text-align      : center;
+            margin-right    : 10px;
+
+            img {
+              width : 17.14px;
+              height: 19.29px;
+
+            }
+          }
+        }
+
+        &:after {
+          position    : absolute;
+          right       : 0;
+          height      : 29px;
+          width       : 1px;
+          content     : "";
+          border-right: 1px solid var(--gray5);
+        }
+      }
+
+      .right {
+        width             : 50%;
+        display           : flex;
+        align-items       : center;
+        // justify-content: flex-end;
+        justify-content   : center;
+
+        .sign_up_btn {
+
+          border          : none;
+          outline         : none;
+          background-color: transparent;
+          cursor          : pointer;
+          color           : var(--brand_color_black);
+
+        }
+      }
+    }
+
+    .menu_wrapper {
+      margin-top: 40px;
+
+      .menu {
+        a {
+          color: var(--brand_color_black);
+
+          img {
+            margin-right: 17px;
+          }
+        }
+
+        margin-bottom: 20px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .langs_area {
+      margin-top: 40px;
+
+      .lang_btn {
+        background-color: transparent;
+        border          : 1px solid var(--color_black2);
+        margin-right    : 9px;
+        color           : var(--brand_color_black);
+        padding         : 0px 17px;
+        border-radius   : 5px;
+        cursor          : pointer;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .lang_btn.active {
+      background-color: var(--brand_color_red);
+      border-color    : var(--brand_color_red);
+      color           : #fff;
+    }
+
+    .tel_area {
+      margin-top: 40px;
+
+      .phone_link {
+        strong {
+          color      : var(--brand_color_black);
+          font-weight: 400;
+        }
+      }
+    }
+
+  }
+}

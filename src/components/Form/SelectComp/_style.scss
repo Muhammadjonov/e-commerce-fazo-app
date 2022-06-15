@@ -1,0 +1,29 @@
+.select__wrapper {
+  position  : relative;
+  margin-top: 10px;
+  width     : 49%;
+
+  .select__comp {
+    font-size: 14px;
+  }
+
+  .custom__label {
+    position        : absolute;
+    top             : 10px;
+    left            : 13px;
+    padding         : 0px 4px 0px 4px;
+    pointer-events  : none;
+    transform       : scale(0.95) translateY(-1.4rem) translateX(-0.1rem);
+    background-color: #fff;
+    transition      : all 0.3s ease-in-out;
+    color           : #767676;
+    margin          : 0;
+    font-size       : 14px;
+    line-height     : 24px;
+  }
+
+  .error_message {
+    color    : var(--brand_color_red);
+    font-size: 14px;
+  }
+}

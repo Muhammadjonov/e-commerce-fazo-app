@@ -1,0 +1,83 @@
+.title48 {
+  font-size  : 48px;
+  line-height: 65px;
+}
+
+.title36_bold {
+  font-family: "GothamPro-Medium", sans-serif;
+  font-size  : 36px;
+  line-height: 34px;
+}
+
+.title42_extra_bold {
+  font-size  : 42px;
+  line-height: 57px;
+  font-family: "GothamPro-Medium", sans-serif;
+}
+
+.title28_bold {
+  font-family: "GothamPro-Medium", sans-serif;
+  font-size  : 28px;
+  line-height: 38px;
+}
+
+.title24_bold {
+  font-size  : 24px;
+  line-height: 30px;
+  font-family: "GothamPro-Medium", sans-serif;
+}
+
+.title20_bold {
+  font-size  : 20px;
+  line-height: 26px;
+  font-family: "GothamPro-Medium", sans-serif;
+}
+
+.title18_bold {
+  font-weight: 400;
+  font-size  : 18px;
+  line-height: 20px;
+  font-family: "GothamPro-Medium", sans-serif;
+
+}
+
+.p18_regular {
+  font-weight: 400;
+  font-size  : 18px;
+  line-height: 29px;
+}
+
+.p16_regular {
+  font-weight: 400;
+  font-size  : 16px;
+  line-height: 29px;
+}
+
+.p14_regular {
+  font-weight: 400;
+  font-size  : 14px;
+  line-height: 25px;
+}
+
+.container {
+  margin   : 0 auto;
+  max-width: 1550px;
+  padding  : 0px 15px;
+
+}
+
+@media screen and (max-width:1440px) {
+  .container {
+    width  : 100%;
+    padding: 0px 15px;
+    margin : 0;
+  }
+}
+
+@media screen and (max-width:992px) {
+  .container {
+    width  : 100%;
+    padding: 0px 10px;
+    margin : 0;
+  }
+}

@@ -1,0 +1,18 @@
+.installment_purchase {
+  .installment_purchase_card {
+    margin-bottom: 30px;
+
+    .tab_content_title {
+      color: var(--text);
+    }
+
+    .inst_body {
+      margin-top: 10px;
+
+      .tab_text {
+        margin-top: 12px;
+        color     : var(--daraja2);
+      }
+    }
+  }
+}

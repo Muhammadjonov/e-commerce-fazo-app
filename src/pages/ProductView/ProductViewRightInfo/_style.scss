@@ -1,0 +1,82 @@
+.product_view_right_info {
+  .product_view_right_info_card {
+    background-color: var(--color_white2);
+    border          : 1px solid var(--gray6);
+    border-radius   : 5px;
+    padding         : 20px 20px 20px 35px;
+    display         : flex;
+
+    i {
+      color     : var(--color_black2);
+      font-size : 16px;
+      margin-top: 2px;
+    }
+
+    .product_view_right_info_card_body {
+      margin-left: 10px;
+
+
+      .card_title {
+        font-family: "GothamPro-Medium", sans-serif;
+        font-weight: 700;
+        font-size  : 16px;
+        line-height: 29ox;
+        color      : var(--brand_color_black);
+
+      }
+
+      .content {
+        color      : var(--color_black2);
+        line-height: 22px;
+
+        .social_link {
+          color      : var(--blue1);
+          margin-left: 10px;
+        }
+      }
+
+      .more_about_program {
+        margin-top : 5px;
+        line-height: 22px;
+        color      : var(--blue1);
+
+      }
+    }
+  }
+
+  .have_questions {
+    margin-top: 20px;
+  }
+
+  .delivery_payment {
+    margin-top: 20px;
+    display   : block;
+
+    img {
+      width: 22px;
+
+    }
+
+    .delivery {
+      display: flex;
+    }
+
+    .payment {
+      margin-top : 20px;
+      display    : flex;
+      align-items: flex-start;
+
+      img {
+        width: 22px;
+      }
+
+      ul {
+        li {
+          color      : var(--color_black2);
+          line-height: 22px;
+          list-style : disc inside;
+        }
+      }
+    }
+  }
+}

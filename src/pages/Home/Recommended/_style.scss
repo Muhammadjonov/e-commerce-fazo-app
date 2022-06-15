@@ -1,0 +1,32 @@
+.recommended {
+  margin: 80px 0px 30px;
+
+  .top {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : flex-end;
+    margin         : 80px 0px 30px;
+
+    .hot_deals_title {
+      color: var(--brand_color_black);
+    }
+
+    .show_more {
+      color     : var(--color_black2);
+      transition: color .3s;
+
+      &:hover {
+        color: var(--brand_color_black);
+      }
+    }
+  }
+
+  .left {
+    height: 100%;
+
+    .recommended_img {
+      width     : 100%;
+      object-fit: cover;
+    }
+  }
+}

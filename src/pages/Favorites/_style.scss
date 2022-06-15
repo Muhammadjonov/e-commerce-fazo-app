@@ -1,0 +1,40 @@
+.favorites {
+  padding: 30px 0px 0px;
+
+  .favorite_breadcrumb_area {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : flex-end;
+
+    .delete_all_favorites {
+      background-color: transparent;
+      border          : none;
+      outline         : none;
+      cursor          : pointer;
+      color           : var(--color_black2);
+      position        : relative;
+
+      &::after {
+        content      : "\f00d";
+        position     : absolute;
+        font-family  : "Font Awesome 6 Free";
+        font-size    : 10px;
+        font-weight  : 900;
+        color        : var(--color_black2);
+        left         : -30px;
+        width        : 22px;
+        height       : 22px;
+        border-radius: 50%;
+        border       : 0.3px solid var(--color_black2);
+        text-align   : center;
+        line-height  : 20px;
+      }
+    }
+  }
+
+  .favorites_body {
+    .favorite_title {
+      margin: 25px 0;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.order__card {
+  display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+  margin-top     : 25px;
+  flex-wrap      : wrap;
+
+  &__left {
+    display    : flex;
+    align-items: center;
+
+    p {
+      margin-left: 30px;
+      color      : var(--brand_color_black);
+    }
+  }
+
+  &__order__count {
+    color: var(--brand_color_black);
+  }
+
+  &__order__price {
+    color: var(--brand_color_black);
+  }
+}
