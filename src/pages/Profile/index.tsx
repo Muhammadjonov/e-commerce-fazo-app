@@ -7,12 +7,12 @@ import "./_style.scss";
 
 const breadcrumbs = [
   {
-    id: 1,
+    id: "1",
     toUrl: "/",
     text: "Главная",
   },
   {
-    id: 2,
+    id: "2",
     toUrl: "#",
     text: "Личный кобинет",
   },

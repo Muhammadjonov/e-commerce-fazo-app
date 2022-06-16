@@ -109,5 +109,11 @@ input[type=number] {
   // background-color: var(--brand_color_red);
 }
 
+.fazo__back__top.ant-back-top {
+  bottom: 30px;
+  right : unset;
+  left  : 30px
+}
+
 // mobile styles
 @import "mobile";

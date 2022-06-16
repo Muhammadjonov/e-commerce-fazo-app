@@ -86,7 +86,7 @@ function App() {
       <Header menuCategories={menuCategories} />
       {element}
       <Footer menuCategories={menuCategories} />
-      <BackTop />
+      <BackTop className="fazo__back__top" />
       <AuthModal />
     </div>
   );

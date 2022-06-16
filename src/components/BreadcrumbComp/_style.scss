@@ -2,6 +2,7 @@
   span {
 
     .ant-breadcrumb-link {
+      user-select: none;
 
       .ant-breadcrumb-separator {
         color: var(--daraja2);

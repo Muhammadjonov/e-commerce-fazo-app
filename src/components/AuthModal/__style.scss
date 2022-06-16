@@ -1,7 +1,78 @@
+.signin__modal {
+
+  &__title {
+    margin     : 30px 0px;
+    font-family: "GothamPro-Medium", sans-serif;
+  }
+
+  &__form {
+    &__recover__wrapper {
+      text-align: right;
+
+      &__password {
+        color: var(--color_black2);
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: var(--brand_color_red);
+        }
+      }
+    }
+
+    &__submit__btn.ant-btn-background-ghost.ant-btn {
+      background-color: var(--brand_color_red);
+      color           : #fff;
+      border-radius   : 5px;
+      border          : 1px solid var(--brand_color_red);
+      font-family     : "GothamPro-Medium", sans-serif;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: var(--brand_color_red);
+        border-color    : var(--brand_color_red);
+        color           : #fff;
+      }
+    }
+
+    &__signup__btn.ant-btn.ant-btn-link {
+      border       : 1px solid var(--color_black2);
+      border-radius: 5px;
+      color        : var(--brand_color_red);
+      font-family  : "GothamPro-Medium", sans-serif;
+    }
+  }
+
+}
+
 .signup__modal {
-  .ant-modal-body {
-    .signup__modal__title {
-      margin: 30px 0px;
+
+  &__title {
+    margin     : 30px 0px;
+    font-family: "GothamPro-Medium", sans-serif;
+    text-align : center;
+  }
+
+  &__form {
+    &__btn__wrapper {
+
+
+      &__submit__btn.ant-btn-background-ghost.ant-btn {
+        background-color: var(--brand_color_red);
+        color           : #fff;
+        border-radius   : 5px;
+        border          : 1px solid var(--brand_color_red);
+        font-family     : "GothamPro-Medium", sans-serif;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: var(--brand_color_red);
+          border-color    : var(--brand_color_red);
+          color           : #fff;
+        }
+      }
     }
   }
 }
