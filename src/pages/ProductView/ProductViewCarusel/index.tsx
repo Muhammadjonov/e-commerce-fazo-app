@@ -66,6 +66,14 @@ function ProductViewCarusel() {
           modules={[FreeMode, Navigation, Thumbs, Controller]}
           loop={true}
           className="mySwiper"
+          breakpoints={{
+              0: {
+                slidesPerView: 3,
+              },
+              576: {
+                slidesPerView: 4,
+              }
+            }}
         >
           {
             productImgs.map(img => (

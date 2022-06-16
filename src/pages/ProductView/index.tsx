@@ -36,16 +36,16 @@ function ProductView() {
           <BreadcrumbComp breadcrumbs={breadcrumbs} />
         </div>
         <Row gutter={[30, 30]}>
-          <Col lg={7}>
+          <Col xs={24} lg={7}>
             <ProductViewCarusel />
           </Col>
 
-          <Col lg={17}>
+          <Col xs={24} lg={17}>
             <Row>
-              <Col lg={17}>
+              <Col xs={24} lg={17}>
                 <ProductDescription />
               </Col>
-              <Col lg={7}>
+              <Col xs={24} lg={7}>
                 <ProductViewRightInfo />
               </Col>
             </Row>

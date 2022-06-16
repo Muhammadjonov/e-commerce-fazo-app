@@ -35,7 +35,7 @@ function HomeCenterBanner() {
           <Swiper
             slidesPerView={1}
             // effect={"fade"}
-            navigation={true}
+            // navigation={true}
             grabCursor={true}
             loop={true}
             autoplay={{

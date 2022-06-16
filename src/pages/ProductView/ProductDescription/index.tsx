@@ -66,7 +66,7 @@ const ProductDescription = () => {
         MacBook Pro 13 MXK32ZP/A Space Gray
       </h2>
       <Row gutter={[16, 16]}>
-        <Col sm={20}>
+        <Col>
           <div className="action_area">
             <h5 className="product_price title20_bold">
               16 559 000 cум <img src="/assets/icons/info.svg" alt="info" />

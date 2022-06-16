@@ -26,7 +26,7 @@ function HomeCenterBannerCard(props: IHomeCenterBannerCard) {
   return (
     <div className="center_banner_card">
       <Row gutter={[16, 16]}>
-        <Col lg={9} md={9} sm={24} xs={24}>
+        <Col lg={9} xs={24}>
           <div className="left">
             <div className="left_card">
               <h1 className="banner_title">
@@ -38,12 +38,12 @@ function HomeCenterBannerCard(props: IHomeCenterBannerCard) {
             </div>
           </div>
         </Col>
-        <Col lg={6} md={6} sm={24} xs={24}>
+        <Col lg={6} xs={24}>
           <div className="center">
             <img src={imageUrl} alt={title} />
           </div>
         </Col>
-        <Col lg={9} md={9} sm={24} xs={24}>
+        <Col lg={9} xs={24}>
           <div className="right">
             <div>
               <h1 className="price title42_extra_bold">
