@@ -1,4 +1,3 @@
-export const footerDataUrl = "site/socials/";
 export const brandsUrl = "site/brands/";
 export const bannersUrl = "site/banners/";
 export const stockUrl = "site/ads/";
@@ -15,4 +14,6 @@ export const menuCategoriesUrl = "product-manager/category/menu-categories";
 export const leftMenuUrl = "page-manager/page/pages/";
 export const oneLeftMenuUrl = "page-manager/page/detail";
 export const headerTopMenuUrl = "site/header-menus/";
+export const footerDataUrl = "site/socials/";
 export const footerMenuUrl = "site/footer-menu/"
+export const footerSettingsUrl = "site/footer-settings/"

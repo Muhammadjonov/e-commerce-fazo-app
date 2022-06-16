@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { headerSettingsUrl } from '../../api/apiUrls';
+import { footerSettingsUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import { FooterSettingsResType, FooterSettingsInfoType } from '../../types';
 import './_style.scss';
@@ -8,7 +8,7 @@ function LeftBox() {
   const [footerSettings, setFooterSettings] = useState<FooterSettingsInfoType>({} as FooterSettingsInfoType);
 
   const getFooterSettings = useCallback(() => {
-    baseAPI.fetchAll<FooterSettingsResType>(headerSettingsUrl)
+    baseAPI.fetchAll<FooterSettingsResType>(footerSettingsUrl)
       .then((res) => {
         if (res.data.status === 200) {
           setFooterSettings(res.data.data);

@@ -7,7 +7,7 @@ import { useT } from '../../custom/hooks/useT';
 interface IBreadcrumbComp {
   breadcrumbs:
   {
-    id: number,
+    id: string,
     toUrl: string,
     text: string
   }[]
@@ -20,17 +20,26 @@ function BreadcrumbComp(props: IBreadcrumbComp) {
   const { lang } = useT();
 
   return (
-    // @ts-ignore
     <Breadcrumb
       className='breadcrumb_comp'
       separator={<i className="fa-solid fa-angle-right"></i>}
     >
       {
-        breadcrumbs.map(breadcrumb => (
-          // @ts-ignore
-          <Breadcrumb.Item key={breadcrumb.id}>
-            <Link className="breadcrm_link" to={breadcrumb.toUrl}>{breadcrumb.text} </Link> </Breadcrumb.Item>
-        ))
+        breadcrumbs.map((breadcrumb) => {
+          let last = breadcrumbs[breadcrumbs?.length - 1].id === breadcrumb.id;
+          return (
+            <Breadcrumb.Item key={breadcrumb.id}>
+              {
+                last ? (breadcrumb.text)
+                  : (
+                    <Link className="breadcrm_link" to={breadcrumb.toUrl}>{breadcrumb.text}
+                    </Link>
+                  )
+              }
+            </Breadcrumb.Item>
+          )
+        }
+        )
       }
     </Breadcrumb>
   )

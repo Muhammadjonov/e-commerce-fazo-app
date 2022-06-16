@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Col, Row, Collapse, Slider, Checkbox } from "antd";
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
-import CheckBoxFilter from "../../components/Form/CheckBoxFilter";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import ProductCard from "../../components/ProductCard";
 import ShowMoreBtn from "../../components/Buttons/ShowMoreBtn";
@@ -19,6 +18,7 @@ import { useLocation, useParams } from "react-router-dom";
 import "./_style.scss";
 import { formatPrice } from "../../helpers";
 import { useT } from "../../custom/hooks/useT";
+import EmptyFilteredResult from "./EmplyFilteredResult";
 
 const { Panel } = Collapse;
 
@@ -147,17 +147,17 @@ function Filter() {
   const generateBreadcrumbs = () => {
     return [
       {
-        id: 1,
+        id: "1",
         toUrl: "/",
         text: "Главная",
       },
       {
-        id: category?.id,
+        id: category?.slug,
         toUrl: "#",
         text: category?.title
       },
       {
-        id: subCategory?.id,
+        id: subCategory?.slug,
         toUrl: `/category/:${subCategory?.slug}`,
         text: subCategory?.title
       }
@@ -169,7 +169,7 @@ function Filter() {
       <div className="container">
         <div className="filter_breadcrumb_area">
           <BreadcrumbComp breadcrumbs={generateBreadcrumbs()} />
-          <ProductCountComp total={products?._meta?.totalCount} perCount={products?._meta?.perPage} />
+          <ProductCountComp total={products?._meta?.totalCount} perCount={products?._meta?.perPage < products?._meta?.totalCount ? products?._meta?.perPage : products?._meta?.totalCount} />
         </div>
 
         <div className="filter_body">
@@ -287,66 +287,74 @@ function Filter() {
             </Col>
 
             <Col lg={19}>
-              <Row gutter={[30, 30]}>
-                <Col sm={24} xs={24}>
-                  <div className="right_top">
-                    <div className="right_top_filter">
-                      <button
-                        onClick={() => setPriceSort(prev => prev === 3 ? 4 : 3)}
-                        type="button"
-                        className="by_money"
-                      >
-                        <img
-                          src="/assets/icons/money_filter.svg"
-                          alt="monoy_filter"
-                        />{" "}
-                        <span className="p16_regular">По цене</span>
-                      </button>
-                      <button
-                        onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
-                        type="button"
-                        className="by_popular"
-                      >
-                        <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
-                        <span className="p16_regular">По алфавиту</span>
-                      </button>
-                    </div>
-
-                    <div className="right_top_change_grid">
-                      <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
-                        <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
-                      </button>
-                      <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
-                        <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
-                      </button>
-                    </div>
-                  </div>
-                </Col>
-
-                {grid.multiple
-                  ? products?.items.map((product) => (
-                    <Col lg={6} key={product.id}>
-                      <ProductCard {...product} />
-                    </Col>
-                  ))
-                  : products?.items.map((product) => (
-                    <Col sm={24} xs={24} key={product.id}>
-                      <ProductCardCol {...product} />
-                    </Col>
-                  ))}
-              </Row>
-
               {
-                products?._meta?.pageCount > 1 &&
-                (<div className="button_area ">
-                  <ShowMoreBtn onChange={handleChangePerPage} />
-                </div>)
+                products?.items.length !== 0 ? (
+                  <>
+                    <Row gutter={[30, 30]}>
+                      <Col sm={24} xs={24}>
+                        <div className="right_top">
+                          <div className="right_top_filter">
+                            <button
+                              onClick={() => setPriceSort(prev => prev === 3 ? 4 : 3)}
+                              type="button"
+                              className="by_money"
+                            >
+                              <img
+                                src="/assets/icons/money_filter.svg"
+                                alt="monoy_filter"
+                              />{" "}
+                              <span className="p16_regular">По цене</span>
+                            </button>
+                            <button
+                              onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
+                              type="button"
+                              className="by_popular"
+                            >
+                              <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
+                              <span className="p16_regular">По алфавиту</span>
+                            </button>
+                          </div>
+
+                          <div className="right_top_change_grid">
+                            <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
+                              <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
+                            </button>
+                            <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
+                              <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
+                            </button>
+                          </div>
+                        </div>
+                      </Col>
+
+                      {grid.multiple
+                        ? products?.items.map((product) => (
+                          <Col lg={6} key={product.id}>
+                            <ProductCard {...product} />
+                          </Col>
+                        ))
+                        : products?.items.map((product) => (
+                          <Col sm={24} xs={24} key={product.id}>
+                            <ProductCardCol {...product} />
+                          </Col>
+                        ))}
+                    </Row>
+
+                    {
+                      products?._meta?.pageCount > 1 &&
+                      (<div className="button_area ">
+                        <ShowMoreBtn onChange={handleChangePerPage} />
+                      </div>)
+                    }
+
+                    <PaginationComp {...products?._meta} page={page} setPage={setPage} />
+
+                    <PopularModels />
+                    {/* <InterestedProduct /> */}
+                  </>
+                ) : (
+                  <EmptyFilteredResult />
+                )
               }
-
-              <PaginationComp {...products?._meta} page={page} setPage={setPage} />
-
-              <PopularModels />
-              {/* <InterestedProduct /> */}
 
               {/* <WhereBuying /> */}
             </Col>
