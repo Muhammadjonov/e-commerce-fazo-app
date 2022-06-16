@@ -4,6 +4,7 @@ import BuyButton from "./BuyButton";
 import "./_style.scss";
 import { useState } from "react";
 import InstallmentModal from "../../../components/InstallmentModal";
+import { ProductDetailInfoType } from "../../../types";
 
 const productInfoData = [
   {
@@ -53,23 +54,25 @@ const productInfoData = [
 
 ]
 
-const ProductDescription = () => {
+const ProductDescription = (props: ProductDetailInfoType) => {
 
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
 
   const onOpenInstallmentModal = () => setIsOpenInstallmentModal(true);
   const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
 
+  const {name, price} = props;
+
   return (
     <div className="product_desc">
       <h2 className="product_name title36_bold">
-        MacBook Pro 13 MXK32ZP/A Space Gray
+        {name}
       </h2>
       <Row gutter={[16, 16]}>
         <Col>
           <div className="action_area">
             <h5 className="product_price title20_bold">
-              16 559 000 cум <img src="/assets/icons/info.svg" alt="info" />
+              {price} cум <img src="/assets/icons/info.svg" alt="info" />
             </h5>
             <div className="right">
               <div className="card_footer">

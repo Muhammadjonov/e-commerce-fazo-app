@@ -5,34 +5,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Controller, FreeMode, Navigation, Thumbs } from "swiper";
 import "./_style.scss";
 
-const productImgs = [
-  {
-    id: "1",
-    img: "/assets/img/Computer.png"
-  },
-  {
-    id: "2",
-    img: "/assets/img/smart_watch.png"
-  },
-  {
-    id: "3",
-    img: "/assets/img/Computer.png"
-  },
-  {
-    id: "4",
-    img: "/assets/img/smart_watch.png"
-  },
-  {
-    id: "5",
-    img: "/assets/img/smart_watch.png"
-  },
-  {
-    id: "6",
-    img: "/assets/img/smart_watch.png"
-  }
-]
+interface IProductViewCarusel {
+  image: string[];
+}
 
-function ProductViewCarusel() {
+function ProductViewCarusel(props: IProductViewCarusel) {
+  const { image } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
   return (
@@ -42,14 +20,13 @@ function ProductViewCarusel() {
         slidesPerView={1}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs, Controller]}
-        loop={true}
         className="mySwiper2"
       >
         {
-          productImgs.map(img => (
-            <SwiperSlide key={img.id}>
+          image?.map((img, ind) => (
+            <SwiperSlide key={ind}>
               <div className="img_body">
-                <img src={img.img} alt="" />
+                <img src={img} alt={`img${ind}`} />
               </div>
             </SwiperSlide>
           ))
@@ -64,22 +41,27 @@ function ProductViewCarusel() {
           navigation={true}
           watchSlidesProgress={true}
           modules={[FreeMode, Navigation, Thumbs, Controller]}
-          loop={true}
           className="mySwiper"
           breakpoints={{
-              0: {
-                slidesPerView: 3,
-              },
-              576: {
-                slidesPerView: 4,
-              }
-            }}
+            0: {
+              slidesPerView: 3,
+            },
+            576: {
+              slidesPerView: 4,
+            },
+            992: {
+              slidesPerView: 3,
+            },
+            1200: {
+              slidesPerView: 4,
+            }
+          }}
         >
           {
-            productImgs.map(img => (
-              <SwiperSlide key={img.id}>
+            image?.map((img, ind) => (
+              <SwiperSlide key={ind}>
                 <div className="img_body">
-                  <img src={img.img} alt="" />
+                  <img src={img} alt={`img${ind}`} />
                 </div>
               </SwiperSlide>
             ))

@@ -285,3 +285,36 @@ export type FooterMenuResType = {
 	message: string,
 	data: FooterMenuInfoType
 }
+
+export type ProductDetailInfoType = {
+	id: number,
+	name: string,
+	slug: string,
+	imageUrl: string,
+	description: string,
+	short_description: string,
+	meta_title: string,
+	meta_description: string,
+	meta_keyword: string,
+	price: number | null,
+	old_price: number | null,
+	category: string,
+	categorySlug: string,
+	subCategory: string,
+	subCategorySlug: string,
+	characterAssigns:
+	{
+		id: number,
+		characterName: string,
+		value: string
+	}[],
+	images: string[],
+	is_delivery: number,
+	delivery_price: number
+}
+
+export type ProductDetailResType = {
+	status: number,
+	message: string,
+	data: ProductDetailInfoType
+}

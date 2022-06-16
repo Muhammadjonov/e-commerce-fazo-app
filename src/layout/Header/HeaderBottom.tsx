@@ -33,7 +33,7 @@ function HeaderBottom(props: IHeaderBottom) {
           {
             menuCategories?.map(category => (
               <li className="category" key={category.id}>
-                <NavLink className={createActiveClassName(category.slug)} to={`/category/:${category.slug}`}>
+                <NavLink className={createActiveClassName(category.slug)} to={`/category/${category.slug}`}>
                   {category.title}
                 </NavLink>
               </li>

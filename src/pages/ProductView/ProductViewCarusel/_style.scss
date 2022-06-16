@@ -34,6 +34,11 @@
       padding: 10px 0;
 
       .swiper-wrapper {
+        .swiper-slide {
+          display: grid;
+          place-items: center;
+        }
+
         .img_body {
           padding: 10px;
           width: 72px;
