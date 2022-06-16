@@ -1,4 +1,5 @@
 import { Col, Row } from 'antd';
+import { useParams } from 'react-router-dom';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
 import ProductDescription from './ProductDescription';
 import ProductViewCarusel from './ProductViewCarusel';
@@ -27,6 +28,7 @@ const breadcrumbs = [
 
 
 function ProductView() {
+  let { product_slug } = useParams();
   return (
     <section className="product_view">
       <div className="container">

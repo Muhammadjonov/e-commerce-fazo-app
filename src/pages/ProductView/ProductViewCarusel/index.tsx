@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Image, Tabs } from "antd";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// import required modules
+import { Controller, FreeMode, Navigation, Thumbs } from "swiper";
 import "./_style.scss";
-
-
-const { TabPane } = Tabs;
 
 const productImgs = [
   {
@@ -22,43 +22,61 @@ const productImgs = [
     id: "4",
     img: "/assets/img/smart_watch.png"
   },
-
+  {
+    id: "5",
+    img: "/assets/img/smart_watch.png"
+  },
+  {
+    id: "6",
+    img: "/assets/img/smart_watch.png"
+  }
 ]
 
 function ProductViewCarusel() {
-
-  const [visible, setVisible] = useState<boolean>(false);
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
   return (
     <div className="product_view_carusel">
-      <Tabs className="product_tabs" tabPosition={"bottom"}>
+      <Swiper
+        spaceBetween={10}
+        slidesPerView={1}
+        thumbs={{ swiper: thumbsSwiper }}
+        modules={[FreeMode, Navigation, Thumbs, Controller]}
+        loop={true}
+        className="mySwiper2"
+      >
         {
           productImgs.map(img => (
-            <TabPane tab={<img src={img.img} alt="product" />} key={img.id}>
+            <SwiperSlide key={img.id}>
               <div className="img_body">
-                <Image
-                  preview={{ visible: false }}
-                  width={"100%"}
-                  src={img.img}
-                  onClick={() => setVisible(true)}
-                />
+                <img src={img.img} alt="" />
               </div>
-            </TabPane>
+            </SwiperSlide>
           ))
         }
-
-
-      </Tabs>
-
-
-      <div style={{ display: 'none' }}>
-        <Image.PreviewGroup preview={{ visible, onVisibleChange: vis => setVisible(vis) }}>
+      </Swiper>
+      <div className="product_view_bottom">
+        <Swiper
+          onSwiper={setThumbsSwiper}
+          spaceBetween={10}
+          slidesPerView={4}
+          freeMode={true}
+          navigation={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs, Controller]}
+          loop={true}
+          className="mySwiper"
+        >
           {
             productImgs.map(img => (
-              <Image src={img.img} key={img.id} />
+              <SwiperSlide key={img.id}>
+                <div className="img_body">
+                  <img src={img.img} alt="" />
+                </div>
+              </SwiperSlide>
             ))
           }
-        </Image.PreviewGroup>
+        </Swiper>
       </div>
     </div>
   )

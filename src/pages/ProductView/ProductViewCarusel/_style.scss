@@ -1,55 +1,71 @@
 .product_view_carusel {
-  .ant-tabs-tabpane {
+  .img_body img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  .mySwiper2 {
+    height: 80%;
+    width: 100%;
+
     .img_body {
-      padding      : 30px;
-      border       : 1px solid var(--gray6);
+      padding: 30px;
+      border: 1px solid var(--gray6);
       border-radius: 5px;
     }
   }
 
-  .ant-tabs-nav {
-    display: block;
+  .product_view_bottom {
+    position: relative;
 
-    &:before {
-      display: none;
-    }
+    .mySwiper {
+      width: calc(100% - 36px);
+      margin: 0 auto;
+      position: unset;
+      box-sizing: border-box;
+      padding: 10px 0;
 
-    .ant-tabs-nav-wrap {
-      display: block;
+      .swiper-wrapper {
+        .img_body {
+          padding: 10px;
+          width: 72px;
+          height: 72px;
+          border: 1px solid var(--gray6);
+          border-radius: 5px;
+        }
 
-
-      .ant-tabs-nav-list {
-        display        : flex;
-        justify-content: space-between;
-        flex-wrap      : wrap;
-
-        .ant-tabs-tab {
-          margin-left: 16px;
-
-          &:first-child {
-            margin-left: 0;
-          }
-
-          .ant-tabs-tab-btn {
-
-            img {
-              max-width    : 78px;
-              height       : 78px;
-              object-fit   : cover;
-              border       : 1px solid var(--gray6);
-              border-radius: 5px;
-              padding      : 5px;
-            }
+        .swiper-slide.swiper-slide-visible.swiper-slide-thumb-active {
+          .img_body {
+            border-color: var(--brand_color_red);
           }
         }
       }
     }
+
+    .swiper-button-prev {
+      left: 0;
+    }
+
+    .swiper-button-next {
+      right: 0;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      top: 50%;
+      transform: translateY(40%);
+      background-color: var(--gray5);
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+
+      &::after {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+      }
+    }
   }
-}
-
-
-.ant-image-preview-img {
-  width     : 400px;
-  height    : 400px;
-  object-fit: cover;
 }
