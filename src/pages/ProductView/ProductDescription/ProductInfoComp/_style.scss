@@ -1,12 +1,18 @@
 .product_info_comp {
   .product_info_title {
-    color : var(--brand_color_black);
+    color: var(--brand_color_black);
     margin: 55px 0px 25px;
   }
 
   .product_info_body {
     display: flex;
     padding: 18px 8px 18px 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--gray6);
+    }
 
     .desc_name {
       color: var(--color_black2);

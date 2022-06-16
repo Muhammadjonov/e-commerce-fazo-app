@@ -80,7 +80,6 @@ function Filter() {
 
   // productlarni olish
   let { category_slug } = useParams();
-  category_slug = category_slug!.slice(1);
   const getProducts = useCallback(() => {
     setIsLoading(true);
     baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })

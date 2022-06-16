@@ -84,7 +84,7 @@ function HotDealsCard(props: IHotDealsCard) {
             </div>
           )
         } */}
-        <Link className="product_view_link" to={"#"}>
+        <Link className="product_view_link" to={`/product/detail/${slug}`}>
           <figure>
             <img src={imageUrl ?? ""} alt="watch" className="product_card_img" />
           </figure>

@@ -82,7 +82,7 @@ function BurgerMenu(props: IBurgerMenu) {
                       {
                         category?.subCategories.map((subcategory) => (
                           <Link
-                            to={`/category/:${subcategory.slug}`}
+                            to={`/category/${subcategory.slug}`}
                             className="p18_regular subcategory_link"
                             key={subcategory.id}
                           >

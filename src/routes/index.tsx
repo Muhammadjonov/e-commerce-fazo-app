@@ -31,7 +31,7 @@ const routes = [
     element: <SearchResult />,
   },
   {
-    path: "product/detail/:product_id",
+    path: "product/detail/:product_slug",
     element: <ProductView />,
   },
   {
