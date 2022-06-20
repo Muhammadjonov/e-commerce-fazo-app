@@ -14,7 +14,8 @@ function ProductCardCol(props: ProductType) {
     price,
     old_price,
     name,
-    brandName
+    brandName,
+    slug
   } = props;
 
   const { t, lang } = useT();
@@ -24,7 +25,7 @@ function ProductCardCol(props: ProductType) {
       <div className="card_body">
         <Row gutter={[20, 20]}>
           <Col md={6}>
-            <Link className="product_view_link card_left" to={"#"}>
+            <Link className="product_view_link card_left" to={`/product/detail/${slug}`}>
               <figure>
                 <img src={imageUrl ?? ""} alt="watch" className="product_card_img" />
               </figure>
@@ -32,7 +33,7 @@ function ProductCardCol(props: ProductType) {
           </Col>
           <Col md={12}>
             <div className="desc">
-              <Link className="product_view_link" to={"#"}>
+              <Link className="product_view_link" to={`/product/detail/${slug}`}>
                 <h5 className="product_name title24_bold">
                   {name}
                 </h5>

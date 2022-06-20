@@ -42,7 +42,7 @@ function HeaderTop(props: HeaderInfoType) {
               {
                 headerTopMenus.map((headerTopMenu) => (
                   <li key={headerTopMenu.urlValue}>
-                    <Link className="header_top_link" to={`/page/:${headerTopMenu.urlValue}`}>
+                    <Link className="header_top_link" to={`/page/${headerTopMenu.urlValue}`}>
                       {headerTopMenu.name}
                     </Link>
                   </li>
@@ -66,7 +66,7 @@ function HeaderTop(props: HeaderInfoType) {
         <nav className="mobile_header_top">
           <Logo logo={logo} />
           <PhoneComp phone={phone} isShowNumber={false} iconName={"mobile_tel"} />
-          <Location iconName={"mobile_map-pin"} color={color_black2} />
+          {/* <Location iconName={"mobile_map-pin"} color={color_black2} /> */}
         </nav>
       </div>
     </div>

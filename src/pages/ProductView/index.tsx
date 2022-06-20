@@ -56,7 +56,7 @@ function ProductView() {
     }
   ]
 
-  const { characterAssigns, meta_description } = productDetail;
+  const { characterAssigns, meta_description, delivery_price } = productDetail;
 
   return (
     <section className="product_view">
@@ -72,12 +72,12 @@ function ProductView() {
           <Col xs={24} lg={17}>
             <Row>
               <Col xs={24} lg={17}>
-                <ProductDescription 
+                <ProductDescription
                   {...productDetail}
                 />
               </Col>
               <Col xs={24} lg={7}>
-                <ProductViewRightInfo />
+                <ProductViewRightInfo delivery_price={delivery_price} />
               </Col>
             </Row>
 

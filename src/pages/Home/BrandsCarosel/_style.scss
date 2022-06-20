@@ -2,7 +2,8 @@
   margin-bottom: 55px;
 
   .brands_container {
-    position: relative;
+    position   : relative;
+    user-select: none;
   }
 
   .BrandsCarousel_title_navigation {

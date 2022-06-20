@@ -106,11 +106,23 @@
         .header_centr {
 
           .header_center_right {
+            height : 100%;
+            display: block;
+            width  : 100%;
 
             ul {
+              justify-content: space-between;
+              align-items    : center;
+              height         : 100%;
 
               li {
                 margin-right: 25px;
+
+                .right_item {
+                  .user_nav_text {
+                    display: none;
+                  }
+                }
 
                 &:last-child {
                   margin-right: 0;

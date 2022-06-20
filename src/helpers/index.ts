@@ -23,12 +23,12 @@ export const setItemToLocalStorage = (key: string, value: string) => localStorag
 
 export const getAccessToken = (): string =>
   getItemFromLocalStorage("access_token");
-export const getRememberToken = (): string =>
-  getItemFromLocalStorage("remember_token");
 
-export const setTokens = (access_token: string, remember_token: string) => {
+// export const getRememberToken = (): string =>
+//   getItemFromLocalStorage("remember_token");
+
+export const setToken = (access_token: string,) => {
   localStorage.setItem("access_token", access_token);
-  localStorage.setItem("remember_token", remember_token);
 };
 
 export const removeTokens = () => {
@@ -38,7 +38,7 @@ export const removeTokens = () => {
 
 
 export const formatPrice = (num: number) => {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+  return num?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 }
 
 export const onlyString = (value: any) => {

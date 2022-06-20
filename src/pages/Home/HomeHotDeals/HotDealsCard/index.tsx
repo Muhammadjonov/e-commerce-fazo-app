@@ -92,10 +92,9 @@ function HotDealsCard(props: IHotDealsCard) {
         <p className="price title18_bold">
           <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>{price} {t(`sum.${lang}`)}
         </p>
-        <Link className='product_view_link' to={"#"}>
+        <Link className='product_view_link' to={`/product/detail/${slug}`}>
           <h5 className="product_name">
             {name}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro quo at dolore.
           </h5>
         </Link>
         {/* <p className="offer_end_title p14_regular">

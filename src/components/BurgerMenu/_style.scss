@@ -67,9 +67,6 @@
               }
 
               /* Change background color of buttons on hover */
-              &:hover {
-                background-color: var(--gray6);
-              }
 
               .p18_regular {
                 margin-left: 20px;
@@ -84,11 +81,11 @@
 
             /* Create an active/current "tab button" class */
             li.tablinks.active {
-              background-color: var(--brand_color_yellow);
+              // background-color: var(--brand_color_yellow);
               transform       : translateX(8px);
-              box-shadow      : 0px 0px 10px rgba(255, 110, 66, 0.8);
-              border-radius   : 5px;
-              color           : #fff;
+              box-shadow      : 0px 0px 10px rgba(0, 0, 0, 0.3);
+              border-radius   : 10px;
+              // color        : #fff;
             }
           }
         }
@@ -147,11 +144,11 @@
                 transition         : all .3s ease-in-out;
 
                 &:hover {
-                  background-color: var(--brand_color_yellow);
-                  transform       : translateX(8px);
-                  box-shadow      : 0px 0px 10px rgba(255, 110, 66, 0.8);
-                  border-radius   : 5px;
-                  color           : #fff;
+                  // background-color: var(--brand_color_yellow);
+                  transform          : translateX(8px);
+                  box-shadow         : 0px 0px 10px rgba(0, 0, 0, 0.3);
+                  border-radius      : 10px;
+                  // color           : #fff;
                 }
 
               }
