@@ -7,7 +7,6 @@ import SearchComp from '../../components/SearchComp';
 import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, setLang } from '../../helpers';
-import { HeartOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { CategoriesInfoType } from '../../types';
 
 const drowerMenusData = [
@@ -90,7 +89,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       className="right_item"
                       to={""}
                     >
-                      <UserOutlined style={{ fontSize: '26px', color: 'var(--brand_color_black)' }} />
+                      <img src="/assets/icons/user.svg" alt="user-icon" />
                       <span className="user_nav_text">
                         {t(`signIn.${lang}`)}
                       </span>
@@ -102,7 +101,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/balance"}
                     >
                       <Badge count={11}>
-                        <i className="fa-solid fa-scale-unbalanced"></i>
+                        <img src="/assets/icons/compound.svg" alt="compound-icon" />
                       </Badge>
                       <span className="user_nav_text">Сравнение</span>
                     </Link>
@@ -113,7 +112,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/favorites"}
                     >
                       <Badge count={5}>
-                        <HeartOutlined style={{ fontSize: '26px', color: 'var(--brand_color_black)' }} />
+                        <img src="/assets/icons/heart.svg" alt="heart-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`favorite.${lang}`)}</span>
                     </Link>
@@ -124,7 +123,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={""}
                     >
                       <Badge count={11}>
-                        <ShoppingCartOutlined style={{ fontSize: '26px', color: 'var(--brand_color_black)' }} />
+                        <img src="/assets/icons/cart.svg" alt="cart-icon" />
                       </Badge>
                       <span className="user_nav_text">Корзина</span>
                     </Link>
