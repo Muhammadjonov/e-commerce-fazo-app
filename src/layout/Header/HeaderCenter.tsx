@@ -9,6 +9,7 @@ import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, setLang } from '../../helpers';
 import { CategoriesInfoType } from '../../types';
 import { AuthContext } from '../../App';
+import { useAppSelector } from '../../Store/hooks';
 
 const drowerMenusData = [
   {
@@ -50,6 +51,8 @@ function HeaderCenter(props: IHeaderCenter) {
   const [isOpenHeaderCentrDrower, setIsOpenHeaderCentrDrower] = useState<boolean>(false)
   const { t, lang } = useT();
 
+  const userData = useAppSelector(state => state.auth);
+
   const authContext = useContext(AuthContext);
 
 
@@ -69,7 +72,7 @@ function HeaderCenter(props: IHeaderCenter) {
     changeLang(language);
     handleOpen(false);
   }
-
+  console.log("user", userData)
   return (
     <div className="header_center">
       <div className="container">
@@ -89,15 +92,32 @@ function HeaderCenter(props: IHeaderCenter) {
               <div className="header_center_right">
                 <ul>
                   <li>
-                    <button type='button'
-                      className="right_item"
-                      onClick={authContext.onOpenSignInModal}
-                    >
-                      <img src="/assets/icons/User.svg" alt="user" />
-                      <span className="user_nav_text">
-                        {t(`signIn.${lang}`)}
-                      </span>
-                    </button>
+                    {
+                      !userData?.authorized ? (
+
+                        <button type='button'
+                          className="right_item"
+                          onClick={authContext.onOpenSignInModal}
+                        >
+                          <img src="/assets/icons/User.svg" alt="user" />
+                          <span className="user_nav_text">
+                            {t(`signIn.${lang}`)}
+                          </span>
+                        </button>
+                      ) : (
+                        <button type='button'
+                          className="right_item"
+
+                        >
+                          <img src="/assets/icons/User.svg" alt="user" />
+                          <span className="user_nav_text">
+                            {userData?.user?.firstname?.slice(0, 7)}
+                          </span>
+                        </button>
+                      )
+
+
+                    }
                   </li>
                   <li>
                     <Link

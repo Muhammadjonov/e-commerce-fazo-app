@@ -99,7 +99,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
           </p>
           <p className="content">
             Телеграм: <a href={footerDatas?.telegram_url} className="social_link">
-              {footerDatas?.telegram_url}
+              @{footerDatas?.telegram_url?.slice(13)}
             </a>
           </p>
           <p className="content">

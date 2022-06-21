@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { Button, Form, Input, Modal, Steps } from 'antd';
 import "./__style.scss";
-import { handleChangePhone, setToken } from '../../helpers';
+import { handleChangePhone, setToken, setUserToLocalStorage } from '../../helpers';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../App';
 import baseAPI from '../../api/baseAPI';
 import { enterPhoneUrl, registerUrl, verifyCodeUrl } from '../../api/apiUrls';
-import { t } from 'i18next';
 import { useT } from '../../custom/hooks/useT';
+import PhoneInput from 'react-phone-input-2';
+import { useAppDispatch, useAppSelector } from '../../Store/hooks';
+import { setUser, UserResType } from '../../features/authSlice';
 
 const { Step } = Steps;
 
@@ -28,10 +30,14 @@ const AuthModal = (props: IAuthModal) => {
   const [error, setError] = useState<string>('');
   const [error1, setError2] = useState<string>('');
   const [error3, setError3] = useState<string>('');
-
-
+  const [minutes, setMinutes] = useState(0);
+  const [secunds, setSecunds] = useState(0);
+  const [isConfirm, setIsConfirm] = useState(true);
+  let interval: any;
   let formData = new FormData();
 
+  const dispatch = useAppDispatch()
+  const { loading } = useAppSelector((state) => state.loading);
   const onFinishSignIn = (values: any) => {
     console.log('Success:', values);
 
@@ -41,11 +47,6 @@ const AuthModal = (props: IAuthModal) => {
     console.log('Failed:', errorInfo);
   };
 
-  const options = {
-    headers: { "Content-Type": "multipart/form-data" }
-
-  }
-
   const onFinishSignUp1 = (values: any) => {
     let { phone } = values;
     setPhone(phone);
@@ -54,6 +55,7 @@ const AuthModal = (props: IAuthModal) => {
       .then((res) => {
         if (res.data.status === 200) {
           setCurrent(1);
+          startTimer();
         } else if (res.data.status === 403) {
           setError(res.data.message);
         }
@@ -61,6 +63,24 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+  }
+
+  const resendCode = () => {
+    formData.append('phone', phone);
+    baseAPI.create<any>(enterPhoneUrl, formData)
+      .then((res) => {
+        if (res.data.status === 200) {
+          startTimer();
+        } else if (res.data.status === 403) {
+          setError(res.data.message);
+        }
+      })
+      .catch((err) => {
+        console.log('err', err);
+      })
+
+    setIsConfirm(true);
+    startTimer();
   }
 
   const onFinishSignUp2 = (values: any) => {
@@ -76,6 +96,9 @@ const AuthModal = (props: IAuthModal) => {
           setError2(res.data.message);
         }
       })
+      .catch((err) => {
+        console.log('err', err);
+      })
   }
   const onFinishSignUp3 = (values: any) => {
     let { firstname, lastname, password, password_repeat } = values;
@@ -85,28 +108,44 @@ const AuthModal = (props: IAuthModal) => {
     formData.append('lastname', lastname);
     formData.append('password', password);
     formData.append('password_repeat', password_repeat);
-    baseAPI.create<any>(registerUrl, formData)
+    baseAPI.create<UserResType>(registerUrl, formData)
       .then((res) => {
         if (res.data.status === 200) {
+          dispatch(setUser(res.data));
+          setUserToLocalStorage(res.data?.data);
           setToken(res.data?.data?.auth_key)
+          onCloseSignUpModal();
         } else if (res.status === 403) {
           setError3(res.data.message);
         }
       })
+      .catch((err) => {
+        console.log('err', err);
+      })
   }
+  // set interval
 
+  const startTimer = () => {
+    let finishDate = new Date();
+    finishDate.setMinutes(finishDate.getMinutes() + 2);
+    let finishDateTime = finishDate.getTime();
 
-  // const handleChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   let value = e.target.value;
-  //   value = value.trim()
-  //   setPhone(value);
-  // }
+    interval = setInterval(() => {
+      let now = new Date().getTime();
+      let distance = finishDateTime - now;
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let secunds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // const handleChangeCode = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   let value = e.target.value;
-  //   value = value.trim()
-  //   setCode(value);
-  // }
+      if (distance < 0) {
+        clearInterval(interval);
+        setIsConfirm(false);
+      } else {
+        setMinutes(minutes);
+        setSecunds(secunds);
+      }
+    }, 1000);
+  };
+
 
   const setBack = (current: number) => {
     setCurrent(current);
@@ -194,7 +233,11 @@ const AuthModal = (props: IAuthModal) => {
                 name="phone"
                 rules={[{ required: true }]}
               >
-                <Input
+                <PhoneInput
+                  country={'uz'}
+                  onlyCountries={['uz']}
+                  placeholder={"+998"}
+                  disableDropdown={true}
                 />
               </Form.Item>
               <div
@@ -227,19 +270,47 @@ const AuthModal = (props: IAuthModal) => {
               autoComplete="off"
             >
               <p className="signup__modal__form__timeout__text">
-                Введите полученный код
+                {phone} telefon raqamiga SMS-kod jo'natildi.
               </p>
               <Form.Item
                 name="code"
                 rules={[{ required: true }]}
               >
                 <Input.Password
+                  placeholder={"Введите полученный код"}
                 />
               </Form.Item>
               <div className="signup__modal__form__resend_btn_wrapper">
-                <button type="button" className="signup__modal__form__resend_btn_wrapper__code">
-                  Отправить код еще раз
-                </button>
+                <p className="signup__modal__form__timeout__text">
+                  {isConfirm && (
+                    lang === "ru" ? (
+                      <>
+                        Отправить повторный код можно через
+                        <span className="d-block">
+                          0{minutes} : {`${secunds < 10 ? "0" : ""}${secunds}`}
+                        </span>
+                      </>
+                    ) : lang === "uz" ? (
+                      <>
+                        Kodni{` `}
+                        <span className="d-block">
+                          0{minutes} : {`${secunds < 10 ? "0" : ""}${secunds}`} dan kegin qayta jo'natishingiz mumkin
+                        </span>
+                      </>
+                    ) : null
+                  )}
+                </p>
+                {
+                  !isConfirm && (
+                    <button
+                      onClick={resendCode}
+                      type="button"
+                      className="signup__modal__form__resend_btn_wrapper__code"
+                    >
+                      Отправить код еще раз
+                    </button>
+                  )
+                }
               </div>
               <div
                 className="signup__modal__form__btn__wrapper"

@@ -10,7 +10,7 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import "swiper/css/thumbs";
 import "swiper/css/free-mode";
-
+import 'react-phone-input-2/lib/style.css'
 import "./static/css/_style.scss";
 import "./i18next/config";
 import { store } from './Store'

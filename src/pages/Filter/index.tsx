@@ -52,10 +52,13 @@ function Filter() {
 
   const { brands, category, characters, maxPrice: max_price, minPrice: min_price, products, subCategory } = byCategoryProducts;
 
-  const [minPrice, setMinPrice] = useState<string>(min_price);
-  const [maxPrice, setMaxPrice] = useState<string>(max_price);
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
   const [filter, setFilter] = useState<any>([] as any);
-  const [brandId, setBrandId] = useState<CheckboxValueType[]>([])
+  const [brandId, setBrandId] = useState<CheckboxValueType[]>([]);
+  let newObj = {} as any;
+  characters?.map(item => item.assigns.map(subItem => subItem.value)).forEach(el => el.forEach(subEl => newObj[subEl] = false))
+  console.log("new", newObj)
   const {
     register,
     control,
@@ -64,9 +67,10 @@ function Filter() {
     reset,
     formState: { errors },
   } = useForm<any>({
-
+    defaultValues: newObj
   });
   const onSubmit: SubmitHandler<any> = (items) => {
+    console.log("items", items)
     let filtered = Object.keys(items).filter(item => items[item])
     setFilter(filtered);
   };
@@ -87,12 +91,15 @@ function Filter() {
 
   // productlarni olish
   let { category_slug } = useParams();
+
   const getProducts = useCallback(() => {
     setIsLoading(true);
     baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })
       .then((res) => {
         setByCategoryProducts(res.data.data);
         setIsLoading(false);
+        setMinPrice(res.data?.data?.minPrice);
+        setMaxPrice(res.data?.data?.maxPrice);
       })
   }, [page, category_slug, filter, perPage, priceSort, nameSort]);
 
@@ -107,16 +114,16 @@ function Filter() {
     })
   }, [page])
 
-  useEffect(() => {
-    reset();
-    setMaxPrice("");
-    setMinPrice("");
-  }, [pathname])
+  // useEffect(() => {
+  //   reset();
+  //   setMaxPrice("");
+  //   setMinPrice("");
+  // }, [pathname])
 
-  useEffect(() => {
-    setMaxPrice(max_price);
-    setMinPrice(min_price);
-  }, [])
+  // useEffect(() => {
+  //   setMaxPrice(max_price);
+  //   setMinPrice(min_price);
+  // }, [])
 
   useEffect(() => {
     width < 768 && handleChangeGrid({ multiple: true, one: false })
@@ -176,6 +183,10 @@ function Filter() {
     ]
   }
 
+  const clearassignFilter = () => {
+    reset();
+  }
+
   return (
     <section className="filter_wrapper">
       <div className="container">
@@ -187,7 +198,7 @@ function Filter() {
         <div className="filter_body">
           <Row gutter={[30, 30]}>
             <Col lg={5} sm={0} xs={0}>
-              {/* <h3 className="title20_bold">Смартфоны в Ташкенте</h3> */}
+              {/* <h3 className="title20_bold" onClick={clearassignFilter}>Clear</h3> */}
               <form className="filter_form" onSubmit={handleSubmit(onSubmit)}>
                 <Collapse
                   defaultActiveKey={["1"]}
@@ -205,7 +216,6 @@ function Filter() {
                           value={minPrice}
                           name="minPrice"
                           onChange={handleMinPrice}
-                          // {...register("minPrice")}
                           autoComplete="off"
                         />
                         <input
@@ -217,16 +227,20 @@ function Filter() {
                           autoComplete="off"
                         />
                       </div>
-                      <Slider
-                        className="max_min_slider"
-                        range
-                        defaultValue={[+min_price, +max_price]}
-                        min={+min_price ?? 0}
-                        max={+max_price ?? 1000000}
-                        value={[+minPrice, +maxPrice]}
-                        tipFormatter={null}
-                        onChange={handleMaxMinChange}
-                      />
+                      {
+                        min_price && max_price && (
+                          <Slider
+                            className="max_min_slider"
+                            range
+                            min={+min_price ?? 0}
+                            max={+max_price ?? 1000000}
+                            value={[+minPrice, +maxPrice]}
+                            tipFormatter={null}
+                            onChange={handleMaxMinChange}
+                          />
+                        )
+                      }
+
                     </div>
                   </Panel>
                   {

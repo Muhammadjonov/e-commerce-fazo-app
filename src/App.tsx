@@ -7,12 +7,15 @@ import Footer from './layout/Footer';
 import routes from './routes';
 import { BackTop } from 'antd';
 import { useAppSelector } from "./Store/hooks";
-import { getAccessToken } from "./helpers";
+import { getAccessToken, setUserToLocalStorage } from "./helpers";
 import { fetchUserById } from "./Store/authSlice";
 import { MenuCategoriesInfoType, MenuCategoriesResType } from './types';
-import { menuCategoriesUrl } from './api/apiUrls';
+import { menuCategoriesUrl, profileUrl } from './api/apiUrls';
 import baseAPI from './api/baseAPI';
 import AuthModal from './components/AuthModal';
+import { useDispatch } from 'react-redux';
+import { request } from './api/config';
+import { setUser, UserResType } from './features/authSlice';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -32,6 +35,31 @@ function App() {
   let { pathname } = useLocation();
 
   const auth = useAppSelector(state => state.auth)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const access_token = getAccessToken();
+    if (access_token) {
+      request
+        .get<UserResType>(profileUrl, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        })
+        .then((res) => {
+          dispatch(setUser(res.data));
+          setUserToLocalStorage(res.data.data);
+        }).catch(e => console.info(e));
+    }
+
+    // window.addEventListener("load", function (e) {
+    //   let basket = getBasketFromLocalStorage();
+    //   if (basket) {
+    //     dispatch(setBasket({ data: { ...basket } }));
+    //   }
+    // });
+  }, [dispatch]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
