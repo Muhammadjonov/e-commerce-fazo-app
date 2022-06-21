@@ -1,41 +1,45 @@
-import React, { useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay, EffectFade } from "swiper";
 import CategoryButton from '../../../components/CategoryButton';
-import { useState } from 'react';
 import { Collapse, Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import baseAPI from '../../../api/baseAPI';
-import { bannersUrl } from '../../../api/apiUrls';
-import { BannerInfoType, BannerResType } from '../../../types';
+import { bannersUrl, categoriesUrl } from '../../../api/apiUrls';
+import { BannerInfoType, BannerResType, CategoriesInfoType, CategoriesResType } from '../../../types';
 import "./_style.scss";
+import useWindowSize from '../../../custom/hooks/useWindowSize';
 
 const { Panel } = Collapse;
 
-const categories = [
-  {
-    id: "1",
-    name: "Телефоны, планшеты",
-    iconName: "phone",
-    toUrl: "#",
-    subcategories: [
-      {
-        id: "1",
-        name: "Коммутаторы",
-        toUrl: "#"
-      },
-      {
-        id: "2",
-        name: "Коммутаторы",
-        toUrl: "#"
-      }
-    ]
-  }
-]
+// const categories = [
+//   {
+//     id: "1",
+//     name: "Телефоны, планшеты",
+//     iconName: "phone",
+//     toUrl: "#",
+//     subcategories: [
+//       {
+//         id: "1",
+//         name: "Коммутаторы",
+//         toUrl: "#"
+//       },
+//       {
+//         id: "2",
+//         name: "Коммутаторы",
+//         toUrl: "#"
+//       }
+//     ]
+//   }
+// ]
 
 function HomeTopBanner() {
   const [banner, setBanner] = useState<BannerInfoType[]>([]);
   const [isOpenCategoriesDrower, setIsOpenCategoriesDrower] = useState<boolean>(false);
+  const { width } = useWindowSize();
+  // get categories
+  const [categories, setCategories] = useState<CategoriesInfoType>([])
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState<boolean>(true);
 
   const getBanners = useCallback(() => {
     baseAPI.fetchAll<BannerResType>(bannersUrl)
@@ -47,11 +51,24 @@ function HomeTopBanner() {
       .catch((err) => console.log(err))
   }, [])
 
+  const getCategories = useCallback(() => {
+    setIsCategoriesLoading(true);
+    baseAPI.fetchAll<CategoriesResType>(categoriesUrl)
+      .then((res) => {
+        if (res.data.status === 200) {
+          setCategories(res.data.data);
+          setIsCategoriesLoading(false);
+        }
+      })
+  }, [])
+
   useEffect(() => {
     getBanners();
-  }, [getBanners])
+    getCategories();
+  }, [getBanners, getCategories])
 
   const handleOpen = (value: boolean) => setIsOpenCategoriesDrower(value)
+
   const drowerTitle = (
     <Link
       onClick={() => handleOpen(false)}
@@ -119,11 +136,11 @@ function HomeTopBanner() {
             >
               {
                 categories.map(category => (
-                  <Panel header={<Link to={category.toUrl} onClick={() => handleOpen(false)}><img src={`/assets/icons/${category.iconName}.svg `} alt="icon" /> {category.name}</Link>} key={category.id}>
+                  <Panel header={<Link to={category.slug}><img src={`/assets/icons/${category.imageUrl}.svg `} alt="icon" /> {category.title}</Link>} key={category.id}>
                     {
-                      category.subcategories.map(subcategory => (
+                      category.subCategories.map(subcategory => (
 
-                        <Link key={subcategory.id} to={subcategory.toUrl} onClick={() => handleOpen(false)}>{subcategory.name}</Link>
+                        <Link key={subcategory.id} to={subcategory.slug} onClick={() => handleOpen(false)}>{subcategory.title}</Link>
 
                       ))
                     }

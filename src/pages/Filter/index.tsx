@@ -47,7 +47,7 @@ function Filter() {
 
   let { pathname } = useLocation();
   const { t, lang } = useT()
-  const { width } = useWindowSize()
+  const { width } = useWindowSize();
 
 
   const { brands, category, characters, maxPrice: max_price, minPrice: min_price, products, subCategory } = byCategoryProducts;

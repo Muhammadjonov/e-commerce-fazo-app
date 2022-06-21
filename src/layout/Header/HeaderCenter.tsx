@@ -7,47 +7,19 @@ import SearchComp from '../../components/SearchComp';
 import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, setLang } from '../../helpers';
-import { CategoriesInfoType } from '../../types';
+import { CategoriesInfoType, HeaderTopMenuInfoType, } from '../../types';
 import { AuthContext } from '../../App';
 import { useAppSelector } from '../../Store/hooks';
-
-const drowerMenusData = [
-  {
-    id: "1",
-    img: "/assets/icons/menu1.svg",
-    text: "Наши магазины"
-  },
-  {
-    id: "2",
-    img: "/assets/icons/menu2.svg",
-    text: "B2B продажи"
-  },
-  {
-    id: "3",
-    img: "/assets/icons/menu3.svg",
-    text: "Покупка в рассрочку"
-  },
-  {
-    id: "4",
-    img: "/assets/icons/menu4.svg",
-    text: "Способы оплаты"
-  },
-  {
-    id: "5",
-    img: "/assets/icons/menu5.svg",
-    text: "Гарантия на товары"
-  },
-
-]
 
 interface IHeaderCenter {
   logo: string,
   phone: string,
   categories: CategoriesInfoType,
+  headerTopMenus: HeaderTopMenuInfoType
 }
 
 function HeaderCenter(props: IHeaderCenter) {
-  const { logo, phone, categories } = props;
+  const { logo, phone, categories, headerTopMenus } = props;
   const [isOpenHeaderCentrDrower, setIsOpenHeaderCentrDrower] = useState<boolean>(false)
   const { t, lang } = useT();
 
@@ -125,7 +97,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/balance"}
                     >
                       <Badge count={11}>
-                        <img src="/assets/icons/Compare.svg" alt="compare" />
+                        <img src="/assets/icons/compound.svg" alt="compound-icon" />
                       </Badge>
                       <span className="user_nav_text">Сравнение</span>
                     </Link>
@@ -136,7 +108,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/favorites"}
                     >
                       <Badge count={5}>
-                        <img src="/assets/icons/heart.svg" alt="favourite" />
+                        <img src="/assets/icons/heart.svg" alt="heart-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`favorite.${lang}`)}</span>
                     </Link>
@@ -147,7 +119,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={""}
                     >
                       <Badge count={11}>
-                        <img src="/assets/icons/shopping-cart.svg" alt="shopping-cart" />
+                        <img src="/assets/icons/cart.svg" alt="cart-icon" />
                       </Badge>
                       <span className="user_nav_text">Корзина</span>
                     </Link>
@@ -197,15 +169,15 @@ function HeaderCenter(props: IHeaderCenter) {
             </div>
             <ul className="menu_wrapper">
               {
-                drowerMenusData.map(data => (
-                  <li key={data.id} className='menu'>
+                headerTopMenus.map((headerTopMenu) => (
+                  <li key={headerTopMenu.urlType} className='menu'>
                     <Link
-                      to={data.img}
+                      to={`/page/${headerTopMenu.urlValue}`}
                       className="p14_regular"
                       onClick={() => handleOpen(false)}
                     >
-                      <img src={data.img} alt="menu_img" />
-                      {data.text}
+                      <img src={headerTopMenu.imageUrl} alt={headerTopMenu.urlValue} />
+                      {headerTopMenu.name}
                     </Link>
                   </li>
                 ))
@@ -232,9 +204,6 @@ function HeaderCenter(props: IHeaderCenter) {
               <PhoneComp phone={phone} iconName='mobile_tel' isShowNumber={true} />
             </div>
           </Drawer>
-
-
-
         </div>
       </div>
     </div >
