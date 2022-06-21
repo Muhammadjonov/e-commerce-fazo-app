@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import {  useContext, useState } from 'react';
 import { Badge, Button, Col, Drawer, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo';
@@ -7,39 +7,8 @@ import SearchComp from '../../components/SearchComp';
 import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, setLang } from '../../helpers';
-import { CategoriesInfoType, HeaderTopMenuInfoType, LeftMenuInfoType, LeftMenuResType } from '../../types';
+import { CategoriesInfoType, HeaderTopMenuInfoType,  } from '../../types';
 import { AuthContext } from '../../App';
-import { leftMenuUrl } from '../../api/apiUrls';
-import baseAPI from '../../api/baseAPI';
-
-const drowerMenusData = [
-  {
-    id: "1",
-    img: "/assets/icons/menu1.svg",
-    text: "Наши магазины"
-  },
-  {
-    id: "2",
-    img: "/assets/icons/menu2.svg",
-    text: "B2B продажи"
-  },
-  {
-    id: "3",
-    img: "/assets/icons/menu3.svg",
-    text: "Покупка в рассрочку"
-  },
-  {
-    id: "4",
-    img: "/assets/icons/menu4.svg",
-    text: "Способы оплаты"
-  },
-  {
-    id: "5",
-    img: "/assets/icons/menu5.svg",
-    text: "Гарантия на товары"
-  },
-
-]
 
 interface IHeaderCenter {
   logo: string,
@@ -72,8 +41,6 @@ function HeaderCenter(props: IHeaderCenter) {
     changeLang(language);
     handleOpen(false);
   }
-
-  const [leftMenu, setLeftMenu] = useState<LeftMenuInfoType>();
 
   return (
     <div className="header_center">
