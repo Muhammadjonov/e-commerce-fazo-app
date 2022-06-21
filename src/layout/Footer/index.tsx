@@ -90,7 +90,7 @@ function Footer(props: IFooter) {
                 {
                   menu2?.map((menu) => (
                     <li key={menu.urlValue}>
-                      <Link to={`/page/:${menu.urlValue}`}>{menu.name}</Link>
+                      <Link to={`/page/${menu.urlValue}`}>{menu.name}</Link>
                     </li>
                   ))
                 }

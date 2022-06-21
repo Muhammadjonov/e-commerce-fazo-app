@@ -1,3 +1,4 @@
+import { title } from 'process';
 import { number, string } from "yup"
 
 export type userType = {
@@ -286,6 +287,12 @@ export type FooterMenuResType = {
 	data: FooterMenuInfoType
 }
 
+export type CharacterAssignsType = {
+	id: number,
+	characterName: string,
+	value: string
+}
+
 export type ProductDetailInfoType = {
 	id: number,
 	name: string,
@@ -302,12 +309,7 @@ export type ProductDetailInfoType = {
 	categorySlug: string,
 	subCategory: string,
 	subCategorySlug: string,
-	characterAssigns:
-	{
-		id: number,
-		characterName: string,
-		value: string
-	}[],
+	characterAssigns: CharacterAssignsType[],
 	images: string[],
 	is_delivery: number,
 	delivery_price: number
@@ -317,4 +319,28 @@ export type ProductDetailResType = {
 	status: number,
 	message: string,
 	data: ProductDetailInfoType
+}
+
+export type ReturnExchangeInfoType = {
+	id: number,
+	url: string,
+	title: string,
+	description: string
+}
+
+export type ReturnExchangeResType = {
+	status: number,
+	message: string,
+	data: ReturnExchangeInfoType
+}
+
+export type PaymentListInfoType = {
+	id: number,
+	title: string
+}[]
+
+export type PaymentListResTyoe = {
+	status: number,
+	message: string,
+	data: PaymentListInfoType
 }

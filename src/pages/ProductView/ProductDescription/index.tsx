@@ -4,64 +4,23 @@ import BuyButton from "./BuyButton";
 import "./_style.scss";
 import { useState } from "react";
 import InstallmentModal from "../../../components/InstallmentModal";
-import { ProductDetailInfoType } from "../../../types";
+import { CharacterAssignsType } from "../../../types";
 
-const productInfoData = [
-  {
-    id: "1",
-    title: "Технические параметры",
-    description: [
-      {
-        id: "1",
-        desc_name: "Название",
-        desc: "MacBook Pro 13 MXK32ZP/A Space Gray",
-      },
-      {
-        id: "2",
-        desc_name: "Состояние",
-        desc: "Новый",
-      },
-      {
-        id: "3",
-        desc_name: "Технические параметры",
-        desc: "MacBook Pro 13 MXK32ZP/A Space Gray",
-      },
 
-    ]
-  },
-  {
-    id: "2",
-    title: "Технические параметры",
-    description: [
-      {
-        id: "1",
-        desc_name: "Название",
-        desc: "MacBook Pro 13 MXK32ZP/A Space Gray",
-      },
-      {
-        id: "2",
-        desc_name: "Состояние",
-        desc: "Новый",
-      },
-      {
-        id: "3",
-        desc_name: "Технические параметры",
-        desc: "MacBook Pro 13 MXK32ZP/A Space Gray",
-      },
+interface IProductDescription {
+  name: string,
+  price: number | null,
+  characterAssigns: CharacterAssignsType[]
+}
 
-    ]
-  }
-
-]
-
-const ProductDescription = (props: ProductDetailInfoType) => {
+const ProductDescription = (props: IProductDescription) => {
 
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
 
   const onOpenInstallmentModal = () => setIsOpenInstallmentModal(true);
   const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
 
-  const {name, price} = props;
+  const { name, price, characterAssigns } = props;
 
   return (
     <div className="product_desc">
@@ -117,13 +76,11 @@ const ProductDescription = (props: ProductDetailInfoType) => {
               MacBook Pro 13 MXK32ZP/A Space Gray Full HD 1920x1080 IPS / Core™ i7-1165G7 / 8GB RAM / 256GB SSD
             </p>
           </div>
-
           {
-            productInfoData.map(info => (
-              <ProductInfoComp key={info.id} {...info} />
-            ))
+            characterAssigns?.length !== 0 && (
+              <ProductInfoComp description={characterAssigns} />
+            )
           }
-
         </Col>
       </Row>
 

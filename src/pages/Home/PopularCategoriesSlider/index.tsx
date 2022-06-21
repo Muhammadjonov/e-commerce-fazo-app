@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "./_style.scss";
 
 // import required modules
-import { Autoplay, Navigation } from "swiper";
+import { Autoplay, Navigation, Lazy } from "swiper";
 import PopularSliderCard from './PopularSliderCard';
 import { RecommendedCategoriesInfoType, RecommendedCategoriesResType } from '../../../types';
 import baseAPI from '../../../api/baseAPI';
@@ -39,10 +39,12 @@ function PopularCategoriesSlider() {
             spaceBetween={30}
             navigation={true}
             loop={true}
+            lazy={true}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
             }}
+            modules={[Autoplay, Navigation, Lazy]}
             breakpoints={{
               0: {
                 slidesPerView: 1,
@@ -65,7 +67,6 @@ function PopularCategoriesSlider() {
                 spaceBetween: 30,
               },
             }}
-            modules={[Autoplay, Navigation]}
             className="mySwiper"
           >
             {

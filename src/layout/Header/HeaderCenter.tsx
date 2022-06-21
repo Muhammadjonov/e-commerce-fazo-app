@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Badge, Button, Col, Drawer, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo';
@@ -8,6 +8,7 @@ import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, setLang } from '../../helpers';
 import { CategoriesInfoType } from '../../types';
+import { AuthContext } from '../../App';
 
 const drowerMenusData = [
   {
@@ -45,9 +46,12 @@ interface IHeaderCenter {
 }
 
 function HeaderCenter(props: IHeaderCenter) {
+  const { logo, phone, categories } = props;
   const [isOpenHeaderCentrDrower, setIsOpenHeaderCentrDrower] = useState<boolean>(false)
   const { t, lang } = useT();
-  const { logo, phone, categories } = props;
+
+  const authContext = useContext(AuthContext);
+
 
   const handleOpen = (value: boolean) => setIsOpenHeaderCentrDrower(value)
 
@@ -71,29 +75,29 @@ function HeaderCenter(props: IHeaderCenter) {
       <div className="container">
         <div className="header_centr">
           <Row gutter={[16, 16]}>
-            <Col lg={4}>
+            <Col md={4}>
               <div className="header_center_left">
                 <Logo logo={logo} />
               </div>
             </Col>
-            <Col lg={11} offset={1}>
+            <Col md={11} offset={1}>
               <div className="header_center_middle">
                 <SearchComp categories={categories} />
               </div>
             </Col>
-            <Col lg={6} offset={2}>
+            <Col xl={{ span: 6, offset: 2 }} md={8}>
               <div className="header_center_right">
                 <ul>
                   <li>
-                    <Link
+                    <button type='button'
                       className="right_item"
-                      to={""}
+                      onClick={authContext.onOpenSignInModal}
                     >
                       <img src="/assets/icons/user.svg" alt="user-icon" />
                       <span className="user_nav_text">
                         {t(`signIn.${lang}`)}
                       </span>
-                    </Link>
+                    </button>
                   </li>
                   <li>
                     <Link
@@ -213,7 +217,7 @@ function HeaderCenter(props: IHeaderCenter) {
 
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

@@ -1,4 +1,4 @@
-import { AxiosPromise } from "axios";
+import { AxiosPromise, AxiosRequestConfig } from "axios";
 import { PER_PAGE } from "../constants";
 import { request } from "./config";
 
@@ -9,7 +9,7 @@ type FetchWithPaginationType = {
   page?: number;
   per_page?: number;
 };
-
+// config?: AxiosRequestConfig<T>
 interface IBaseApi {
   find<T>(id: string, url: string, showNotification?: boolean): AxiosPromise<T>;
   fetchAll<T>(url: string, data?: object): AxiosPromise<T>;

@@ -6,7 +6,6 @@ import { LeftMenuInfoType, OneLeftMenuResType } from '../../types';
 
 const HeaderMenusContent = () => {
   let { page_slug } = useParams();
-  page_slug = page_slug?.slice(1);
   const [onePage, setOnePage] = useState<LeftMenuInfoType>({} as LeftMenuInfoType);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

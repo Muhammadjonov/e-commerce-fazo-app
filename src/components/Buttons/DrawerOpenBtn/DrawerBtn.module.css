@@ -1,0 +1,7 @@
+.open_drower_btn {
+  background-color: var(--brand_color_red) !important;
+  border          : none;
+  border-radius   : 5px;
+  padding         : 0px 8px;
+  margin-right    : 10px;
+}

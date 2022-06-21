@@ -22,7 +22,7 @@ function ProductCard(props: ProductType) {
   return (
     <Card className="product_card" bordered={false} hoverable>
       <div className="card_body">
-        <Link className="product_view_link" to={"#"}>
+        <Link className="product_view_link" to={`/product/detail/${slug}`}>
           <figure>
             <img src={imageUrl ?? ""} alt={name} className="product_card_img" />
           </figure>
@@ -31,7 +31,7 @@ function ProductCard(props: ProductType) {
           {price} {t(`sum.${lang}`)}
         </p>
         <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>
-        <Link className="product_view_link" to={"#"}>
+        <Link className="product_view_link" to={`/product/detail/${slug}`}>
           <h5 className="product_name">
             {name}
           </h5>
