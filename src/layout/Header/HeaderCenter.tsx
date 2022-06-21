@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Badge, Button, Col, Drawer, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo';
@@ -7,8 +7,10 @@ import SearchComp from '../../components/SearchComp';
 import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, setLang } from '../../helpers';
-import { CategoriesInfoType } from '../../types';
+import { CategoriesInfoType, HeaderTopMenuInfoType, LeftMenuInfoType, LeftMenuResType } from '../../types';
 import { AuthContext } from '../../App';
+import { leftMenuUrl } from '../../api/apiUrls';
+import baseAPI from '../../api/baseAPI';
 
 const drowerMenusData = [
   {
@@ -43,10 +45,11 @@ interface IHeaderCenter {
   logo: string,
   phone: string,
   categories: CategoriesInfoType,
+  headerTopMenus:HeaderTopMenuInfoType
 }
 
 function HeaderCenter(props: IHeaderCenter) {
-  const { logo, phone, categories } = props;
+  const { logo, phone, categories, headerTopMenus } = props;
   const [isOpenHeaderCentrDrower, setIsOpenHeaderCentrDrower] = useState<boolean>(false)
   const { t, lang } = useT();
 
@@ -69,6 +72,8 @@ function HeaderCenter(props: IHeaderCenter) {
     changeLang(language);
     handleOpen(false);
   }
+
+  const [leftMenu, setLeftMenu] = useState<LeftMenuInfoType>();
 
   return (
     <div className="header_center">
@@ -177,15 +182,15 @@ function HeaderCenter(props: IHeaderCenter) {
             </div>
             <ul className="menu_wrapper">
               {
-                drowerMenusData.map(data => (
-                  <li key={data.id} className='menu'>
+                headerTopMenus.map((headerTopMenu) => (
+                  <li key={headerTopMenu.urlType} className='menu'>
                     <Link
-                      to={data.img}
+                      to={`/page/${headerTopMenu.urlValue}`}
                       className="p14_regular"
-                      onClick={() => handleOpen(false)}
+                    onClick={() => handleOpen(false)}
                     >
-                      <img src={data.img} alt="menu_img" />
-                      {data.text}
+                      <img src={headerTopMenu.imageUrl} alt={headerTopMenu.urlValue} />
+                      {headerTopMenu.name}
                     </Link>
                   </li>
                 ))
@@ -212,9 +217,6 @@ function HeaderCenter(props: IHeaderCenter) {
               <PhoneComp phone={phone} iconName='mobile_tel' isShowNumber={true} />
             </div>
           </Drawer>
-
-
-
         </div>
       </div>
     </div >

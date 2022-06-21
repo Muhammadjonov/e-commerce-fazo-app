@@ -67,6 +67,7 @@ function Filter() {
 
   });
   const onSubmit: SubmitHandler<any> = (items) => {
+    console.log(items)
     let filtered = Object.keys(items).filter(item => items[item])
     setFilter(filtered);
   };

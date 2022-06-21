@@ -268,6 +268,7 @@ export type HeaderTopMenuInfoType = {
 	name: string,
 	urlValue: string,
 	urlType: string
+	imageUrl:string
 }[]
 
 export type HeaderTopMenuResType = {
