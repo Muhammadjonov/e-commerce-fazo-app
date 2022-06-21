@@ -47,7 +47,7 @@ function Filter() {
 
   let { pathname } = useLocation();
   const { t, lang } = useT()
-  const { width } = useWindowSize()
+  const { width } = useWindowSize();
 
 
   const { brands, category, characters, maxPrice: max_price, minPrice: min_price, products, subCategory } = byCategoryProducts;
@@ -67,6 +67,7 @@ function Filter() {
 
   });
   const onSubmit: SubmitHandler<any> = (items) => {
+    console.log(items)
     let filtered = Object.keys(items).filter(item => items[item])
     setFilter(filtered);
   };

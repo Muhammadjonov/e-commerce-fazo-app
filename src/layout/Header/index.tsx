@@ -5,8 +5,8 @@ import HeaderTop from './HeaderTop';
 import { Affix } from "antd";
 import "./_style.scss";
 import { useAppSelector } from "../../Store/hooks";
-import { CategoriesInfoType, CategoriesResType, HeaderInfoType, HeaderResType, MenuCategoriesInfoType } from "../../types";
-import { categoriesUrl, headerSettingsUrl } from "../../api/apiUrls";
+import { CategoriesInfoType, CategoriesResType, HeaderInfoType, HeaderResType, HeaderTopMenuInfoType, HeaderTopMenuResType, MenuCategoriesInfoType } from "../../types";
+import { categoriesUrl, headerSettingsUrl, headerTopMenuUrl } from "../../api/apiUrls";
 import baseAPI from "../../api/baseAPI";
 
 interface IHeader {
@@ -17,6 +17,7 @@ function Header(props: IHeader) {
   const { menuCategories } = props;
   const { data: user } = useAppSelector(state => state.auth);
 
+  const [headerTopMenus, setHeaderTopMenus] = useState<HeaderTopMenuInfoType>([]);
   const [headerSettings, setHeaderSettings] = useState<HeaderInfoType>({} as HeaderInfoType);
   const [isHeaderSettingsLoading, setIsHeaderSettingsLoading] = useState(true);
 
@@ -46,19 +47,29 @@ function Header(props: IHeader) {
       })
   }, [])
 
+  const getHeaderTopMenus = useCallback(() => {
+    baseAPI.fetchAll<HeaderTopMenuResType>(headerTopMenuUrl)
+      .then((res) => {
+        if (res.data.status === 200) {
+          setHeaderTopMenus(res.data.data);
+        }
+      })
+  }, [])
+
   useEffect(() => {
     getHeaderSettings();
     getCategories();
-  }, [getHeaderSettings, getCategories])
+    getHeaderTopMenus();
+  }, [getHeaderSettings, getCategories, getHeaderTopMenus])
 
   const { logo, phone } = headerSettings;
 
   return (
     <header className="header">
       {user?.name}
-      <HeaderTop {...headerSettings} />
+      <HeaderTop {...headerSettings} headerTopMenus={headerTopMenus} />
       {/* <Affix offsetTop={0}> */}
-      <HeaderCenter categories={categories} {...headerSettings} />
+      <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
       {/* </Affix> */}
       <HeaderBottom categories={categories} menuCategories={menuCategories} />
     </header>
