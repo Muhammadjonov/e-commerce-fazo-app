@@ -1,5 +1,3 @@
-import { title } from 'process';
-import { number, string } from "yup"
 
 export type userType = {
 	name: string
@@ -268,7 +266,7 @@ export type HeaderTopMenuInfoType = {
 	name: string,
 	urlValue: string,
 	urlType: string
-	imageUrl:string
+	imageUrl: string
 }[]
 
 export type HeaderTopMenuResType = {

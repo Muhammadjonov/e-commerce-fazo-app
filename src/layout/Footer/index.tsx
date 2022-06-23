@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 import { FooterResType, FooterInfoType, MenuCategoriesInfoType, FooterMenuResType, FooterMenuInfoType } from '../../types';
 import baseAPI from "../../api/baseAPI";
 import { footerDataUrl, footerMenuUrl } from "../../api/apiUrls";
+import { useT } from '../../custom/hooks/useT';
 
 interface IFooter {
   menuCategories: MenuCategoriesInfoType
 }
 
 function Footer(props: IFooter) {
+  const { t, lang } = useT();
   const { menuCategories } = props;
   const [footerDatas, setFooterDatas] = useState<FooterInfoType>({} as FooterInfoType);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -56,12 +58,12 @@ function Footer(props: IFooter) {
           </Col>
           <Col lg={5} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
-              <h2 className="title20_bold">Категории</h2>
+              <h2 className="title20_bold">{t(`category.${lang}`)}</h2>
               <ul>
                 {
                   menuCategories?.map((menuCategory) => (
                     <li key={menuCategory.id}>
-                      <Link to={`/category/:${menuCategory.slug}`}>{menuCategory.title}</Link>
+                      <Link to={`/category/${menuCategory.slug}`}>{menuCategory.title}</Link>
                     </li>
                   ))
                 }
@@ -76,7 +78,7 @@ function Footer(props: IFooter) {
                 {
                   menu1?.map((menu) => (
                     <li key={menu.urlValue}>
-                      <Link to={`/page/:${menu.urlValue}`}>{menu.name}</Link>
+                      <Link to={`/page/${menu.urlValue}`}>{menu.name}</Link>
                     </li>
                   ))
                 }

@@ -13,7 +13,8 @@ export type UserType = {
   firstname: string | null
   lastname: string | null
   status: number,
-  auth_key: string
+  auth_key: string,
+  email: string | null
 };
 
 const initialState = {

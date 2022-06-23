@@ -43,7 +43,7 @@ export const setToken = (access_token: string,) => {
 
 export const removeTokens = () => {
   localStorage.removeItem("access_token");
-  localStorage.removeItem("remember_token");
+  // localStorage.removeItem("remember_token");
 };
 
 
@@ -74,30 +74,3 @@ export const onlyNumber = (value: any) => {
   return value.replace(/[^0-9 ]/gi, "");
 };
 
-
-
-// export const handleChangePhone = (e: React.ChangeEvent<HTMLInputElement>, phone: string, setPhone: (value: string) => void) => {
-//   let { value } = e.target;
-//   value = value.trim();
-//   const phoneRegex = /(?:\+\ [9]{2}[8]\ [0-9]{2}\ [0-9]{3}\-[0-9]{2}\-[0-9]{2})/;
-
-//   if (value.length < 4) {
-//     setPhone("+998 ");
-//     console.log("phone regex");
-//   } else if (phoneRegex.test(value)) {
-//     setPhone(value);
-//   }
-
-// }
-
-export const handleChangePhone = (e: React.ChangeEvent<HTMLInputElement>, phone: string, setPhone: (value: string) => void) => {
-  let { value } = e.target;
-  value = value.trim();
-  const phoneRegex = /(?:\+\ [9]{2}[8]\ [0-9]{2}\ [0-9]{3}\-[0-9]{2}\-[0-9]{2})/;
-
-  if (value.length < 4) {
-    setPhone("+998 ");
-  } else value = value.slice(0, 4).replace(/[^0-9]/g, "");
-
-  console.log(value)
-}

@@ -1,10 +1,11 @@
 import { AlignLeftOutlined, BarsOutlined, MoreOutlined } from '@ant-design/icons';
-import { Affix, Breadcrumb, Button, Col, Drawer, Row } from 'antd';
+import { Affix, Breadcrumb, Button, Col, Divider, Drawer, Row } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
 import { leftMenuUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import DrawerOpenBtn from '../../components/Buttons/DrawerOpenBtn';
+import { useT } from '../../custom/hooks/useT';
 import { LeftMenuInfoType, LeftMenuResType } from '../../types';
 
 import "./_style.scss";
@@ -23,6 +24,7 @@ const breadcrumbs: any = [
 
 
 function HeaderTopMenus() {
+  const { t, lang } = useT();
   const [activeKey, setActiveKey] = useState<string>("install");
   const [leftMenus, setLeftMenus] = useState<LeftMenuInfoType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -44,10 +46,6 @@ function HeaderTopMenus() {
   }, [getLeftMenus])
 
   const [visible, setVisible] = useState<boolean>(false);
-
-  const showDrawer = () => {
-    setVisible(true);
-  };
 
   const onClose = () => {
     setVisible(false);
@@ -75,30 +73,6 @@ function HeaderTopMenus() {
           <Row gutter={[30, 30]}>
             <Col xs={24} lg={5}>
               <DrawerOpenBtn text="Ma'lumot" setState={setVisible} icon={<AlignLeftOutlined />} />
-              <Drawer
-                title="Ma'lumot"
-                placement="left"
-                onClose={onClose}
-                visible={visible}
-              >
-                <ul className="header_top_menus__body__left inside-drawer">
-                  {leftMenus.length !== 0 && leftMenus.map((leftMenu) => (
-                    <li className="header_top_menus__body__left__item" key={leftMenu.id}>
-                      <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/:${leftMenu.slug}`}>
-                        <img className='header_top_menus__body__left__item__link__img' src={leftMenu.imageUrl} alt={leftMenu.title} />
-                        <div className="header_top_menus__body__left__item__link__content">
-                          <h4 className="title16_bold header_top_menus__body__left__item__link__content__title">
-                            {leftMenu.title}
-                          </h4>
-                          <p className="header_top_menus__body__left__item__link__content__text">
-                            {leftMenu.short_description}
-                          </p>
-                        </div>
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </Drawer>
               <ul className="header_top_menus__body__left">
                 {leftMenus.length !== 0 && leftMenus.map((leftMenu) => (
                   <li className="header_top_menus__body__left__item" key={leftMenu.id}>
@@ -122,11 +96,25 @@ function HeaderTopMenus() {
             </Col>
           </Row>
         </div>
-
-
-        {/* <HeaderTopMenusTabs setActiveKey={setActiveKey} headerMenusTabsData={leftMenus} />
-          <MobileHeaderMenus setActiveKey={setActiveKey} headerMenusTabsData={headerMenusTabsData} activeKey={activeKey} /> */}
       </div>
+      <Drawer
+        title={t(`information.${lang}`)}
+        placement="left"
+        onClose={onClose}
+        visible={visible}
+        className="header__top__menus__drawer"
+      >
+        <ul className="header_top_menus__drawer__list">
+          {leftMenus.length !== 0 && leftMenus.map((leftMenu) => (
+            <li className="header_top_menus__drawer__list__item" key={leftMenu.id}>
+              <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__drawer__list__item__link"} to={`/page/${leftMenu.slug}`}>
+                {leftMenu.title}
+              </NavLink>
+              <Divider className="header_top_menus__drawer__list__item__divider" />
+            </li>
+          ))}
+        </ul>
+      </Drawer>
     </section>
   )
 }

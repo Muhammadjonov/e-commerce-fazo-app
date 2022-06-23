@@ -64,14 +64,14 @@ function SearchComp(props: ISearchComp) {
     <Input.Group compact className='search_wrapper' >
       <Select
         bordered={false}
-        defaultValue={"Все категории"}
+        defaultValue={t(`allCategory.${lang}`)}
         style={{ width: '30%' }}
         size='large'
         onSelect={onSelect}
       // onFocus={onFocus}
       // onBlur={onBlur}
       >
-        <Option value="all">Все категории</Option>
+        <Option value="all">{t(`allCategory.${lang}`)}</Option>
         {
           categories?.map(category => (
             <Option key={category.id} value={category.slug}>{category.title}</Option>

@@ -1,15 +1,17 @@
 import { useContext, useState } from 'react';
-import { Badge, Button, Col, Drawer, Row } from 'antd';
+import { Badge, Button, Col, Drawer, Dropdown, Menu, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import MobileSearchComp from '../../components/MobileSearchComp';
 import SearchComp from '../../components/SearchComp';
 import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
-import { changeLang, LangType, setLang } from '../../helpers';
+import { changeLang, LangType, removeTokens, removeUserFromLocalStorage, setLang } from '../../helpers';
 import { CategoriesInfoType, HeaderTopMenuInfoType, } from '../../types';
 import { AuthContext } from '../../App';
 import { useAppSelector } from '../../Store/hooks';
+import { logout } from '../../features/authSlice';
+import { useDispatch } from 'react-redux';
 
 interface IHeaderCenter {
   logo: string,
@@ -22,7 +24,7 @@ function HeaderCenter(props: IHeaderCenter) {
   const { logo, phone, categories, headerTopMenus } = props;
   const [isOpenHeaderCentrDrower, setIsOpenHeaderCentrDrower] = useState<boolean>(false)
   const { t, lang } = useT();
-
+  const dispatch = useDispatch();
   const userData = useAppSelector(state => state.auth);
 
   const authContext = useContext(AuthContext);
@@ -44,7 +46,40 @@ function HeaderCenter(props: IHeaderCenter) {
     changeLang(language);
     handleOpen(false);
   }
-  console.log("user", userData)
+
+  const handleLogout = () => {
+    removeUserFromLocalStorage();
+    removeTokens();
+    dispatch(logout());
+  }
+  // userDropdown menu
+
+  const userMenu = (
+    <Menu
+      items={[
+        {
+          label: <Link to="/profile">{t(`profile.${lang}`)}</Link>,
+          key: '0',
+        },
+        {
+          label: <Link to={"#"}>To'lov tarixi</Link>,
+          key: '1',
+        },
+        {
+          label: <Link to={"#"}>Mening buyurtmalarim</Link>,
+          key: '2',
+        },
+        {
+          label: <Link
+            to="/"
+            onClick={handleLogout}
+          >{t(`logout.${lang}`)}</Link>,
+          key: '3',
+        },
+      ]}
+    />
+  )
+
   return (
     <div className="header_center">
       <div className="container">
@@ -66,7 +101,6 @@ function HeaderCenter(props: IHeaderCenter) {
                   <li>
                     {
                       !userData?.authorized ? (
-
                         <button type='button'
                           className="right_item"
                           onClick={authContext.onOpenSignInModal}
@@ -77,18 +111,18 @@ function HeaderCenter(props: IHeaderCenter) {
                           </span>
                         </button>
                       ) : (
-                        <button type='button'
-                          className="right_item"
-
+                        <Dropdown
+                          overlay={userMenu}
+                          trigger={['click']}
                         >
-                          <img src="/assets/icons/User.svg" alt="user" />
-                          <span className="user_nav_text">
-                            {userData?.user?.firstname?.slice(0, 7)}
-                          </span>
-                        </button>
+                          <div className="right_item">
+                            <img src="/assets/icons/User.svg" alt="user" />
+                            <span className="user_nav_text">
+                              {userData?.user?.firstname?.slice(0, 7)}...
+                            </span>
+                          </div>
+                        </Dropdown>
                       )
-
-
                     }
                   </li>
                   <li>
@@ -97,7 +131,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/balance"}
                     >
                       <Badge count={11}>
-                        <img src="/assets/icons/compound.svg" alt="compound-icon" />
+                        <img src="/assets/icons/Compare.svg" alt="Compare-icon" />
                       </Badge>
                       <span className="user_nav_text">Сравнение</span>
                     </Link>
@@ -119,7 +153,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={""}
                     >
                       <Badge count={11}>
-                        <img src="/assets/icons/cart.svg" alt="cart-icon" />
+                        <img src="/assets/icons/shopping-cart.svg" alt="shopping-cart-icon" />
                       </Badge>
                       <span className="user_nav_text">Корзина</span>
                     </Link>

@@ -10,8 +10,8 @@
 
     &__left {
       background-color: var(--color_white2);
-      border-radius: 5px;
-      border: 1px solid var(--gray6);
+      border-radius   : 5px;
+      border          : 1px solid var(--gray6);
 
       &:not(.inside-drawer) {
         display: block;
@@ -25,8 +25,8 @@
           padding: 20px;
 
           &__img {
-            width: 30px;
-            height: 30px;
+            width     : 30px;
+            height    : 30px;
             object-fit: contain;
           }
 
@@ -34,9 +34,9 @@
             margin-left: 12px;
 
             &__text {
-              color: var(--color_black2);
+              color      : var(--color_black2);
               line-height: 17px;
-              font-size: 13px;
+              font-size  : 13px;
             }
           }
         }
@@ -48,24 +48,23 @@
 
     }
 
-    
+
 
     &__content {
-      color: var(--brand_color_black);
+      color      : var(--brand_color_black);
       font-family: 'GothamPro', sans-serif !important;
     }
 
     .ant-btn {
-      display: none;
+      display         : none;
       background-color: var(--brand_color_black);
-      border: none;
+      border          : none;
     }
   }
 
 }
+
 .ant-drawer-content-wrapper {
-  max-width: 320px;
-  width: 100%;
 
   .ant-drawer-header,
   .ant-drawer-body {
@@ -90,6 +89,55 @@
     &__left {
       &:not(.inside-drawer) {
         display: none;
+      }
+    }
+  }
+}
+
+// drawer styles
+
+.ant-drawer.ant-drawer-left.header__top__menus__drawer {
+  .ant-drawer-content-wrapper {
+    .ant-drawer-content {
+      .ant-drawer-wrapper-body {
+
+        .ant-drawer-header {
+          background-color: var(--brand_color_black);
+
+          .ant-drawer-header-title {
+            .ant-drawer-title {
+              color      : #fff;
+              font-family: "GothamPro-Medium", sans-serif;
+            }
+
+            .ant-drawer-close {
+              color      : #fff;
+              font-family: "GothamPro-Medium", sans-serif;
+            }
+          }
+        }
+
+        .ant-drawer-body {
+          .header_top_menus__drawer__list {
+            margin-top: 10px;
+
+            .header_top_menus__drawer__list__item {
+              .header_top_menus__drawer__list__item__divider {
+                margin: 10px 0px;
+              }
+
+              .header_top_menus__drawer__list__item__link {
+                color: var(--brand_color_black);
+
+                &:hover,
+                &:active,
+                &:focus {
+                  color: var(--color_black2);
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
