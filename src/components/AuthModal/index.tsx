@@ -56,7 +56,6 @@ const AuthModal = (props: IAuthModal) => {
   const [resetPswForm2] = Form.useForm();
   const [resetPswForm3] = Form.useForm();
 
-  let interval: any;
   let formData = new FormData();
 
   const dispatch = useAppDispatch();
@@ -109,9 +108,9 @@ const AuthModal = (props: IAuthModal) => {
       })
   }
 
-  const resendCode = () => {
+  const resendCode = (url: string) => {
     formData.append('phone', phone);
-    baseAPI.create<any>(enterPhoneUrl, formData)
+    baseAPI.create<any>(url, formData)
       .then((res) => {
         if (res.data.status === 200) {
         } else if (res.data.status === 403) {
@@ -237,7 +236,6 @@ const AuthModal = (props: IAuthModal) => {
       })
   }
 
-  // set interval
 
   const setBack = (current: number) => {
     setCurrent(current);
@@ -428,6 +426,15 @@ const AuthModal = (props: IAuthModal) => {
                       />
                     </Form.Item>
                     <span className="auth__error__text">{resetErrors.codeErr}</span>
+                    <div className="signup__modal__form__resend_btn_wrapper">
+                      <button
+                        onClick={() => resendCode(resetEnterPhoneUrl)}
+                        type="button"
+                        className="signup__modal__form__resend_btn_wrapper__code"
+                      >
+                        Отправить код еще раз
+                      </button>
+                    </div>
                     <div
                       className="signup__modal__form__btn__wrapper"
                     >
@@ -564,6 +571,15 @@ const AuthModal = (props: IAuthModal) => {
                 />
               </Form.Item>
               <span className="auth__error__text">{signUpErrors.codeErr}</span>
+              <div className="signup__modal__form__resend_btn_wrapper">
+                <button
+                  onClick={() => resendCode(enterPhoneUrl)}
+                  type="button"
+                  className="signup__modal__form__resend_btn_wrapper__code"
+                >
+                  Отправить код еще раз
+                </button>
+              </div>
               <div
                 className="signup__modal__form__btn__wrapper"
               >
