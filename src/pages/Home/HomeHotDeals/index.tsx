@@ -1,15 +1,17 @@
 import { Col, Row } from 'antd'
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { newProductsUrl } from '../../../api/apiUrls';
 import baseAPI from '../../../api/baseAPI';
 import CardsTitleTop from '../../../components/CardsTitleTop';
 import { ProductType, NewProductsResType } from '../../../types';
 import HotDealsCard from './HotDealsCard';
+import { LoadingContext } from "react-router-loading";
 
 
 function HomeHotDeals() {
   const [newProducts, setNewProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const loadingContext = useContext(LoadingContext);
 
   const getNewProducts = useCallback(() => {
     baseAPI.fetchWithParams<NewProductsResType>(newProductsUrl, { limit: 8 })
@@ -17,6 +19,7 @@ function HomeHotDeals() {
         if (res.data.status === 200) {
           setNewProducts(res.data.data);
           setIsLoading(false);
+          loadingContext.done();
         }
       })
   }, [])

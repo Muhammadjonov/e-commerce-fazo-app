@@ -4,7 +4,7 @@ import Location from '../../components/Location';
 import Logo from '../../components/Logo';
 import PhoneComp from '../../components/PhoneComp';
 import { useT } from '../../custom/hooks/useT';
-import {  HeaderTopMenuInfoType } from '../../types';
+import { HeaderTopMenuInfoType } from '../../types';
 
 
 interface IHeaderTop {
@@ -14,7 +14,7 @@ interface IHeaderTop {
 }
 
 function HeaderTop(props: IHeaderTop) {
-  const { lang } = useT();
+  const { t, lang } = useT();
   const { logo, phone, headerTopMenus } = props;
 
   return (

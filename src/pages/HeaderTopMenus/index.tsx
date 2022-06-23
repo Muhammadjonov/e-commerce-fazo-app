@@ -76,7 +76,7 @@ function HeaderTopMenus() {
               <ul className="header_top_menus__body__left">
                 {leftMenus.length !== 0 && leftMenus.map((leftMenu) => (
                   <li className="header_top_menus__body__left__item" key={leftMenu.id}>
-                    <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/:${leftMenu.slug}`}>
+                    <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/${leftMenu.slug}`}>
                       <img className='header_top_menus__body__left__item__link__img' src={leftMenu.imageUrl} alt={leftMenu.title} />
                       <div className="header_top_menus__body__left__item__link__content">
                         <h4 className="title16_bold header_top_menus__body__left__item__link__content__title">

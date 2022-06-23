@@ -23,7 +23,7 @@ const profileSidebarData = [
     id: "1",
     text: `Shukurillo Tojonazarov <br/>
     +998 99 0333848`,
-    img: '/assets/icons/user.svg'
+    img: '/assets/icons/User.svg'
   },
   {
     id: "2",

@@ -1,11 +1,31 @@
 {
   "signIn": {
     "ru": "Войти",
-    "uz": "Login"
+    "uz": "Kirish"
+  },
+  "signUp": {
+    "ru": "зарегистрироваться",
+    "uz": "ro'yxatdan o'tish"
+  },
+  "registration": {
+    "ru": "Регистрация",
+    "uz": "Ro‘yxatdan o‘tish"
+  },
+  "forgetPassword": {
+    "ru": "Забыли пароль?",
+    "uz": "Parolni unutdingizmi?"
+  },
+  "cart": {
+    "ru": "Корзина",
+    "uz": "Savatcha"
   },
   "favorite": {
     "ru": "Избранное",
     "uz": "Sevimlilar"
+  },
+  "comparison": {
+    "ru": "Сравнение",
+    "uz": "Taqqoslash"
   },
   "search": {
     "ru": "Поиск",
@@ -14,5 +34,33 @@
   "sum": {
     "ru": "сум",
     "uz": "so'm"
+  },
+  "back": {
+    "ru": "Назад",
+    "uz": "Orqaga"
+  },
+  "information": {
+    "ru": "Информация",
+    "uz": "Ma'lumot"
+  },
+  "category": {
+    "ru": "Категории",
+    "uz": "Kategoriyalar"
+  },
+  "allCategory": {
+    "ru": "Все категории",
+    "uz": "Barcha kategoriyalar"
+  },
+  "profile": {
+    "ru": "Личный кабинет",
+    "uz": "Shaxsiy kabinet"
+  },
+  "logout": {
+    "ru": "Выйти",
+    "uz": "Chiqish"
+  },
+  "signInOrCreateAccount": {
+    "ru": " Войти или создать профиль",
+    "uz": "Tizimga kiring yoki profil yarating"
   }
 }

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useContext, useState, useCallback, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay, EffectFade } from "swiper";
 import CategoryButton from '../../../components/CategoryButton';
@@ -9,29 +9,10 @@ import { bannersUrl, categoriesUrl } from '../../../api/apiUrls';
 import { BannerInfoType, BannerResType, CategoriesInfoType, CategoriesResType } from '../../../types';
 import "./_style.scss";
 import useWindowSize from '../../../custom/hooks/useWindowSize';
+import { LoadingContext } from "react-router-loading";
+
 
 const { Panel } = Collapse;
-
-// const categories = [
-//   {
-//     id: "1",
-//     name: "Телефоны, планшеты",
-//     iconName: "phone",
-//     toUrl: "#",
-//     subcategories: [
-//       {
-//         id: "1",
-//         name: "Коммутаторы",
-//         toUrl: "#"
-//       },
-//       {
-//         id: "2",
-//         name: "Коммутаторы",
-//         toUrl: "#"
-//       }
-//     ]
-//   }
-// ]
 
 function HomeTopBanner() {
   const [banner, setBanner] = useState<BannerInfoType[]>([]);
@@ -41,11 +22,15 @@ function HomeTopBanner() {
   const [categories, setCategories] = useState<CategoriesInfoType>([])
   const [isCategoriesLoading, setIsCategoriesLoading] = useState<boolean>(true);
 
+  const loadingContext = useContext(LoadingContext);
+
+
   const getBanners = useCallback(() => {
     baseAPI.fetchAll<BannerResType>(bannersUrl)
       .then((res) => {
         if (res.data.status === 200) {
           setBanner(res.data.data);
+          loadingContext.done();
         }
       })
       .catch((err) => console.log(err))

@@ -7,13 +7,25 @@
     "ru": "зарегистрироваться",
     "uz": "ro'yxatdan o'tish"
   },
+  "registration": {
+    "ru": "Регистрация",
+    "uz": "Ro‘yxatdan o‘tish"
+  },
   "forgetPassword": {
     "ru": "Забыли пароль?",
     "uz": "Parolni unutdingizmi?"
   },
+  "cart": {
+    "ru": "Корзина",
+    "uz": "Savatcha"
+  },
   "favorite": {
     "ru": "Избранное",
     "uz": "Sevimlilar"
+  },
+  "comparison": {
+    "ru": "Сравнение",
+    "uz": "Taqqoslash"
   },
   "search": {
     "ru": "Поиск",

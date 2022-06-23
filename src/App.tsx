@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 import i18next from 'i18next';
-import { useLocation, useRoutes } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Routes, Route } from "react-router-loading"
 import { fallbackLang, languages } from './constants';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
@@ -16,6 +17,19 @@ import AuthModal from './components/AuthModal';
 import { useDispatch } from 'react-redux';
 import { request } from './api/config';
 import { setUser, UserResType } from './features/authSlice';
+// pages
+import Filter from './pages/Filter';
+import Home from './pages/Home';
+import SearchResult from './pages/SearchResult';
+import ProductView from './pages/ProductView';
+import HeaderTopMenus from './pages/HeaderTopMenus';
+import HeaderMenusContent from './pages/HeaderTopMenus/HeaderMenusContent';
+import Favorites from './pages/Favorites';
+import ProductComparison from './pages/ProductComparison';
+import ProfileInfoBody from './pages/Profile/ProfileInfoBody';
+import PersonalData from './pages/Profile/PersonalData';
+import Checkout from './pages/Checkout';
+import PageNotFound from './pages/PageNotFound';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -30,7 +44,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 function App() {
   const [isOnline, setIsOnline] = useState<boolean>(false);
-  let element = useRoutes(routes)
+  // let element = useRoutes(routes)
 
   let { pathname } = useLocation();
 
@@ -99,24 +113,6 @@ function App() {
     getMenuCategories();
   }, [getMenuCategories])
 
-  // check internet connection
-
-  // const checkInternet = () => {
-  //   if (navigator.onLine) {
-  //     console.log('online');
-  //     setIsOnline(true);
-  //   } else {
-  //     console.log('offline');
-  //     setIsOnline(false);
-  //   }
-  // }
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     checkInternet()
-  //   }, 5000);
-  //   // return () => window.removeEventListener("offline", isOnline);
-  // }, [checkInternet])
-
   // auth context
   const [isOpenSignInModal, setIsOpenSignInModal] = useState<boolean>(false);
   const [isOpenSignUpModal, setIsOpenSignUpModal] = useState<boolean>(false);
@@ -148,7 +144,23 @@ function App() {
     <AuthContext.Provider value={contextValue}>
       <div className="mixel_wrapper">
         <Header menuCategories={menuCategories} />
-        {element}
+        <Routes>
+          <Route path="/" element={<Home />} loading />
+          <Route path="category/:category_slug" element={<Filter />} loading />
+          <Route path="search" element={<SearchResult />} loading />
+          <Route path="product/detail/:product_slug" element={<ProductView />} loading />
+          <Route path="page" element={<HeaderTopMenus />} >
+            <Route path=":page_slug" element={<HeaderMenusContent />} loading />
+          </Route>
+          <Route path="favorites" element={<Favorites />} />
+          <Route path="balance" element={<ProductComparison />} />
+          <Route path="profile" element={<ProductComparison />} >
+            <Route index element={<ProfileInfoBody />} />
+            <Route path="personal-data" element={<PersonalData />} />
+          </Route>
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
         <Footer menuCategories={menuCategories} />
         <BackTop className="fazo__back__top" />
         <AuthModal

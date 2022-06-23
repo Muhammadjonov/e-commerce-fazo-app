@@ -3,7 +3,7 @@ import { Input, Select } from "antd";
 import { AudioOutlined } from '@ant-design/icons';
 import "./_style.scss";
 import { CategoriesInfoType } from "../../types";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useT } from "../../custom/hooks/useT";
 
 const { Search } = Input;
@@ -16,7 +16,6 @@ interface ISearchComp {
 
 function SearchComp(props: ISearchComp) {
   const { t, lang } = useT();
-
   const enterButton = (
     <>
       <img src="/assets/icons/search.svg" alt="search" />
@@ -30,6 +29,7 @@ function SearchComp(props: ISearchComp) {
   })
   const { categories } = props;
   const navigate = useNavigate();
+  let { pathname } = useLocation();
 
   const handleSearchValue = (e: any) => {
     setSearchValues(prev => ({ ...prev, key: e.target.value.trim() }));
@@ -49,27 +49,25 @@ function SearchComp(props: ISearchComp) {
     }
   }
 
-  // body is not scroll
+  // pathname o'zgarganda search ni tozalash logikasi
 
-  // const onFocus = () => {
-  //   body.style.overflowY = "hidden";
-  // }
+  useEffect(() => {
+    setSearchValues({
+      category: "all",
+      key: ""
+    })
+  }, [pathname])
 
-  // const onBlur = () => {
-  //   body.style.overflowY = "auto";
-  // }
 
   return (
 
     <Input.Group compact className='search_wrapper' >
       <Select
         bordered={false}
-        defaultValue={t(`allCategory.${lang}`)}
+        value={searchValues.category}
         style={{ width: '30%' }}
         size='large'
         onSelect={onSelect}
-      // onFocus={onFocus}
-      // onBlur={onBlur}
       >
         <Option value="all">{t(`allCategory.${lang}`)}</Option>
         {
@@ -84,6 +82,7 @@ function SearchComp(props: ISearchComp) {
         // placeholder={"input search text"}
         enterButton={enterButton}
         onSearch={onSearch}
+        value={searchValues.key}
         style={{ width: "70%" }}
         onChange={handleSearchValue}
       />

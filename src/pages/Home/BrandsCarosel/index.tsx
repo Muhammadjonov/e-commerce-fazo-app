@@ -6,50 +6,18 @@ import "./_style.scss";
 import { FreeMode, Autoplay, Navigation } from "swiper";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { BrandInfoType, BrandsResType } from "../../../types";
 import baseAPI from "../../../api/baseAPI";
 import { brandsUrl } from "../../../api/apiUrls";
+import { LoadingContext } from "react-router-loading";
 
-
-const brandSliderCardData = [
-  {
-    id: "1",
-    img: "/assets/img/mi.png",
-    toUrl: "#"
-  },
-  {
-    id: "2",
-    img: "/assets/img/mi.png",
-    toUrl: "#"
-  },
-  {
-    id: "3",
-    img: "/assets/img/mi.png",
-    toUrl: "#"
-  },
-  {
-    id: "4",
-    img: "/assets/img/mi.png",
-    toUrl: "#"
-  },
-  {
-    id: "5",
-    img: "/assets/img/mi.png",
-    toUrl: "#"
-  },
-  {
-    id: "6",
-    img: "/assets/img/mi.png",
-    toUrl: "#"
-  }
-
-]
 
 function BrandsCarusel() {
 
   const [brands, setBrands] = useState<BrandInfoType>([] as BrandInfoType)
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const loadingContext = useContext(LoadingContext);
 
   const getBrands = useCallback(() => {
     setIsLoading(true);
@@ -58,6 +26,7 @@ function BrandsCarusel() {
         if (res.data.status === 200) {
           setBrands(res.data.data);
           setIsLoading(false);
+          loadingContext.done();
         }
       })
   }, [])

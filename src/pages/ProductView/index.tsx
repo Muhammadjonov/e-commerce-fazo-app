@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { LoadingContext } from 'react-router-loading';
 import { productDetailUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
@@ -17,6 +18,8 @@ function ProductView() {
   let { product_slug } = useParams();
   const [productDetail, setProductDetail] = useState<ProductDetailInfoType>({} as ProductDetailInfoType);
   const [isLoading, setIsLoading] = useState(true);
+  const loadingContext = useContext(LoadingContext);
+
   const getProductDetail = useCallback(() => {
     setIsLoading(true);
     baseAPI.fetchWithParams<ProductDetailResType>(productDetailUrl, { key: product_slug })
@@ -24,6 +27,7 @@ function ProductView() {
         if (res.data.status === 200) {
           setProductDetail(res.data.data);
           setIsLoading(false);
+          loadingContext.done();
         }
       })
   }, [])

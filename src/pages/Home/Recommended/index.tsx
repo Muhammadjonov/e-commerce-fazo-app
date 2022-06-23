@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import ProductCard from '../../../components/ProductCard';
@@ -7,20 +7,23 @@ import CardsTitleTop from '../../../components/CardsTitleTop';
 import baseAPI from '../../../api/baseAPI';
 import { recommendedProductsUrl, stockUrl } from '../../../api/apiUrls';
 import { ProductType, RecommendedProductsResType, StockInfoType, StockResType } from '../../../types';
+import { LoadingContext } from 'react-router-loading';
 
 function Recommended() {
 
   const [recommendedProducts, setRecommendedProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [stock, setStock] = useState<StockInfoType>({} as StockInfoType);
-  // get Recommended products
+  const loadingContext = useContext(LoadingContext);
 
+  // get Recommended products
   const getNewProducts = useCallback(() => {
     baseAPI.fetchWithParams<RecommendedProductsResType>(recommendedProductsUrl, { limit: 8 })
       .then((res) => {
         if (res.data.status === 200) {
           setRecommendedProducts(res.data.data);
           setIsLoading(false);
+          loadingContext.done();
         }
       })
   }, [])

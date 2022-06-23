@@ -120,6 +120,18 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+    setResetErrors({
+      phoneErr: "",
+      codeErr: "",
+      pswErr: ""
+    });
+    setSignUpErrors({
+      phoneErr: "",
+      codeErr: "",
+      pswErr: ""
+    });
+    signUp2Form.resetFields();
+    resetPswForm2.resetFields();
   }
 
   const onFinishSignUp2 = (values: any) => {
@@ -416,13 +428,18 @@ const AuthModal = (props: IAuthModal) => {
                     onFinish={onFinishReset2}
                   >
                     <p className="signup__modal__form__timeout__text">
-                      {resetPhone} telefon raqamiga SMS-kod jo'natildi.
+                      {
+                        lang === "ru" ? `На номер +${resetPhone.slice(0, 3) + ` (` + resetPhone.slice(3, 5) + `) ... - ` + resetPhone.slice(8, 10) + ` - ` + resetPhone.slice(10)} было выслано
+                  СМС сообщение с кодом` : lang === "uz" ? `+${resetPhone.slice(0, 3) + ` (` + resetPhone.slice(3, 5) + `) ... - ` + resetPhone.slice(8, 10) + ` - ` + resetPhone.slice(10)} telefon raqamiga aktivatsiya kodi jo'natildi.` : ""
+                      }
                     </p>
                     <Form.Item label="Пароль"
                       name="code"
                       rules={[{ required: true }]}
                     >
                       <Input.Password
+                        placeholder={"Введите полученный код"}
+                        maxLength={4}
                       />
                     </Form.Item>
                     <span className="auth__error__text">{resetErrors.codeErr}</span>
@@ -560,7 +577,10 @@ const AuthModal = (props: IAuthModal) => {
               form={signUp2Form}
             >
               <p className="signup__modal__form__timeout__text">
-                {phone} telefon raqamiga SMS-kod jo'natildi.
+                {
+                  lang === "ru" ? `На номер +${phone.slice(0, 3) + ` (` + phone.slice(3, 5) + `) ... - ` + phone.slice(8, 10) + ` - ` + phone.slice(10)} было выслано
+                  СМС сообщение с кодом` : lang === "uz" ? `+${phone.slice(0, 3) + ` (` + phone.slice(3, 5) + `) ... - ` + phone.slice(8, 10) + ` - ` + phone.slice(10)} telefon raqamiga aktivatsiya kodi jo'natildi.` : ""
+                }
               </p>
               <Form.Item
                 name="code"
@@ -568,6 +588,7 @@ const AuthModal = (props: IAuthModal) => {
               >
                 <Input.Password
                   placeholder={"Введите полученный код"}
+                  maxLength={4}
                 />
               </Form.Item>
               <span className="auth__error__text">{signUpErrors.codeErr}</span>

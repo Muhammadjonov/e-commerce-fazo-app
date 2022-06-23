@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Col, Row, Collapse } from "antd";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import baseAPI from "../../api/baseAPI";
 import { SearchInfoType, SearchResType } from "../../types";
 import { searchUrl } from "../../api/apiUrls";
+import { LoadingContext } from "react-router-loading";
 
 const { Panel } = Collapse;
 
@@ -44,6 +45,7 @@ function SearchResult() {
   let key = searchParams.get("key");
   const [searchResultProducts, setSearchResultProducts] = useState<SearchInfoType>({} as SearchInfoType);
   const [page, setPage] = useState<number>(1);
+  const loadingContext = useContext(LoadingContext);
 
 
   const [grid, setGrid] = useState<GridType>({
@@ -73,6 +75,7 @@ function SearchResult() {
       .then((res) => {
         if (res.data.status === 200) {
           setSearchResultProducts(res.data.data);
+          loadingContext.done();
         }
       })
   }, [category, key])
@@ -88,7 +91,7 @@ function SearchResult() {
     })
   }, [page])
 
-  let { items, _links, _meta } = searchResultProducts;
+  let { items, _meta } = searchResultProducts;
 
   return (
     <section className="search_result_wrapper">

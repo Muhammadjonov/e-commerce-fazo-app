@@ -45,6 +45,7 @@ function HeaderCenter(props: IHeaderCenter) {
     setLang(language)
     changeLang(language);
     handleOpen(false);
+    window.location.reload();
   }
 
   const handleLogout = () => {
@@ -53,7 +54,6 @@ function HeaderCenter(props: IHeaderCenter) {
     dispatch(logout());
   }
   // userDropdown menu
-
   const userMenu = (
     <Menu
       items={[
@@ -79,6 +79,17 @@ function HeaderCenter(props: IHeaderCenter) {
       ]}
     />
   )
+
+  // drawer sign in handle
+
+  const handleOpenDrawerSignIn = () => {
+    authContext.onOpenSignInModal();
+    handleOpen(false);
+  }
+  const handleOpenDrawerSignUp = () => {
+    authContext.onOpenSignUpModal();
+    handleOpen(false);
+  }
 
   return (
     <div className="header_center">
@@ -133,7 +144,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       <Badge count={11}>
                         <img src="/assets/icons/Compare.svg" alt="Compare-icon" />
                       </Badge>
-                      <span className="user_nav_text">Сравнение</span>
+                      <span className="user_nav_text">{t(`comparison.${lang}`)}</span>
                     </Link>
                   </li>
                   <li>
@@ -155,7 +166,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       <Badge count={11}>
                         <img src="/assets/icons/shopping-cart.svg" alt="shopping-cart-icon" />
                       </Badge>
-                      <span className="user_nav_text">Корзина</span>
+                      <span className="user_nav_text">{t(`cart.${lang}`)}</span>
                     </Link>
                   </li>
 
@@ -188,16 +199,24 @@ function HeaderCenter(props: IHeaderCenter) {
           >
             <div className="reg_area">
               <div className="left">
-                <button type="button" className={"sign_in_btn"}>
+                <button
+                  type="button"
+                  className={"sign_in_btn"}
+                  onClick={handleOpenDrawerSignIn}
+                >
                   <span className="user_wrapper">
-                    <img src="/assets/icons/user.svg" alt="user" />
+                    <img src="/assets/icons/User.svg" alt="user" />
                   </span>
-                  <span className="p14_regular sign_in_text" >Войти</span>
+                  <span className="p14_regular sign_in_text" >{t(`signIn.${lang}`)}</span>
                 </button>
               </div>
               <div className="right">
-                <button type="button" className={"sign_up_btn"}>
-                  <span className="p14_regular sign_up_text">Регистрация</span>
+                <button
+                  type="button"
+                  className={"sign_up_btn"}
+                  onClick={handleOpenDrawerSignUp}
+                >
+                  <span className="p14_regular sign_up_text">{t(`registration.${lang}`)}</span>
                 </button>
               </div>
             </div>
@@ -230,7 +249,7 @@ function HeaderCenter(props: IHeaderCenter) {
                 className={`lang_btn p16_regular ${lang === "uz" ? "active" : ""}`}
                 onClick={() => handleChangeLang("uz")}
               >
-                Узб
+                O'zb
               </button>
             </div>
 

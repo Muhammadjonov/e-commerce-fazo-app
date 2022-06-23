@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Col, Row, Collapse, Slider, Checkbox, Drawer } from "antd";
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
@@ -22,6 +22,7 @@ import EmptyFilteredResult from "./EmplyFilteredResult";
 import useWindowSize from "../../custom/hooks/useWindowSize";
 import DrawerOpenBtn from "../../components/Buttons/DrawerOpenBtn";
 import { AlignLeftOutlined } from "@ant-design/icons";
+import { LoadingContext } from "react-router-loading";
 
 const { Panel } = Collapse;
 
@@ -38,6 +39,7 @@ function Filter() {
   const [perPage, setPerPage] = useState<number>(24);
   const [priceSort, setPriceSort] = useState<number>(3);
   const [nameSort, setNameSort] = useState<number>(3);
+  const loadingContext = useContext(LoadingContext);
 
   const [grid, setGrid] = useState<GridType>({
     multiple: true,
@@ -96,10 +98,13 @@ function Filter() {
     setIsLoading(true);
     baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })
       .then((res) => {
-        setByCategoryProducts(res.data.data);
-        setIsLoading(false);
-        setMinPrice(res.data?.data?.minPrice);
-        setMaxPrice(res.data?.data?.maxPrice);
+        if (res.data.status === 200) {
+          setByCategoryProducts(res.data.data);
+          setIsLoading(false);
+          setMinPrice(res.data?.data?.minPrice);
+          setMaxPrice(res.data?.data?.maxPrice);
+          loadingContext.done();
+        }
       })
   }, [page, category_slug, filter, perPage, priceSort, nameSort]);
 
@@ -113,17 +118,6 @@ function Filter() {
       behavior: "smooth"
     })
   }, [page])
-
-  // useEffect(() => {
-  //   reset();
-  //   setMaxPrice("");
-  //   setMinPrice("");
-  // }, [pathname])
-
-  // useEffect(() => {
-  //   setMaxPrice(max_price);
-  //   setMinPrice(min_price);
-  // }, [])
 
   useEffect(() => {
     width < 768 && handleChangeGrid({ multiple: true, one: false })

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./_style.scss";
 
@@ -8,18 +8,23 @@ import PopularSliderCard from './PopularSliderCard';
 import { RecommendedCategoriesInfoType, RecommendedCategoriesResType } from '../../../types';
 import baseAPI from '../../../api/baseAPI';
 import { recommendedCategoriesUrl } from '../../../api/apiUrls';
+import { LoadingContext } from 'react-router-loading';
 
 
 function PopularCategoriesSlider() {
   const [popularCategories, setPopularCategories] = useState<RecommendedCategoriesInfoType>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
+  const loadingContext = useContext(LoadingContext);
 
   const getPopularCategories = useCallback(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     baseAPI.fetchAll<RecommendedCategoriesResType>(recommendedCategoriesUrl)
       .then((res) => {
-        setPopularCategories(res.data.data);
-        setIsLoading(false);
+        if (res.data.status === 200) {
+          setPopularCategories(res.data.data);
+          loadingContext.done();
+          // setIsLoading(false);
+        }
       })
   }, [])
 

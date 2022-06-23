@@ -18,7 +18,7 @@ export type Tlangs = [
 
 function LanguageComp() {
   const { lang } = useT();
-  let langs: Tlangs = [{ 1: "Ру", 2: "ru" }, { 1: "Узб", 2: "uz" }];
+  let langs: Tlangs = [{ 1: "Ру", 2: "ru" }, { 1: "O'zb", 2: "uz" }];
 
   const handleSetLang = (language: LangType) => {
     setLang(language);
@@ -37,7 +37,7 @@ function LanguageComp() {
     </Menu>
   );
 
-  const currentLangText = lang === "uz" ? "Узб" : "Ру";
+  const currentLangText = lang === "uz" ? "O'zb" : "Ру";
 
   return (
     <Dropdown overlay={langMenu} placement="bottomRight">
