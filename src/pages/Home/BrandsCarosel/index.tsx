@@ -17,7 +17,7 @@ function BrandsCarusel() {
 
   const [brands, setBrands] = useState<BrandInfoType>([] as BrandInfoType)
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const loadingContext = useContext(LoadingContext);
+  // const loadingContext = useContext(LoadingContext);
 
   const getBrands = useCallback(() => {
     setIsLoading(true);
@@ -26,8 +26,12 @@ function BrandsCarusel() {
         if (res.data.status === 200) {
           setBrands(res.data.data);
           setIsLoading(false);
-          loadingContext.done();
+
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+
       })
   }, [])
 
@@ -65,14 +69,12 @@ function BrandsCarusel() {
                 spaceBetween: 30,
               },
             }}
-            slidesPerView={5}
             spaceBetween={30}
             freeMode={true}
             navigation={true}
-            grabCursor={true}
             loop={true}
             autoplay={{
-              delay: 2500,
+              delay: 3000,
               disableOnInteraction: false,
             }}
             modules={[FreeMode, Autoplay, Navigation]}

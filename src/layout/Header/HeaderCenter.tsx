@@ -116,7 +116,7 @@ function HeaderCenter(props: IHeaderCenter) {
                           className="right_item"
                           onClick={authContext.onOpenSignInModal}
                         >
-                          <img src="/assets/icons/User.svg" alt="user" />
+                          <img src="/assets/icons/user.svg" alt="user" />
                           <span className="user_nav_text">
                             {t(`signIn.${lang}`)}
                           </span>
@@ -127,9 +127,9 @@ function HeaderCenter(props: IHeaderCenter) {
                           trigger={['click']}
                         >
                           <div className="right_item">
-                            <img src="/assets/icons/User.svg" alt="user" />
+                            <img src="/assets/icons/user.svg" alt="user" />
                             <span className="user_nav_text">
-                              {userData?.user?.firstname?.slice(0, 7)}...
+                              {userData?.user?.first_name?.slice(0, 7)}...
                             </span>
                           </div>
                         </Dropdown>
@@ -142,7 +142,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/balance"}
                     >
                       <Badge count={11}>
-                        <img src="/assets/icons/Compare.svg" alt="Compare-icon" />
+                        <img src="/assets/icons/compare.svg" alt="compare-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`comparison.${lang}`)}</span>
                     </Link>

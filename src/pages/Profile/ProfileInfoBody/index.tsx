@@ -5,41 +5,48 @@ import "./_style.scss";
 import DeleteAddressModal from './DeleteAddressModal';
 import AddAddress from './AddAddress';
 import { Link } from 'react-router-dom';
-
+import { useAppSelector } from '../../../Store/hooks';
+import { useT } from '../../../custom/hooks/useT';
 
 const ProfileInfoBody = () => {
+  const { t, lang } = useT();
+  const { user } = useAppSelector(state => state.auth)
+
+  const { first_name, last_name, username, } = user;
 
   const handleOnChangeNotif = (checked: boolean) => {
     console.log(`switch to ${checked}`);
   }
 
+
+
   return (
     <>
-      <Col lg={12}>
+      <Col lg={12} md={24}>
         <div className="personal_data bordered_card">
           <div className="top">
 
             <div className="left">
               <Avatar icon={<img src='/assets/icons/user.svg' alt="user" />} />
               <span className="text">
-                Личные данные
+                {t(`personaData.${lang}`)}
               </span>
             </div>
             <Link to="/profile/personal-data" className="change_profile_btn">
-              Изменит
+              {t(`edit.${lang}`)}
             </Link>
           </div>
 
           <div className="body">
             <h5 className="user_title">
-              Shukurillo Tojinazarov
+              {first_name} {last_name}
             </h5>
-            <p className="tel_number"><span>Телефон:</span>+998 99 0333848</p>
+            <p className="tel_number"><span>{t(`phone.${lang}`)}</span>{`+${username}`}</p>
           </div>
 
         </div>
       </Col>
-      <Col lg={12}>
+      {/* <Col lg={12}>
         <div className="notifications bordered_card">
           <div className="top">
             <div className="left">
@@ -79,8 +86,8 @@ const ProfileInfoBody = () => {
           </div>
         </div>
 
-      </Col>
-      <Col lg={12}>
+      </Col> */}
+      {/* <Col lg={12}>
         <div className="add_address bordered_card">
           <div className="top">
             <div className="left">
@@ -124,11 +131,11 @@ const ProfileInfoBody = () => {
 
             <AddAddress />
 
-            {/* <ChangeAddress /> */}
+             <ChangeAddress /> 
 
           </div>
         </div>
-      </Col>
+      </Col> */}
     </>
   )
 }

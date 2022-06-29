@@ -12,7 +12,7 @@ function GoodCheaper() {
 
   const [bestsellers, setBestsellers] = useState<ProductType[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const loadingContext = useContext(LoadingContext);
+  // const loadingContext = useContext(LoadingContext);
 
   const getBestsellers = useCallback(() => {
     baseAPI.fetchWithParams<BestsellerResType>(bestsellerUrl, { limit: 8 })
@@ -20,8 +20,12 @@ function GoodCheaper() {
         if (res.data.status === 200) {
           setBestsellers(res.data.data);
           setIsLoading(false);
-          loadingContext.done();
+
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+
       })
   }, [])
 
@@ -32,12 +36,12 @@ function GoodCheaper() {
   return (
     <div className="good_cheaper">
       <div className="container">
-        <CardsTitleTop title="Товары дешевле:" toUrl="#" />
+        <CardsTitleTop title="Товары дешевле:" toUrl="/more-products/bestseller-view" />
         <Row gutter={[30, 30]}>
           {
             bestsellers.map(bestseller => (
               <Col key={bestseller.id} lg={6} md={8} sm={12} xs={24} >
-                <ProductCard {...bestseller} />
+                <ProductCard product={bestseller} />
               </Col>
             ))
           }

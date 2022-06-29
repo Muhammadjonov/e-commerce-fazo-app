@@ -78,6 +78,10 @@ function SearchResult() {
           loadingContext.done();
         }
       })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+        loadingContext.done();
+      })
   }, [category, key])
 
   useEffect(() => {
@@ -125,7 +129,7 @@ function SearchResult() {
                       grid.multiple
                         ? items?.map((product) => (
                           <Col lg={6} md={8} sm={12} xs={24} key={product.id}>
-                            <ProductCard {...product} />
+                            <ProductCard product={product} />
                           </Col>
                         ))
                         : items?.map((product) => (

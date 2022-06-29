@@ -30,6 +30,10 @@ function ProductView() {
           loadingContext.done();
         }
       })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+        loadingContext.done();
+      })
   }, [])
 
   useEffect(() => {
@@ -44,17 +48,17 @@ function ProductView() {
       text: "Главная"
     },
     {
-      id: productDetail?.categorySlug,
+      id: "2",
       toUrl: "#",
       text: productDetail?.category
     },
     {
-      id: productDetail?.subCategorySlug,
+      id: "3",
       toUrl: `/category/${productDetail?.subCategorySlug}`,
       text: productDetail?.subCategory
     },
     {
-      id: productDetail?.name,
+      id: "4",
       toUrl: `#`,
       text: productDetail?.name
     }

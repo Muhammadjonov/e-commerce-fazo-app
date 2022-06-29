@@ -1,11 +1,10 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import i18next from 'i18next';
-import { useLocation } from 'react-router-dom';
-import { Routes, Route } from "react-router-loading"
+import { useLocation, useRoutes } from 'react-router-dom';
+import { Routes, Route, LoadingContext } from "react-router-loading"
 import { fallbackLang, languages } from './constants';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
-import routes from './routes';
 import { BackTop } from 'antd';
 import { useAppSelector } from "./Store/hooks";
 import { getAccessToken, setUserToLocalStorage } from "./helpers";
@@ -30,6 +29,11 @@ import ProfileInfoBody from './pages/Profile/ProfileInfoBody';
 import PersonalData from './pages/Profile/PersonalData';
 import Checkout from './pages/Checkout';
 import PageNotFound from './pages/PageNotFound';
+import BestsellerFilter from './pages/BestsellerFilter';
+import AllNewCommersProduct from './pages/AllNewCommersProduct';
+import Profile from './pages/Profile';
+import { setLoading } from './features/loading/loadingSlice';
+import routes from './routes';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -44,17 +48,19 @@ export const AuthContext = createContext({} as AuthContextType);
 
 function App() {
   const [isOnline, setIsOnline] = useState<boolean>(false);
+  const [isProfileLoading, setIsProfileLoading] = useState<boolean>();
   // let element = useRoutes(routes)
-
+  const loadingContext = useContext(LoadingContext);
   let { pathname } = useLocation();
 
-  const auth = useAppSelector(state => state.auth)
+  const auth = useAppSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const access_token = getAccessToken();
     if (access_token) {
+      setIsProfileLoading(true);
       request
         .get<UserResType>(profileUrl, {
           headers: {
@@ -64,9 +70,17 @@ function App() {
         .then((res) => {
           dispatch(setUser(res.data));
           setUserToLocalStorage(res.data.data);
-        }).catch(e => console.info(e));
+        }).catch(e => {
+          console.info(e);
+          setIsProfileLoading(false);
+        })
+        .finally(() => {
+          setIsProfileLoading(false);
+        })
+        ;
+    } else {
+      setIsProfileLoading(false);
     }
-
     // window.addEventListener("load", function (e) {
     //   let basket = getBasketFromLocalStorage();
     //   if (basket) {
@@ -144,23 +158,33 @@ function App() {
     <AuthContext.Provider value={contextValue}>
       <div className="mixel_wrapper">
         <Header menuCategories={menuCategories} />
-        <Routes>
-          <Route path="/" element={<Home />} loading />
-          <Route path="category/:category_slug" element={<Filter />} loading />
-          <Route path="search" element={<SearchResult />} loading />
-          <Route path="product/detail/:product_slug" element={<ProductView />} loading />
-          <Route path="page" element={<HeaderTopMenus />} >
-            <Route path=":page_slug" element={<HeaderMenusContent />} loading />
-          </Route>
-          <Route path="favorites" element={<Favorites />} />
-          <Route path="balance" element={<ProductComparison />} />
-          <Route path="profile" element={<ProductComparison />} >
-            <Route index element={<ProfileInfoBody />} />
-            <Route path="personal-data" element={<PersonalData />} />
-          </Route>
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
+        {/* {element} */}
+        {
+          !isProfileLoading ? (
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="category/:category_slug" element={<Filter />} loading />
+              <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
+              <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
+              <Route path="search" element={<SearchResult />} loading />
+              <Route path="product/detail/:product_slug" element={<ProductView />} loading />
+              <Route path="page" element={<HeaderTopMenus />} >
+                <Route path=":page_slug" element={<HeaderMenusContent />} loading />
+              </Route>
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="balance" element={<ProductComparison />} />
+              <Route path="profile" element={<Profile />} >
+                <Route index element={<ProfileInfoBody />} />
+                <Route path="personal-data" element={<PersonalData />} />
+              </Route>
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          ) : (<div style={{ height: "400px" }}>
+
+          </div>)
+        }
+
         <Footer menuCategories={menuCategories} />
         <BackTop className="fazo__back__top" />
         <AuthModal
@@ -168,7 +192,6 @@ function App() {
           isOpenSignIn={isOpenSignInModal}
           onCloseSignUpModal={onCloseSignUpModal}
           onCloseSignInModal={onCloseSignInModal}
-
         />
       </div>
     </AuthContext.Provider>

@@ -39,6 +39,22 @@
     "ru": "Назад",
     "uz": "Orqaga"
   },
+  "cancel": {
+    "ru": "Отмена",
+    "uz": "Bekor qilish"
+  },
+  "home": {
+    "ru": "Главная",
+    "uz": "Bosh sahifa"
+  },
+  "personalCabinet": {
+    "ru": "Личный кобинет",
+    "uz": "Shaxsiy kabinet"
+  },
+  "myInstallments": {
+    "ru": "Мои рассрочки",
+    "uz": "Mening to'lovlarim"
+  },
   "information": {
     "ru": "Информация",
     "uz": "Ma'lumot"
@@ -62,5 +78,53 @@
   "signInOrCreateAccount": {
     "ru": " Войти или создать профиль",
     "uz": "Tizimga kiring yoki profil yarating"
+  },
+  "newPassword": {
+    "ru": " Новый пароль",
+    "uz": "Yangi parol"
+  },
+  "personaData": {
+    "ru": "Личные данные",
+    "uz": "Shaxsiy ma'lumotlar"
+  },
+  "personalData": {
+    "ru": "Персональные данные",
+    "uz": "Shaxsiy ma'lumotlar"
+  },
+  "yourFirstName": {
+    "ru": "Ваше имя",
+    "uz": "Ismingiz"
+  },
+  "yourLastName": {
+    "ru": "Ваша фамилия",
+    "uz": "Familiyangiz"
+  },
+  "yourMiddleName": {
+    "ru": "Отчество",
+    "uz": "Otasini ismi"
+  },
+  "phoneNumber": {
+    "ru": "Номер телефона",
+    "uz": "Telefon raqami"
+  },
+  "password": {
+    "ru": "Пароль",
+    "uz": "Parol"
+  },
+  "repeatPassword": {
+    "ru": "Подтвердить пароль",
+    "uz": "Parolni  tasdiqlang"
+  },
+  "save": {
+    "ru": "Сохранить",
+    "uz": "Saqlash"
+  },
+  "edit": {
+    "ru": "Изменить",
+    "uz": "O'zgartirish"
+  },
+  "phone": {
+    "ru": "Телефон:",
+    "uz": "Telefon:"
   }
 }

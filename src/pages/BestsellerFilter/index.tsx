@@ -5,25 +5,21 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import ProductCard from "../../components/ProductCard";
 import ShowMoreBtn from "../../components/Buttons/ShowMoreBtn";
 import PaginationComp from "../../components/PaginationComp";
-import InterestedProduct from "./InterestedProducts";
-import PopularModels from "./PopularModels";
-import WhereBuying from "./WhereBuying";
 import BreadcrumbComp from "../../components/BreadcrumbComp";
 import ProductCountComp from "../../components/ProductCountComp";
 import ProductCardCol from "../../components/ProductCardCol";
-import { ByCategoryProductsInfoType, ByCategoryProductsResType, RecommendedCategoriesInfoType, RecommendedCategoriesResType } from "../../types";
+import { MoreProductsInfoType, MoreProductsResType, RecommendedCategoriesInfoType, RecommendedCategoriesResType } from "../../types";
 import baseAPI from "../../api/baseAPI";
-import { byCategoriesProductUrl, recommendedCategoriesUrl } from "../../api/apiUrls";
+import { moreProductsUrl, recommendedCategoriesUrl } from "../../api/apiUrls";
 import { useLocation, useParams } from "react-router-dom";
 import "./_style.scss";
-import { formatPrice } from "../../helpers";
 import { useT } from "../../custom/hooks/useT";
-import EmptyFilteredResult from "./EmplyFilteredResult";
 import useWindowSize from "../../custom/hooks/useWindowSize";
 import DrawerOpenBtn from "../../components/Buttons/DrawerOpenBtn";
 import { AlignLeftOutlined } from "@ant-design/icons";
 import { LoadingContext } from "react-router-loading";
-import SpinnerLoader from "../../components/SpinnerLoader";
+import PopularModels from "../Filter/PopularModels";
+import EmptyFilteredResult from "../Filter/EmplyFilteredResult";
 
 const { Panel } = Collapse;
 
@@ -33,8 +29,8 @@ type GridType = {
   one: boolean;
 };
 
-function Filter() {
-  const [byCategoryProducts, setByCategoryProducts] = useState<ByCategoryProductsInfoType>({} as ByCategoryProductsInfoType);
+function BestsellerFilter() {
+  const [byCategoryProducts, setByCategoryProducts] = useState<MoreProductsInfoType>({} as MoreProductsInfoType);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [perPage, setPerPage] = useState<number>(24);
@@ -53,15 +49,15 @@ function Filter() {
   const { width } = useWindowSize();
 
 
-  const { brands, category, characters, maxPrice: max_price, minPrice: min_price, products, subCategory, categoryLikeProducts } = byCategoryProducts;
+  const { brands, characters, maxPrice: max_price, minPrice: min_price, products, categoryLikeProducts } = byCategoryProducts;
 
   const [minPrice, setMinPrice] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<string>("");
   const [filter, setFilter] = useState<any>([] as any);
   const [brandId, setBrandId] = useState<CheckboxValueType[]>([]);
   let newObj = {} as any;
-  characters?.map(item => item.assigns.map(subItem => subItem.value)).forEach(el => el.forEach(subEl => newObj[subEl] = false))
-  console.log("new", newObj)
+  // characters?.map(item => item.assigns.map(subItem => subItem.value)).forEach(el => el.forEach(subEl => newObj[subEl] = false))
+  // console.log("new", newObj)
 
   const {
     register,
@@ -88,12 +84,17 @@ function Filter() {
     }));
   };
 
+  // price lar ni o'zgartirish logikasi
+
+  let unformattedMinPrice = minPrice?.replace(/\s/g, '')
+  let unformattedMaxPrice = maxPrice?.replace(/\s/g, '')
+
   // productlarni olish
-  let { category_slug } = useParams();
+  let { products_url } = useParams();
 
   const getProducts = useCallback(() => {
     setIsLoading(true);
-    baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, maxPrice, minPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })
+    baseAPI.fetchWithPagination<MoreProductsResType>({ url: moreProductsUrl + products_url, page, params: { maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })
       .then((res) => {
         if (res.data.status === 200) {
           setByCategoryProducts(res.data.data);
@@ -104,20 +105,24 @@ function Filter() {
       .catch((err) => {
         console.log("err", err);
       })
-  }, [page, category_slug, filter, perPage, priceSort, nameSort]);
+  }, [page, products_url, filter, perPage, priceSort, nameSort]);
 
   const getProductss = useCallback(() => {
-    baseAPI.fetchWithPagination<ByCategoryProductsResType>({ url: byCategoriesProductUrl, page, params: { key: category_slug, } })
+    setIsLoading(true);
+    baseAPI.fetchWithPagination<MoreProductsResType>({ url: moreProductsUrl + products_url, page, params: { maxPrice: unformattedMaxPrice, minPrice: unformattedMinPrice, filter, brandId, priceSort, nameSort }, per_page: perPage })
       .then((res) => {
         if (res.data.status === 200) {
-          setMinPrice(res.data?.data?.minPrice);
+          setByCategoryProducts(res.data?.data);
+          setIsLoading(false);
+          loadingContext.done();
           setMaxPrice(res.data?.data?.maxPrice);
+          setMinPrice(res.data?.data?.minPrice);
         }
       })
       .catch((err) => {
         console.log("err", err);
       })
-  }, [category_slug]);
+  }, [products_url]);
 
   // getPopularCategories
 
@@ -129,12 +134,16 @@ function Filter() {
     baseAPI.fetchAll<RecommendedCategoriesResType>(recommendedCategoriesUrl)
       .then((res) => {
         if (res.data.status === 200) {
-          setPopularCategories(res.data?.data);
+          setPopularCategories(res.data.data);
           loadingContext.done();
           // setIsLoading(false);
         }
       })
   }, [])
+
+  useEffect(() => {
+    getPopularCategories();
+  }, [getPopularCategories])
 
   useEffect(() => {
     getPopularCategories();
@@ -146,9 +155,8 @@ function Filter() {
   }, [getProducts])
 
   useEffect(() => {
-    getProductss()
+    getProductss();
   }, [getProductss])
-
 
   useEffect(() => {
     window.scrollTo({
@@ -161,34 +169,37 @@ function Filter() {
     width < 768 && handleChangeGrid({ multiple: true, one: false })
   }, [width])
 
-  useEffect(() => {
-    setPage(1)
-  }, [priceSort, nameSort, maxPrice, minPrice, filter])
-
   const handleBrandChange = (checkedValues: CheckboxValueType[]) => {
     setBrandId(checkedValues);
   }
 
   const handleMaxMinChange = (values: [number, number]) => {
+    // setMinPrice(formatPrice(values[0]));
+    // setMaxPrice(formatPrice(values[1]));
     setMinPrice(values[0].toString());
     setMaxPrice(values[1].toString());
   }
 
   const handleMinPrice = (e: any) => {
     let newValue = e.target.value.replace(/[^0-9]+/g, '')
+    // setMinPrice(formatPrice(newValue));
     setMinPrice(newValue);
   }
   const handleMaxPrice = (e: any) => {
     let newValue = e.target.value.replace(/[^0-9]+/g, '')
+    // setMaxPrice(formatPrice(newValue));
     setMaxPrice(newValue);
   }
 
   const handleChangePerPage = () => {
     setPerPage(prev => prev + 24);
   }
+  console.log("perpa", perPage)
   // filter drawer
 
   const handleOpen = (value: boolean) => setIsOpenFilterDrawer(value)
+
+
 
   // generate breadcrumbs
 
@@ -202,12 +213,7 @@ function Filter() {
       {
         id: "2",
         toUrl: "#",
-        text: category?.title
-      },
-      {
-        id: "3",
-        toUrl: `/category/${subCategory?.slug}`,
-        text: subCategory?.title
+        text: products_url === "recommended-view" ? "Рекомендуем" : "Товары дешевле"
       }
     ]
   }
@@ -223,19 +229,20 @@ function Filter() {
           <BreadcrumbComp breadcrumbs={generateBreadcrumbs()} />
           <ProductCountComp total={products?._meta?.totalCount} perCount={products?._meta?.perPage < products?._meta?.totalCount ? products?._meta?.perPage : products?._meta?.totalCount} />
         </div>
+
         <div className="filter_body">
           <Row gutter={[30, 30]}>
             <Col lg={5} sm={0} xs={0}>
               {/* <h3 className="title20_bold" onClick={clearassignFilter}>Clear</h3> */}
               <form className="filter_form" onSubmit={handleSubmit(onSubmit)}>
                 <Collapse
-                  defaultActiveKey={["1"]}
+                  defaultActiveKey={["0"]}
                   ghost
                   expandIconPosition="end"
                 >
                   <Panel
                     header={<p className="p18_regular">Цена ({t(`sum.${lang}`)})</p>}
-                    key="1"
+                    key="0"
                   >
                     <div className='slider_filter'>
                       <div className="top">
@@ -251,7 +258,6 @@ function Filter() {
                           value={maxPrice}
                           name="maxPrice"
                           onChange={handleMaxPrice}
-                          // {...register("maxPrice")}
                           autoComplete="off"
                         />
                       </div>
@@ -275,7 +281,7 @@ function Filter() {
                     brands && brands?.length !== 0 && (
                       <Panel
                         header={<p className="p18_regular">Бренд</p>}
-                        key="2"
+                        key="1"
                       >
                         <Checkbox.Group onChange={handleBrandChange}>
                           {
@@ -305,32 +311,35 @@ function Filter() {
 
                   {
                     characters?.map((character) => (
-                      <Panel
-                        header={<p className="p18_regular">{character.name}</p>}
-                        key={character.id}
-                      >
-                        {
-                          character?.assigns?.map((assign) => (
-                            <div
-                              className="checkbox_filter"
-                              key={assign.id}
-                            >
-                              <Controller
-                                name={assign.value}
-                                control={control}
-                                render={({ field }) => (
-                                  <Checkbox
-                                    {...field}
-                                    className='checkbox_filter'
-                                  >
-                                    {assign.value}
-                                  </Checkbox>
-                                )}
-                              />
-                            </div>
-                          ))
-                        }
-                      </Panel>
+                      character.length !== 0 &&
+                      character?.map((items) => (
+                        <Panel
+                          header={<p className="p18_regular">{items.name}</p>}
+                          key={items.id}
+                        >
+                          {
+                            items?.assigns?.map((assign) => (
+                              <div
+                                className="checkbox_filter"
+                                key={assign.id}
+                              >
+                                <Controller
+                                  name={assign.value}
+                                  control={control}
+                                  render={({ field }) => (
+                                    <Checkbox
+                                      {...field}
+                                      className='checkbox_filter'
+                                    >
+                                      {assign.value}
+                                    </Checkbox>
+                                  )}
+                                />
+                              </div>
+                            ))
+                          }
+                        </Panel>
+                      ))
                     ))
                   }
                 </Collapse>
@@ -352,12 +361,12 @@ function Filter() {
 
                             {
                               width < 992 && (
-                                <DrawerOpenBtn setState={setIsOpenFilterDrawer} icon={<AlignLeftOutlined />} text={"Фильтр"} />
+                                <DrawerOpenBtn setState={setIsOpenFilterDrawer} icon={<AlignLeftOutlined />} />
                               )
                             }
 
                             <Drawer
-                              title={"Фильтр"}
+                              title={<></>}
                               placement="left"
                               onClose={() => handleOpen(false)}
                               visible={isOpenFilterDrawer}
@@ -380,6 +389,7 @@ function Filter() {
                                           value={minPrice}
                                           name="minPrice"
                                           onChange={handleMinPrice}
+                                          // {...register("minPrice")}
                                           autoComplete="off"
                                         />
                                         <input
@@ -387,12 +397,14 @@ function Filter() {
                                           value={maxPrice}
                                           name="maxPrice"
                                           onChange={handleMaxPrice}
+                                          // {...register("maxPrice")}
                                           autoComplete="off"
                                         />
                                       </div>
                                       <Slider
                                         className="max_min_slider"
                                         range
+                                        defaultValue={[+min_price, +max_price]}
                                         min={+min_price ?? 0}
                                         max={+max_price ?? 1000000}
                                         value={[+minPrice, +maxPrice]}
@@ -432,35 +444,36 @@ function Filter() {
                                       </Panel>
                                     )
                                   }
-
                                   {
                                     characters?.map((character) => (
-                                      <Panel
-                                        header={<p className="p18_regular">{character.name}</p>}
-                                        key={character.id}
-                                      >
-                                        {character?.assigns?.length !== 0 &&
-                                          character?.assigns?.map((assign) => (
-                                            <div
-                                              className="checkbox_filter"
-                                              key={assign.id}
-                                            >
-                                              <Controller
-                                                name={assign.value}
-                                                control={control}
-                                                render={({ field }) => (
-                                                  <Checkbox
-                                                    {...field}
-                                                    className='checkbox_filter'
-                                                  >
-                                                    {assign.value}
-                                                  </Checkbox>
-                                                )}
-                                              />
-                                            </div>
-                                          ))
-                                        }
-                                      </Panel>
+                                      character?.map((items) => (
+                                        <Panel
+                                          header={<p className="p18_regular">{items.name}</p>}
+                                          key={items.id}
+                                        >
+                                          {
+                                            items?.assigns?.map((assign) => (
+                                              <div
+                                                className="checkbox_filter"
+                                                key={assign.id}
+                                              >
+                                                <Controller
+                                                  name={assign.value}
+                                                  control={control}
+                                                  render={({ field }) => (
+                                                    <Checkbox
+                                                      {...field}
+                                                      className='checkbox_filter'
+                                                    >
+                                                      {assign.value}
+                                                    </Checkbox>
+                                                  )}
+                                                />
+                                              </div>
+                                            ))
+                                          }
+                                        </Panel>
+                                      ))
                                     ))
                                   }
                                 </Collapse>
@@ -530,7 +543,7 @@ function Filter() {
                     <PaginationComp {...products?._meta} page={page} setPage={setPage} />
 
                     <PopularModels popularCategories={popularCategories} />
-                    <InterestedProduct categoryLikeProducts={categoryLikeProducts} />
+                    {/* <InterestedProduct categoryLikeProducts={categoryLikeProducts} /> */}
                   </>
                 ) : (
                   <EmptyFilteredResult />
@@ -546,4 +559,4 @@ function Filter() {
   );
 }
 
-export default Filter;
+export default BestsellerFilter;

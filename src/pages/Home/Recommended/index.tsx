@@ -14,7 +14,7 @@ function Recommended() {
   const [recommendedProducts, setRecommendedProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [stock, setStock] = useState<StockInfoType>({} as StockInfoType);
-  const loadingContext = useContext(LoadingContext);
+  // const loadingContext = useContext(LoadingContext);
 
   // get Recommended products
   const getNewProducts = useCallback(() => {
@@ -23,8 +23,12 @@ function Recommended() {
         if (res.data.status === 200) {
           setRecommendedProducts(res.data.data);
           setIsLoading(false);
-          loadingContext.done();
+
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+
       })
   }, [])
 
@@ -36,6 +40,9 @@ function Recommended() {
         if (res.data.status === 200) {
           setStock(res.data.data);
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
       })
   }, [])
 
@@ -49,7 +56,7 @@ function Recommended() {
   return (
     <div className="recommended">
       <div className="container">
-        <CardsTitleTop title="Рекомендуем" toUrl="#" />
+        <CardsTitleTop title="Рекомендуем" toUrl="/more-products/recommended-view" />
         <Row gutter={[30, 30]}>
           <Col lg={6} md={0} sm={0} xs={0}>
             <div className="left">
@@ -64,7 +71,7 @@ function Recommended() {
               {
                 recommendedProducts.map(recommendedProduct => (
                   <Col lg={6} md={8} sm={12} xs={24} key={recommendedProduct.id}>
-                    <ProductCard {...recommendedProduct} />
+                    <ProductCard product={recommendedProduct} />
                   </Col>
                 ))
               }

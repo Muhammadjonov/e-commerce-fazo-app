@@ -9,6 +9,7 @@ import PhoneInput from 'react-phone-input-2';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import { setUser, UserResType } from '../../features/authSlice';
 import "./__style.scss";
+import CountDownComp from '../CountDownComp';
 
 const { Step } = Steps;
 
@@ -80,6 +81,9 @@ const AuthModal = (props: IAuthModal) => {
           setIsLoadings(prev => ({ ...prev, signIn: false }));
         }
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, signIn: false }));
+      })
   };
 
 
@@ -106,10 +110,15 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, signUpPhone: false }));
+      })
   }
 
   const resendCode = (url: string) => {
-    formData.append('phone', phone);
+    if (url === enterPhoneUrl) {
+      formData.append('phone', phone);
+    } else formData.append("phone", resetPhone)
     baseAPI.create<any>(url, formData)
       .then((res) => {
         if (res.data.status === 200) {
@@ -120,6 +129,11 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+
+      })
+
+
     setResetErrors({
       phoneErr: "",
       codeErr: "",
@@ -153,6 +167,9 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, signUpCode: false }));
+      })
   }
   const onFinishSignUp3 = (values: any) => {
     let { firstname, lastname, password, password_repeat } = values;
@@ -178,6 +195,8 @@ const AuthModal = (props: IAuthModal) => {
       })
       .catch((err) => {
         console.log('err', err);
+      }).finally(() => {
+        setIsLoadings(prev => ({ ...prev, signUpPsw: false }));
       })
   }
 
@@ -201,6 +220,9 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, resetPhone: false }));
+      })
   }
   const onFinishReset2 = (values: any) => {
     let { code } = values;
@@ -220,6 +242,9 @@ const AuthModal = (props: IAuthModal) => {
       })
       .catch((err) => {
         console.log('err', err);
+      })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, resetCode: false }));
       })
   }
 
@@ -246,6 +271,9 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, resetPsw: false }));
+      })
   }
 
 
@@ -268,6 +296,7 @@ const AuthModal = (props: IAuthModal) => {
       codeErr: "",
       pswErr: ""
     });
+    setSigninError("");
     resetPswForm1.resetFields();
     resetPswForm2.resetFields();
     resetPswForm3.resetFields();
@@ -285,7 +314,6 @@ const AuthModal = (props: IAuthModal) => {
       codeErr: "",
       pswErr: ""
     });
-
   }
   // signUp modal onCancel 
 
@@ -443,15 +471,7 @@ const AuthModal = (props: IAuthModal) => {
                       />
                     </Form.Item>
                     <span className="auth__error__text">{resetErrors.codeErr}</span>
-                    <div className="signup__modal__form__resend_btn_wrapper">
-                      <button
-                        onClick={() => resendCode(resetEnterPhoneUrl)}
-                        type="button"
-                        className="signup__modal__form__resend_btn_wrapper__code"
-                      >
-                        Отправить код еще раз
-                      </button>
-                    </div>
+                    <CountDownComp url={resetEnterPhoneUrl} repiteCode={resendCode} />
                     <div
                       className="signup__modal__form__btn__wrapper"
                     >
@@ -592,15 +612,7 @@ const AuthModal = (props: IAuthModal) => {
                 />
               </Form.Item>
               <span className="auth__error__text">{signUpErrors.codeErr}</span>
-              <div className="signup__modal__form__resend_btn_wrapper">
-                <button
-                  onClick={() => resendCode(enterPhoneUrl)}
-                  type="button"
-                  className="signup__modal__form__resend_btn_wrapper__code"
-                >
-                  Отправить код еще раз
-                </button>
-              </div>
+              <CountDownComp url={enterPhoneUrl} repiteCode={resendCode} />
               <div
                 className="signup__modal__form__btn__wrapper"
               >

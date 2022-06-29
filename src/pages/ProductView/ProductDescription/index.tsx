@@ -5,22 +5,32 @@ import "./_style.scss";
 import { useState } from "react";
 import InstallmentModal from "../../../components/InstallmentModal";
 import { CharacterAssignsType } from "../../../types";
+import BuyNowModal from "./BuyNowModal";
 
 
 interface IProductDescription {
   name: string,
   price: number | null,
-  characterAssigns: CharacterAssignsType[]
+  characterAssigns: CharacterAssignsType[],
+  description: string,
+  short_description: string,
+  id: number
 }
 
 const ProductDescription = (props: IProductDescription) => {
 
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
+  const [isOpenBuyNowModal, setIsOpenBuyNowModal] = useState<boolean>(false);
 
   const onOpenInstallmentModal = () => setIsOpenInstallmentModal(true);
   const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
 
-  const { name, price, characterAssigns } = props;
+  const onOpenBuyNowModal = () => setIsOpenBuyNowModal(true);
+  const onCloseBuyNowModal = () => setIsOpenBuyNowModal(false);
+
+
+
+  const { name, price, characterAssigns, description, short_description, id } = props;
 
   return (
     <div className="product_desc">
@@ -64,7 +74,7 @@ const ProductDescription = (props: IProductDescription) => {
           </div>
 
           <div className="button_area">
-            <BuyButton text="Купить сейчас" />
+            <BuyButton text="Купить сейчас" onClick={onOpenBuyNowModal} />
             <BuyButton onClick={onOpenInstallmentModal} text="Купить в рассрочку сейчас" className="checkout" />
           </div>
 
@@ -73,7 +83,7 @@ const ProductDescription = (props: IProductDescription) => {
               Название для договора
             </p>
             <p className="p14_regular right">
-              MacBook Pro 13 MXK32ZP/A Space Gray Full HD 1920x1080 IPS / Core™ i7-1165G7 / 8GB RAM / 256GB SSD
+              {short_description}
             </p>
           </div>
           {
@@ -83,7 +93,7 @@ const ProductDescription = (props: IProductDescription) => {
           }
         </Col>
       </Row>
-
+      <BuyNowModal product_id={id} isOpenBuyNowModal={isOpenBuyNowModal} onOpenBuyNowModal={onOpenBuyNowModal} onCloseBuyNowModal={onCloseBuyNowModal} />
       <InstallmentModal isOpenInstallmentModal={isOpenInstallmentModal} onOpenInstallmentModal={onOpenInstallmentModal} onCloseInstallmentModal={onCloseInstallmentModal} />
     </div>
   )

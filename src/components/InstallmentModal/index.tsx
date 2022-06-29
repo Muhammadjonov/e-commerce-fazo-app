@@ -14,16 +14,8 @@ export default function InstallmentModal(props: IInstallmentModal) {
 
   const { isOpenInstallmentModal, onOpenInstallmentModal, onCloseInstallmentModal } = props;
 
-  const [confirmLoading, setConfirmLoading] = useState(false);
-
-
   const handleOk = () => {
-
-    setConfirmLoading(true);
-    setTimeout(() => {
-      onCloseInstallmentModal()
-      setConfirmLoading(false);
-    }, 2000);
+    onCloseInstallmentModal()
   };
 
   const handleCancel = () => {
@@ -41,7 +33,6 @@ export default function InstallmentModal(props: IInstallmentModal) {
       }
       visible={isOpenInstallmentModal}
       onOk={handleOk}
-      confirmLoading={confirmLoading}
       onCancel={handleCancel}
     >
       <ModalTop />

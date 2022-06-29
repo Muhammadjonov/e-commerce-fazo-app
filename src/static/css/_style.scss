@@ -55,6 +55,41 @@ button {
   cursor          : pointer;
 }
 
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-track {
+  &:hover {
+    background-color: var(--gray5);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color_black2);
+  border          : 5px solid #fff;
+  border-radius   : 16px;
+
+  &:hover {
+    border-width: 4px;
+  }
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
 .ant-affix {
   z-index: 11;
 }

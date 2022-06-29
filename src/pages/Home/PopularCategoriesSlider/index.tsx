@@ -14,7 +14,7 @@ import { LoadingContext } from 'react-router-loading';
 function PopularCategoriesSlider() {
   const [popularCategories, setPopularCategories] = useState<RecommendedCategoriesInfoType>([]);
   // const [isLoading, setIsLoading] = useState(true);
-  const loadingContext = useContext(LoadingContext);
+  // const loadingContext = useContext(LoadingContext);
 
   const getPopularCategories = useCallback(() => {
     // setIsLoading(true);
@@ -22,9 +22,13 @@ function PopularCategoriesSlider() {
       .then((res) => {
         if (res.data.status === 200) {
           setPopularCategories(res.data.data);
-          loadingContext.done();
+
           // setIsLoading(false);
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+
       })
   }, [])
 

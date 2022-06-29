@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { useT } from '../../custom/hooks/useT';
 import { ProductType } from '../../types';
 import "./_style.scss";
+import { useAppDispatch, useAppSelector } from '../../Store/hooks';
+import { addToFavoutires, removeFromFavourites } from '../../features/favourites/favouritesSlice';
+import { AuthContext } from '../../App';
 
 
+interface IProductCard {
+  product: ProductType
+}
 
-function ProductCard(props: ProductType) {
+function ProductCard(props: IProductCard) {
   const {
     name,
     brandName,
@@ -15,13 +21,31 @@ function ProductCard(props: ProductType) {
     price,
     old_price,
     imageUrl,
-  } = props;
+    userSaveProduct: isFavourite
+  } = props.product;
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((store) => store.auth);
+  // const favourites = useAppSelector((state) => state.favourites);
+  const { onOpenSignInModal } = useContext(AuthContext);
 
   const { t, lang } = useT();
 
+  const onFavouriteClick = (slug: string, isFavourite: boolean) => {
+    if (auth.authorized) {
+      if (isFavourite) {
+        dispatch(removeFromFavourites(slug));
+      } else {
+        dispatch(addToFavoutires(props.product));
+      }
+    } else {
+      onOpenSignInModal();
+    }
+  };
+
+
   return (
     <Card className="product_card" bordered={false} hoverable>
-      <div className="card_body">
+      <div className="card_body" title={name}>
         <Link className="product_view_link" to={`/product/detail/${slug}`}>
           <figure>
             <img src={imageUrl ?? ""} alt={name} className="product_card_img" />
@@ -45,7 +69,10 @@ function ProductCard(props: ProductType) {
             </button>
           </li>
           <li>
-            <button type='button'>
+            <button
+              type='button'
+              onClick={() => onFavouriteClick(slug, isFavourite)}
+            >
               <img src={"/assets/icons/filled_heart.svg"} alt="heart" />
             </button>
           </li>

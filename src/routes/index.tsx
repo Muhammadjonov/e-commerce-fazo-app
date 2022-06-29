@@ -3,6 +3,7 @@ import HeaderMenusContent from "../pages/HeaderTopMenus/HeaderMenusContent";
 
 const Home = lazy(() => import("../pages/Home"));
 const Filter = lazy(() => import("../pages/Filter"));
+const BestsellerFilter = lazy(() => import("../pages/BestsellerFilter"));
 const ProductView = lazy(() => import("../pages/ProductView"));
 const HeaderTopMenus = lazy(() => import("../pages/HeaderTopMenus"));
 const SearchResult = lazy(() => import("../pages/SearchResult"));
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "category/:category_slug",
     element: <Filter />,
+  },
+  {
+    path: "more-product/:products_url",
+    element: <BestsellerFilter />,
   },
   {
     path: "search",

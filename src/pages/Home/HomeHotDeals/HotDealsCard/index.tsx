@@ -76,7 +76,7 @@ function HotDealsCard(props: IHotDealsCard) {
   return (
     <Card className="hot_deals_card" bordered={false} hoverable>
 
-      <div className="card_body">
+      <div className="card_body" title={name}>
         {/* {
           discount !== 0 && (
             <div className="discount">

@@ -1,6 +1,13 @@
+import { UserType } from "../features/authSlice"
 
 export type userType = {
 	name: string
+}
+
+export type ProfileUpdateResType = {
+	status: number,
+	message: string,
+	data: UserType
 }
 
 export type BannerInfoType = {
@@ -88,7 +95,7 @@ export type ProductType = {
 	price: number | null,
 	old_price: number | null,
 	imageUrl: string | null,
-	userSaveProduct?: boolean
+	userSaveProduct: boolean
 }
 
 export type BestsellerResType = {
@@ -185,13 +192,44 @@ export type ByCategoryProductsInfoType = {
 		_meta: _meta
 	}
 	maxPrice: string,
-	minPrice: string
+	minPrice: string,
+	categoryLikeProducts: ProductType[]
 }
 
 export type ByCategoryProductsResType = {
 	status: number,
 	message: string,
 	data: ByCategoryProductsInfoType
+}
+
+export type MoreProductsInfoType = {
+	brands: {
+		id: number,
+		name: string,
+		productCount: string
+	}[],
+	characters: {
+		id: number,
+		name: string,
+		assigns: {
+			id: number,
+			value: string
+		}[]
+	}[][],
+	products: {
+		items: ProductType[],
+		_links: _links,
+		_meta: _meta
+	}
+	maxPrice: string,
+	minPrice: string,
+	categoryLikeProducts: ProductType[]
+}
+
+export type MoreProductsResType = {
+	status: number,
+	message: string,
+	data: MoreProductsInfoType
 }
 
 export type SearchInfoType = {
@@ -343,3 +381,18 @@ export type PaymentListResTyoe = {
 	message: string,
 	data: PaymentListInfoType
 }
+
+export type AllNewProductsInfoType = {
+	items: ProductType[],
+	_links: _links,
+	_meta: _meta
+}
+
+export type AllNewProductsResType = {
+	status: number,
+	message: string,
+	data: {
+		products: AllNewProductsInfoType
+	}
+}
+

@@ -1,7 +1,8 @@
-import { AlignLeftOutlined, BarsOutlined, MoreOutlined } from '@ant-design/icons';
-import { Affix, Breadcrumb, Button, Col, Divider, Drawer, Row } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
+import { AlignLeftOutlined, } from '@ant-design/icons';
+import { Breadcrumb, Col, Divider, Drawer, Row } from 'antd';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
+import { LoadingContext } from 'react-router-loading';
 import { leftMenuUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import DrawerOpenBtn from '../../components/Buttons/DrawerOpenBtn';
@@ -30,6 +31,7 @@ function HeaderTopMenus() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   let { page_slug } = useParams();
   let headerMenu = page_slug!.slice(1)!;
+  const loadingContext = useContext(LoadingContext);
 
   const getLeftMenus = useCallback(() => {
     setIsLoading(true);
@@ -37,7 +39,14 @@ function HeaderTopMenus() {
       .then((res) => {
         if (res.data.status === 200) {
           setLeftMenus(res.data.data);
+          loadingContext.done();
         }
+      })
+      .catch((err) => {
+        console.log("err", err)
+      })
+      .finally(() => {
+        loadingContext.done();
       })
   }, [])
 

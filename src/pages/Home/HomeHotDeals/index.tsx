@@ -11,7 +11,7 @@ import { LoadingContext } from "react-router-loading";
 function HomeHotDeals() {
   const [newProducts, setNewProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const loadingContext = useContext(LoadingContext);
+  // const loadingContext = useContext(LoadingContext);
 
   const getNewProducts = useCallback(() => {
     baseAPI.fetchWithParams<NewProductsResType>(newProductsUrl, { limit: 8 })
@@ -19,8 +19,12 @@ function HomeHotDeals() {
         if (res.data.status === 200) {
           setNewProducts(res.data.data);
           setIsLoading(false);
-          loadingContext.done();
+
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+
       })
   }, [])
 
@@ -31,7 +35,7 @@ function HomeHotDeals() {
   return (
     <div className="home_hot_deals">
       <div className="container">
-        <CardsTitleTop title="Горящие предложения" toUrl='#' />
+        <CardsTitleTop title="Горящие предложения" toUrl='/more-products/newcommers' />
         <Row gutter={[30, 30]}>
           {
             newProducts.map((newProduct) => (

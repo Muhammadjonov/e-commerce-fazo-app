@@ -1,0 +1,22 @@
+.countdown__comp {
+  &__resendbtn {
+    cursor     : pointer;
+    color      : var(--brand_color_red);
+    font-family: "GothamPro-Medium", sans-serif;
+    display    : block;
+    text-align : center;
+    margin     : 0 auto 25px;
+  }
+
+  &__timer {
+    margin-bottom: 25px;
+    text-align   : center;
+    font-family  : "GothamPro-Medium", sans-serif;
+    color        : var(--color_black2);
+
+    &__time {
+      min-width: 50px;
+      display  : inline-block;
+    }
+  }
+}

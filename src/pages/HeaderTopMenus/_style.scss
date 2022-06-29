@@ -64,18 +64,21 @@
 
 }
 
-.ant-drawer-content-wrapper {
+.header__top__menus__drawer.ant-drawer {
 
-  .ant-drawer-header,
-  .ant-drawer-body {
-    padding: 16px 20px;
-  }
+  .ant-drawer-content-wrapper {
 
-  .ant-drawer-header-title {
-    flex-direction: row-reverse;
+    .ant-drawer-header,
+    .ant-drawer-body {
+      padding: 16px 20px;
+    }
 
-    .ant-drawer-close {
-      margin-right: 0;
+    .ant-drawer-header-title {
+      flex-direction: row-reverse;
+
+      .ant-drawer-close {
+        margin-right: 0;
+      }
     }
   }
 }
