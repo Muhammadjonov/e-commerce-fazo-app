@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import PhoneInput from 'react-phone-input-2';
 import { buyNowUrl } from '../../../../api/apiUrls';
 import baseAPI from '../../../../api/baseAPI';
+import NotificationComp from '../../../../components/NotificationComp';
 import { useT } from '../../../../custom/hooks/useT';
 import { useAppSelector } from '../../../../Store/hooks';
 import "./__style.scss";
@@ -46,7 +47,7 @@ const BuyNowModal = (props: IBuyNowModal) => {
       .then((res) => {
         if (res.data.status === 200) {
           setIsLoading(false);
-          message.success("Ваша заявка принята! Мы свяжемся с Вами в ближайшее время!");
+          // NotificationComp("Ваша заявка принята!", "Мы свяжемся с Вами в ближайшее время!", "red_bg", "top")
           handleCancel();
         }
         else if (res.data.status === 403) {
@@ -99,7 +100,10 @@ const BuyNowModal = (props: IBuyNowModal) => {
         </Form.Item>
         <span className="buy__now__from__err">{formErr}</span>
         <div className="buy__now__modal__form__btns">
-          <Button type='link'>
+          <Button
+            onClick={handleCancel}
+            type='link'
+          >
             {t(`cancel.${lang}`)}
           </Button>
           <Button

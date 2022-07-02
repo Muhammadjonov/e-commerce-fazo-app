@@ -61,13 +61,14 @@ function SearchComp(props: ISearchComp) {
 
   return (
 
-    <Input.Group compact className='search_wrapper' >
+    <Input.Group compact className='search_wrapper'>
       <Select
         bordered={false}
         value={searchValues.category}
         style={{ width: '30%' }}
         size='large'
         onSelect={onSelect}
+        getPopupContainer={() => document.getElementById("search__comp")!}
       >
         <Option value="all">{t(`allCategory.${lang}`)}</Option>
         {

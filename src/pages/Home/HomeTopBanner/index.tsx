@@ -22,7 +22,7 @@ function HomeTopBanner() {
   const [categories, setCategories] = useState<CategoriesInfoType>([])
   const [isCategoriesLoading, setIsCategoriesLoading] = useState<boolean>(true);
 
-  // const loadingContext = useContext(LoadingContext);
+  const loadingContext = useContext(LoadingContext);
 
 
   const getBanners = useCallback(() => {
@@ -30,12 +30,12 @@ function HomeTopBanner() {
       .then((res) => {
         if (res.data.status === 200) {
           setBanner(res.data.data);
-
+          loadingContext.done();
         }
       })
       .catch((err) => console.log("err", err))
       .finally(() => {
-
+        loadingContext.done();
       })
   }, [])
 

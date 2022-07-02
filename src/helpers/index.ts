@@ -1,3 +1,4 @@
+import { FavouritesType } from './../features/favourites/favouritesSlice';
 import i18next from 'i18next';
 import { UserType } from '../features/authSlice';
 import { InitialBasketStateType } from '../features/basket/basketSlice';
@@ -31,8 +32,7 @@ export const removeUserFromLocalStorage = () => {
   localStorage.removeItem("user");
 };
 
-export const getAccessToken = (): string =>
-  getItemFromLocalStorage("access_token");
+export const getAccessToken = (): string => getItemFromLocalStorage("access_token");
 
 // export const getRememberToken = (): string =>
 //   getItemFromLocalStorage("remember_token");
@@ -74,3 +74,9 @@ export const onlyNumber = (value: any) => {
   return value.replace(/[^0-9 ]/gi, "");
 };
 
+export const isFavourite = (
+  favourites: FavouritesType,
+  id: number
+): boolean => {
+  return favourites?.find((f) => f.id === id) ? true : false;
+};

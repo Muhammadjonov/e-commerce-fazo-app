@@ -1,19 +1,17 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import i18next from 'i18next';
-import { useLocation, useRoutes } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Routes, Route, LoadingContext } from "react-router-loading"
 import { fallbackLang, languages } from './constants';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import { BackTop } from 'antd';
-import { useAppSelector } from "./Store/hooks";
+import { useAppDispatch, useAppSelector } from "./Store/hooks";
 import { getAccessToken, setUserToLocalStorage } from "./helpers";
-import { fetchUserById } from "./Store/authSlice";
 import { MenuCategoriesInfoType, MenuCategoriesResType } from './types';
 import { menuCategoriesUrl, profileUrl } from './api/apiUrls';
 import baseAPI from './api/baseAPI';
 import AuthModal from './components/AuthModal';
-import { useDispatch } from 'react-redux';
 import { request } from './api/config';
 import { setUser, UserResType } from './features/authSlice';
 // pages
@@ -33,7 +31,7 @@ import BestsellerFilter from './pages/BestsellerFilter';
 import AllNewCommersProduct from './pages/AllNewCommersProduct';
 import Profile from './pages/Profile';
 import { setLoading } from './features/loading/loadingSlice';
-import routes from './routes';
+import { getFavourites } from './features/favourites/favouritesSlice';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -55,7 +53,7 @@ function App() {
 
   const auth = useAppSelector(state => state.auth);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const access_token = getAccessToken();
@@ -90,15 +88,14 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pathname]);
+    if (auth.authorized) {
+      dispatch(getFavourites());
+    }
+  }, [auth]);
 
   useEffect(() => {
-    let token = getAccessToken();
-    if (token) {
-      fetchUserById(localStorage.getItem('userId') || '0')
-    }
-  }, [])
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
 
   useEffect(() => {
     let currentLang = localStorage.getItem("language");
@@ -159,31 +156,26 @@ function App() {
       <div className="mixel_wrapper">
         <Header menuCategories={menuCategories} />
         {/* {element} */}
-        {
-          !isProfileLoading ? (
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="category/:category_slug" element={<Filter />} loading />
-              <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
-              <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
-              <Route path="search" element={<SearchResult />} loading />
-              <Route path="product/detail/:product_slug" element={<ProductView />} loading />
-              <Route path="page" element={<HeaderTopMenus />} >
-                <Route path=":page_slug" element={<HeaderMenusContent />} loading />
-              </Route>
-              <Route path="favorites" element={<Favorites />} />
-              <Route path="balance" element={<ProductComparison />} />
-              <Route path="profile" element={<Profile />} >
-                <Route index element={<ProfileInfoBody />} />
-                <Route path="personal-data" element={<PersonalData />} />
-              </Route>
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          ) : (<div style={{ height: "400px" }}>
-
-          </div>)
-        }
+        <Routes>
+          <Route path="/" element={<Home />} loading />
+          <Route path="category/:category_slug" element={<Filter />} loading />
+          <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
+          <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
+          <Route path="search" element={<SearchResult />} loading />
+          <Route path="product/detail/:product_slug" element={<ProductView />} loading />
+          <Route path="page" element={<HeaderTopMenus />} >
+            <Route path=":page_slug" element={<HeaderMenusContent />} loading />
+          </Route>
+          <Route path="favorites" element={<Favorites />} />
+          <Route path="balance" element={<ProductComparison />} />
+          <Route path="profile" element={<Profile />} >
+            <Route index element={<ProfileInfoBody />} />
+            <Route path="personal-data" element={<PersonalData />} />
+          </Route>
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        {/* ) : (<div style={{ height: "400px" }}> */}
 
         <Footer menuCategories={menuCategories} />
         <BackTop className="fazo__back__top" />

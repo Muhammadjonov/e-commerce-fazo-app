@@ -26,6 +26,7 @@ function HeaderCenter(props: IHeaderCenter) {
   const { t, lang } = useT();
   const dispatch = useDispatch();
   const userData = useAppSelector(state => state.auth);
+  const { data: favoutites } = useAppSelector(state => state.favourites);
 
   const authContext = useContext(AuthContext);
 
@@ -102,7 +103,7 @@ function HeaderCenter(props: IHeaderCenter) {
               </div>
             </Col>
             <Col md={11} offset={1}>
-              <div className="header_center_middle">
+              <div className="header_center_middle" id="search__comp">
                 <SearchComp categories={categories} />
               </div>
             </Col>
@@ -152,7 +153,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       className="right_item"
                       to={"/favorites"}
                     >
-                      <Badge count={5}>
+                      <Badge count={favoutites?.length}>
                         <img src="/assets/icons/heart.svg" alt="heart-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`favorite.${lang}`)}</span>
@@ -205,7 +206,7 @@ function HeaderCenter(props: IHeaderCenter) {
                   onClick={handleOpenDrawerSignIn}
                 >
                   <span className="user_wrapper">
-                    <img src="/assets/icons/User.svg" alt="user" />
+                    <img src="/assets/icons/user.svg" alt="user" />
                   </span>
                   <span className="p14_regular sign_in_text" >{t(`signIn.${lang}`)}</span>
                 </button>

@@ -15,13 +15,14 @@ import "./static/css/_style.scss";
 import "./i18next/config";
 import { store } from './Store'
 import { Provider } from 'react-redux'
+import LoaderComp from './components/LoaderComp';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
 root.render(
 	<Provider store={store}>
-		<Suspense fallback={<h1>Loading...</h1>}>
+		<Suspense fallback={<LoaderComp />}>
 			<Router>
 				<App />
 			</Router>

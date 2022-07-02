@@ -1,19 +1,65 @@
 import { Card } from 'antd';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../../App';
 import { useT } from '../../../../custom/hooks/useT';
+import { addToFavoutires, removeFromFavourites } from '../../../../features/favourites/favouritesSlice';
+import { isFavourite } from '../../../../helpers';
+import { useAppDispatch, useAppSelector } from '../../../../Store/hooks';
+import { ProductType } from '../../../../types';
 // import Countdown from 'react-countdown';
 import "./_style.scss";
 
 interface IHotDealsCard {
-  id: number,
-  name: string,
-  brandName: string,
-  slug: string,
-  price: number | null,
-  old_price: number | null,
-  imageUrl: string | null,
+  product: ProductType
 }
 
+// Random component
+const Completionist = () => <div>You are good to go!</div>;
+interface Irenderer {
+  days: number,
+  hours: number,
+  minutes: number,
+  seconds: number,
+  completed: boolean,
+}
+// Renderer callback with condition
+const renderer = ({ days, hours, minutes, seconds, completed }: Irenderer) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <p className="offer_end_in">
+        <span className="offer_end_date p18_regular">
+          {days}
+          <span className="offer_end_date_text">
+            ДНЕЙ
+          </span>
+        </span>
+        <span className="offer_end_date p18_regular">
+          {hours}
+          <span className="offer_end_date_text">
+            ЧАСОВ
+          </span>
+        </span>
+        <span className="offer_end_date p18_regular">
+          {minutes}
+          <span className="offer_end_date_text">
+            МИНУТ
+          </span>
+        </span>
+        <span className="offer_end_date p18_regular">
+          {seconds}
+          <span className="offer_end_date_text">
+            СЕКУНД
+          </span>
+        </span>
+      </p>
+    )
+  }
+};
 function HotDealsCard(props: IHotDealsCard) {
   const {
     id,
@@ -23,53 +69,26 @@ function HotDealsCard(props: IHotDealsCard) {
     price,
     old_price,
     imageUrl,
-  } = props;
+  } = props.product;
+
   const { t, lang } = useT();
 
-  // Random component
-  const Completionist = () => <div>You are good to go!</div>;
-  interface Irenderer {
-    days: number,
-    hours: number,
-    minutes: number,
-    seconds: number,
-    completed: boolean,
-  }
-  // Renderer callback with condition
-  const renderer = ({ days, hours, minutes, seconds, completed }: Irenderer) => {
-    if (completed) {
-      // Render a completed state
-      return <Completionist />;
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((store) => store.auth);
+  const { data: favourites } = useAppSelector((state) => state.favourites);
+  let isFavorite = isFavourite(favourites, id);
+  const { onOpenSignInModal } = useContext(AuthContext);
+
+  const onFavouriteClick = () => {
+    if (auth.authorized) {
+
+      if (isFavorite) {
+        dispatch(removeFromFavourites(slug));
+      } else {
+        dispatch(addToFavoutires(props.product));
+      }
     } else {
-      // Render a countdown
-      return (
-        <p className="offer_end_in">
-          <span className="offer_end_date p18_regular">
-            {days}
-            <span className="offer_end_date_text">
-              ДНЕЙ
-            </span>
-          </span>
-          <span className="offer_end_date p18_regular">
-            {hours}
-            <span className="offer_end_date_text">
-              ЧАСОВ
-            </span>
-          </span>
-          <span className="offer_end_date p18_regular">
-            {minutes}
-            <span className="offer_end_date_text">
-              МИНУТ
-            </span>
-          </span>
-          <span className="offer_end_date p18_regular">
-            {seconds}
-            <span className="offer_end_date_text">
-              СЕКУНД
-            </span>
-          </span>
-        </p>
-      )
+      onOpenSignInModal();
     }
   };
 
@@ -111,17 +130,20 @@ function HotDealsCard(props: IHotDealsCard) {
         <ul>
           <li>
             <button type='button'>
-              <img src={"/assets/icons/filled_cart.svg"} alt="cart" />
+              <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
+            </button>
+          </li>
+          <li>
+            <button
+              type='button'
+              onClick={onFavouriteClick}
+            >
+              <img src={`/assets/icons/heart-${isFavorite ? 'red' : 'gray'}.svg`} alt="heart" />
             </button>
           </li>
           <li>
             <button type='button'>
-              <img src={"/assets/icons/filled_heart.svg"} alt="heart" />
-            </button>
-          </li>
-          <li>
-            <button type='button'>
-              <i className="fa-solid fa-scale-balanced"></i>
+              <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
             </button>
           </li>
         </ul>

@@ -7,6 +7,7 @@ import "./_style.scss";
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import { addToFavoutires, removeFromFavourites } from '../../features/favourites/favouritesSlice';
 import { AuthContext } from '../../App';
+import { isFavourite } from '../../helpers';
 
 
 interface IProductCard {
@@ -21,18 +22,21 @@ function ProductCard(props: IProductCard) {
     price,
     old_price,
     imageUrl,
-    userSaveProduct: isFavourite
+    id
+    // userSaveProduct: isFavourite
   } = props.product;
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
-  // const favourites = useAppSelector((state) => state.favourites);
+  const { data: favourites } = useAppSelector((state) => state.favourites);
+  let isFavorite = isFavourite(favourites, id);
   const { onOpenSignInModal } = useContext(AuthContext);
 
   const { t, lang } = useT();
 
-  const onFavouriteClick = (slug: string, isFavourite: boolean) => {
+  const onFavouriteClick = () => {
     if (auth.authorized) {
-      if (isFavourite) {
+
+      if (isFavorite) {
         dispatch(removeFromFavourites(slug));
       } else {
         dispatch(addToFavoutires(props.product));
@@ -41,7 +45,6 @@ function ProductCard(props: IProductCard) {
       onOpenSignInModal();
     }
   };
-
 
   return (
     <Card className="product_card" bordered={false} hoverable>
@@ -65,20 +68,20 @@ function ProductCard(props: IProductCard) {
         <ul>
           <li>
             <button type='button'>
-              <img src={"/assets/icons/filled_cart.svg"} alt="cart" />
+              <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
             </button>
           </li>
           <li>
             <button
               type='button'
-              onClick={() => onFavouriteClick(slug, isFavourite)}
+              onClick={onFavouriteClick}
             >
-              <img src={"/assets/icons/filled_heart.svg"} alt="heart" />
+              <img src={`/assets/icons/heart-${isFavorite ? 'red' : 'gray'}.svg`} alt="heart" />
             </button>
           </li>
           <li>
             <button type='button'>
-              <i className="fa-solid fa-scale-balanced"></i>
+              <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
             </button>
           </li>
         </ul>

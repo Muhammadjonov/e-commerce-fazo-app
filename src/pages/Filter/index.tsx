@@ -23,7 +23,6 @@ import useWindowSize from "../../custom/hooks/useWindowSize";
 import DrawerOpenBtn from "../../components/Buttons/DrawerOpenBtn";
 import { AlignLeftOutlined } from "@ant-design/icons";
 import { LoadingContext } from "react-router-loading";
-import SpinnerLoader from "../../components/SpinnerLoader";
 
 const { Panel } = Collapse;
 

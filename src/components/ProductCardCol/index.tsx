@@ -64,12 +64,12 @@ function ProductCardCol(props: ProductType) {
                 <ul>
                   <li>
                     <button type='button'>
-                      <img src={"/assets/icons/filled_heart.svg"} alt="heart" />
+                      <img src={"/assets/icons/heart-gray.svg"} alt="heart" />
                     </button>
                   </li>
                   <li>
                     <button type='button'>
-                      <i className="fa-solid fa-scale-balanced"></i>
+                      <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
                     </button>
                   </li>
                 </ul>

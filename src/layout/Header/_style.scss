@@ -116,7 +116,7 @@
               cursor        : pointer;
 
               .ant-badge-count {
-                background-color: var(--brand_color_red);
+                background-color: var(--brand_color_yellow);
                 font-weight     : bold;
               }
 
@@ -276,6 +276,9 @@
 
           img {
             margin-right: 17px;
+            width       : 20px;
+            height      : 20px;
+            object-fit  : contain;
           }
         }
 

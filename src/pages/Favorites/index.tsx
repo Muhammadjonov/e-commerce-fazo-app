@@ -1,9 +1,16 @@
 import { Col, Row } from 'antd';
-import React from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import BreadcrumbComp from '../../components/BreadcrumbComp';
 import FavoriteProductCard from './FavoriteProductCard';
 import "./_style.scss";
-import favoriteCardData from "./favoriteCardData.json";
+import { FavouritesType, removeAllFavourites } from '../../features/favourites/favouritesSlice';
+import baseAPI from '../../api/baseAPI';
+import { getFavouritesUrl } from '../../api/apiUrls';
+import { LoadingContext } from 'react-router-loading';
+import { ProductType } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../Store/hooks';
+import EmptyFavourites from './EmptyFavourites';
+import PaginationComp from '../../components/PaginationComp';
 
 const breadcrumbs = [
   {
@@ -17,29 +24,94 @@ const breadcrumbs = [
     text: "Изброанное",
   }
 ];
-
+type FavouritesResType = {
+  status: number,
+  message: string,
+  data: ProductType[]
+}
 const Favorites = () => {
+  const [page, setPage] = useState<number>(1);
+  let slicePage = (page - 1) * 20
+  // const [favourites, setFavourites] = useState<FavouritesType>([]);
+  const loadingContext = useContext(LoadingContext);
+  const { data: favourites, loading } = useAppSelector(
+    (store) => store.favourites
+  );
+  // const getFavourites = useCallback(() => {
+
+  //   baseAPI.fetchAll<FavouritesResType>(getFavouritesUrl)
+  //     .then((res) => {
+  //       if (res.data.status === 200) {
+  //         setFavourites(res.data?.data);
+  //         loadingContext.done();
+  //       }
+  //     })
+  // }, [])
+
+  // useEffect(() => {
+  //   getFavourites();
+  // }, [getFavourites])
+
+  useEffect(() => {
+    !loading && loadingContext.done();
+  }, [loading])
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }, [page])
+
+  let page_count = Math.ceil(favourites.length / 20);
+
+  const dispatch = useAppDispatch();
+
+  const deleteAllFavourites = () => dispatch(removeAllFavourites())
+
   return (
     <section className="favorites">
       <div className="container">
         <div className="favorite_breadcrumb_area">
           <BreadcrumbComp breadcrumbs={breadcrumbs} />
-          <button type='button' className="delete_all_favorites">Удалит все</button>
+          {
+            favourites.length !== 0 &&
+            <button
+              type='button'
+              className="delete_all_favorites"
+              onClick={deleteAllFavourites}
+            >
+              Удалит все
+            </button>
+          }
         </div>
         <div className="favorites_body">
           <h4 className="title20_bold favorite_title">
             Избранное
           </h4>
+          {
+            favourites.length !== 0 ? (
+              <>
+                <Row gutter={[30, 30]}>
+                  {
+                    favourites.slice(slicePage, page + 20).map((favourite) => (
+                      <Col lg={6} md={8} sm={12} xs={24} key={favourite.id}>
+                        <FavoriteProductCard {...favourite} />
+                      </Col>
+                    ))
+                  }
+                </Row>
+                {
+                  Math.ceil(favourites.length / 20) > 1 && (
+                    <PaginationComp pageCount={page_count} totalCount={favourites.length} page={page} setPage={setPage} />
+                  )
+                }
+              </>
+            ) : (
+              <EmptyFavourites />
+            )
+          }
 
-          <Row gutter={[30, 30]}>
-            {
-              favoriteCardData.map((product) => (
-                <Col flex={1} key={product.id}>
-                  <FavoriteProductCard {...product} />
-                </Col>
-              ))
-            }
-          </Row>
         </div>
       </div>
     </section>

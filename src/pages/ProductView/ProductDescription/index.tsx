@@ -2,10 +2,15 @@ import { Col, Row } from "antd";
 import ProductInfoComp from "./ProductInfoComp";
 import BuyButton from "./BuyButton";
 import "./_style.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import InstallmentModal from "../../../components/InstallmentModal";
 import { CharacterAssignsType } from "../../../types";
 import BuyNowModal from "./BuyNowModal";
+import NotificationComp from "../../../components/NotificationComp";
+import { useAppDispatch, useAppSelector } from "../../../Store/hooks";
+import { AuthContext } from "../../../App";
+import { isFavourite } from "../../../helpers";
+import { addToFavoutires, removeFromFavourites } from "../../../features/favourites/favouritesSlice";
 
 
 interface IProductDescription {
@@ -14,11 +19,16 @@ interface IProductDescription {
   characterAssigns: CharacterAssignsType[],
   description: string,
   short_description: string,
-  id: number
+  id: number,
+  slug: string,
+  brandName: string,
+  old_price: number | null,
+  imageUrl: string | null,
+  userSaveProduct?: boolean
 }
 
 const ProductDescription = (props: IProductDescription) => {
-
+  const { id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, short_description, description, characterAssigns } = props;
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
   const [isOpenBuyNowModal, setIsOpenBuyNowModal] = useState<boolean>(false);
 
@@ -28,9 +38,33 @@ const ProductDescription = (props: IProductDescription) => {
   const onOpenBuyNowModal = () => setIsOpenBuyNowModal(true);
   const onCloseBuyNowModal = () => setIsOpenBuyNowModal(false);
 
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((store) => store.auth);
+  const { data: favourites } = useAppSelector((state) => state.favourites);
+  let isFavorite = isFavourite(favourites, id);
+  const { onOpenSignInModal } = useContext(AuthContext);
+  let product = {
+    id,
+    name,
+    brandName,
+    slug,
+    price,
+    old_price,
+    imageUrl,
+    userSaveProduct
+  }
+  const onFavouriteClick = () => {
+    if (auth.authorized) {
 
-
-  const { name, price, characterAssigns, description, short_description, id } = props;
+      if (isFavorite) {
+        dispatch(removeFromFavourites(slug));
+      } else {
+        dispatch(addToFavoutires(product));
+      }
+    } else {
+      onOpenSignInModal();
+    }
+  };
 
   return (
     <div className="product_desc">
@@ -48,17 +82,20 @@ const ProductDescription = (props: IProductDescription) => {
                 <ul>
                   <li>
                     <button type='button'>
-                      <img src={"/assets/icons/filled_cart.svg"} alt="cart" />
+                      <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type='button'
+                      onClick={onFavouriteClick}
+                    >
+                      <img src={`/assets/icons/heart-${isFavorite ? 'red' : 'gray'}.svg`} alt="heart" />
                     </button>
                   </li>
                   <li>
                     <button type='button'>
-                      <img src={"/assets/icons/filled_heart.svg"} alt="heart" />
-                    </button>
-                  </li>
-                  <li>
-                    <button type='button'>
-                      <i className="fa-solid fa-scale-balanced"></i>
+                      <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
                     </button>
                   </li>
                 </ul>

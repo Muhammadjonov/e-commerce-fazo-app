@@ -16,7 +16,7 @@ interface IBaseApi {
   fetchWithParams<T>(url: string, params: object): AxiosPromise<T>;
   fetchWithPagination<T>(args: FetchWithPaginationType): AxiosPromise<T>;
   create<T>(url: string, data: object): AxiosPromise<T>;
-  createWithParams<T>(url: string, params: object): AxiosPromise<T>;
+  createWithParams<T>(url: string, data: null, params: object): AxiosPromise<T>;
   update: (id: string, url: string, data: object) => AxiosPromise;
   remove: (id: string, url: string) => Promise<boolean>;
 }
@@ -48,8 +48,8 @@ const baseAPI: IBaseApi = {
     let res = await request.post<T>(url, data);
     return res;
   },
-  async createWithParams<T>(url: string, params: object) {
-    let res = await request.post<T>(url, { params });
+  async createWithParams<T>(url: string, data: null, params: object = {}) {
+    let res = await request.post<T>(url, data, { params: params });
     return res;
   },
 

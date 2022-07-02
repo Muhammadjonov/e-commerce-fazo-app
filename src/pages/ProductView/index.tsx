@@ -13,7 +13,6 @@ import RecentlyWatched from './RecentlyWatched';
 
 import "./_style.scss";
 
-
 function ProductView() {
   let { product_slug } = useParams();
   const [productDetail, setProductDetail] = useState<ProductDetailInfoType>({} as ProductDetailInfoType);

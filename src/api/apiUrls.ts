@@ -33,4 +33,5 @@ export const moreProductsUrl = "product-manager/product/";
 export const newCommersProductsUrl = "product-manager/product/new-comers-view";
 export const getFavouritesUrl = "product-manager/product-save/index";
 export const addFavoritesUrl = "product-manager/product-save/create";
+export const deleteAllFavoritesUrl = "product-manager/product-save/delete-all";
 export const buyNowUrl = "site/buy-now";

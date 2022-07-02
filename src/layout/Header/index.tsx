@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import HeaderBottom from './HeaderBottom';
 import HeaderCenter from './HeaderCenter';
 import HeaderTop from './HeaderTop';
-import { Affix } from "antd";
 import "./_style.scss";
 import { CategoriesInfoType, CategoriesResType, HeaderInfoType, HeaderResType, HeaderTopMenuInfoType, HeaderTopMenuResType, MenuCategoriesInfoType } from "../../types";
 import { categoriesUrl, headerSettingsUrl, headerTopMenuUrl } from "../../api/apiUrls";
 import baseAPI from "../../api/baseAPI";
 import { LoadingContext } from 'react-router-loading';
+import { Affix } from 'antd';
 
 interface IHeader {
   menuCategories: MenuCategoriesInfoType
@@ -83,7 +83,9 @@ function Header(props: IHeader) {
         !isHeaderTopMenusLoading && !isHeaderSettingsLoading && !isCategoriesLoading && (
           <>
             <HeaderTop {...headerSettings} headerTopMenus={headerTopMenus} />
-            <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
+            <Affix offsetTop={0}>
+              <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
+            </Affix>
             <HeaderBottom categories={categories} menuCategories={menuCategories} />
           </>
         )

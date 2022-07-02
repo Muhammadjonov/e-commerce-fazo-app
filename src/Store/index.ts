@@ -7,7 +7,7 @@ export const store = configureStore({
 	reducer: {
 		auth: authSlice,
 		loading: loadingSlice,
-		favorites: favouritesSlice
+		favourites: favouritesSlice
 	},
 })
 

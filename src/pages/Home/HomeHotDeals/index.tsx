@@ -40,7 +40,7 @@ function HomeHotDeals() {
           {
             newProducts.map((newProduct) => (
               <Col key={newProduct.id} lg={6} md={8} sm={12} xs={24} >
-                <HotDealsCard {...newProduct} />
+                <HotDealsCard product={newProduct} />
               </Col>
             ))
           }

@@ -95,7 +95,7 @@ export type ProductType = {
 	price: number | null,
 	old_price: number | null,
 	imageUrl: string | null,
-	userSaveProduct: boolean
+	userSaveProduct?: boolean
 }
 
 export type BestsellerResType = {
@@ -349,7 +349,8 @@ export type ProductDetailInfoType = {
 	characterAssigns: CharacterAssignsType[],
 	images: string[],
 	is_delivery: number,
-	delivery_price: number
+	delivery_price: number,
+	brandName: string
 }
 
 export type ProductDetailResType = {

@@ -1,8 +1,8 @@
-import { addFavoritesUrl } from './../../api/apiUrls';
+import { addFavoritesUrl, deleteAllFavoritesUrl } from './../../api/apiUrls';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getFavouritesUrl } from "../../api/apiUrls";
 import baseAPI from "../../api/baseAPI";
-import { ProductType } from "../../types";
+import { ProductType, _links, _meta } from "../../types";
 
 export const getFavourites = createAsyncThunk('favourites/get', async () => {
   let res = await baseAPI.fetchAll<FavouritesReducerType>(getFavouritesUrl);
@@ -10,7 +10,7 @@ export const getFavourites = createAsyncThunk('favourites/get', async () => {
 });
 
 export const addToFavoutires = createAsyncThunk('favourites/add', async (product: ProductType) => {
-  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, { key: product.slug });
+  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: product.slug });
   if (res.data.status === 200) {
     return product;
   } else {
@@ -19,9 +19,16 @@ export const addToFavoutires = createAsyncThunk('favourites/add', async (product
 });
 
 export const removeFromFavourites = createAsyncThunk('favourites/remove', async (slug: string) => {
-  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, { key: slug });
-  return { res, slug }
+  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: slug });
+  if (res.data.status === 200) {
+    return { slug }
+  }
 });
+
+export const removeAllFavourites = createAsyncThunk('favourites/removeAll', async () => {
+  let res = await baseAPI.create<AddFavouriteResType>(deleteAllFavoritesUrl, {});
+  return res.data
+})
 
 export type AddFavouriteResType = {
   status: number,
@@ -29,14 +36,13 @@ export type AddFavouriteResType = {
   data: null
 }
 
-export type FavouriteType = ProductType;
+export type FavouritesType = ProductType[]
 
-export type FavouritesType = Array<FavouriteType>;
 
 export type FavouritesReducerType = {
-  status: number;
-  data: FavouriteType[];
-  message?: string
+  status: number,
+  data: FavouritesType,
+  message?: string,
   loading: boolean;
 }
 
@@ -62,10 +68,16 @@ export const favouritesSlice = createSlice({
         state.loading = false
       })
       .addCase(removeFromFavourites.fulfilled, (state, action: any) => {
-        if (action.payload.res?.data?.status === true) {
-          state.data = state.data.filter(data => data.id !== action.payload.id)
-        }
+
+        state.data = state.data.filter(data => data.slug !== action.payload.slug)
+
         state.loading = false
+      })
+      .addCase(removeAllFavourites.fulfilled, (state, action: any) => {
+        if (action.payload.status === 200) {
+          state.data = []
+          state.loading = false
+        }
       })
       .addCase(removeFromFavourites.pending, (state) => {
         state.loading = true
@@ -76,6 +88,9 @@ export const favouritesSlice = createSlice({
       .addCase(getFavourites.pending, (state) => {
         state.loading = true
       })
+      .addCase(removeAllFavourites.pending, (state) => {
+        state.loading = true
+      })
       .addCase(removeFromFavourites.rejected, (state) => {
         state.loading = false;
       })
@@ -84,6 +99,9 @@ export const favouritesSlice = createSlice({
       })
       .addCase(getFavourites.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(removeAllFavourites.rejected, (state) => {
+        state.loading = false
       })
   }
 });
