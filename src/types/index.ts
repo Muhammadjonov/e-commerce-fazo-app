@@ -397,3 +397,14 @@ export type AllNewProductsResType = {
 	}
 }
 
+export type HaveQuestionsInfoType = {
+	managers: string,
+	phonesNumbers: string,
+	emails: string
+}
+
+export type HaveQuestionsResType = {
+	status: number,
+	message: string,
+	data: HaveQuestionsInfoType
+}

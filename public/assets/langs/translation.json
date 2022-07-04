@@ -126,5 +126,21 @@
   "phone": {
     "ru": "Телефон:",
     "uz": "Telefon:"
+  },
+  "yourEmail": {
+    "ru": "",
+    "uz": "Emailingiz"
+  },
+  "topic": {
+    "ru": "Тема обращения",
+    "uz": "Mavzu"
+  },
+  "yourMessage": {
+    "ru": "Ваше собшение",
+    "uz": "Xabaringiz"
+  },
+  "send": {
+    "ru": "Отправить",
+    "uz": "Jo'natish"
   }
 }

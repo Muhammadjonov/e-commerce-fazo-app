@@ -35,3 +35,6 @@ export const getFavouritesUrl = "product-manager/product-save/index";
 export const addFavoritesUrl = "product-manager/product-save/create";
 export const deleteAllFavoritesUrl = "product-manager/product-save/delete-all";
 export const buyNowUrl = "site/buy-now";
+export const haveQuestionsUrl = "site/have-question/";
+export const feedBackUrl = "site/contact/";
+export const contactTypesUrl = "site/contact-types/"

@@ -55,7 +55,11 @@ const initialState: FavouritesReducerType = {
 export const favouritesSlice = createSlice({
   name: 'favourites',
   initialState,
-  reducers: {},
+  reducers: {
+    deleteAllFavourites: (state) => {
+      state.data = []
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getFavourites.fulfilled, (state, action) => {
@@ -105,5 +109,5 @@ export const favouritesSlice = createSlice({
       })
   }
 });
-
+export const { deleteAllFavourites } = favouritesSlice.actions;
 export default favouritesSlice.reducer;

@@ -153,6 +153,14 @@
     }
   }
 
+  .ant-affix {
+    .header_center {
+      .header_centr {
+        padding: 20px 0px 10px;
+      }
+    }
+  }
+
   .header_bottom {
     background: #fff;
     box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
@@ -263,6 +271,13 @@
           cursor          : pointer;
           color           : var(--brand_color_black);
 
+        }
+      }
+
+      .right_item {
+        .reg_area__user__text {
+          color      : var(--brand_color_black);
+          margin-left: 16px;
         }
       }
     }

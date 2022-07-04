@@ -79,17 +79,11 @@ function Header(props: IHeader) {
 
   return (
     <header className="header">
-      {
-        !isHeaderTopMenusLoading && !isHeaderSettingsLoading && !isCategoriesLoading && (
-          <>
-            <HeaderTop {...headerSettings} headerTopMenus={headerTopMenus} />
-            <Affix offsetTop={0}>
-              <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
-            </Affix>
-            <HeaderBottom categories={categories} menuCategories={menuCategories} />
-          </>
-        )
-      }
+      <HeaderTop {...headerSettings} headerTopMenus={headerTopMenus} />
+      <Affix offsetTop={0}>
+        <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
+      </Affix>
+      <HeaderBottom categories={categories} menuCategories={menuCategories} />
     </header >
   )
 }

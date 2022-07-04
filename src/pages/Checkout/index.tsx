@@ -115,8 +115,8 @@ const Checkout = () => {
                     <label htmlFor="" className="howto__obtain__label">Укажите адрес доставки</label>
 
                     <div className="howto__obtain__selects">
-                      <SelectComp label={"Регион / Область*"} name="region" register={register} errors={errors} control={control} />
-                      <SelectComp label={"Город  / Район*"} name="district" register={register} errors={errors} control={control} />
+                      {/* <SelectComp label={"Регион / Область*"} name="region" register={register} errors={errors} control={control} /> */}
+                      {/* <SelectComp label={"Город  / Район*"} name="district" register={register} errors={errors} control={control} /> */}
                     </div>
                     <div className="howto__obtain__address">
                       <InputComp name="address" label={"Адрес"} register={register} errors={errors} required={true} />

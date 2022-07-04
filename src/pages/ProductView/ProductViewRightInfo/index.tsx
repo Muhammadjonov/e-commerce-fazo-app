@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { footerDataUrl, footerSettingsUrl, paymentListUrl, returnExchangeUrl } from '../../../api/apiUrls';
+import { haveQuestionsUrl, paymentListUrl, returnExchangeUrl } from '../../../api/apiUrls';
 import baseAPI from '../../../api/baseAPI';
 import { useT } from '../../../custom/hooks/useT';
 import { formatPrice } from '../../../helpers';
-import { FooterInfoType, FooterResType, FooterSettingsInfoType, FooterSettingsResType, PaymentListInfoType, PaymentListResTyoe, ReturnExchangeInfoType, ReturnExchangeResType } from '../../../types';
+import { HaveQuestionsInfoType, HaveQuestionsResType, PaymentListInfoType, PaymentListResTyoe, ReturnExchangeInfoType, ReturnExchangeResType } from '../../../types';
 import "./_style.scss";
 
 interface IProductViewRightInfo {
@@ -15,8 +15,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
   const { t, lang } = useT();
   const [returnExchange, setReturnExchage] = useState<ReturnExchangeInfoType>({} as ReturnExchangeInfoType);
   const [paymentList, setPaymentList] = useState<PaymentListInfoType>([] as PaymentListInfoType);
-  const [footerSettings, setFooterSettings] = useState<FooterSettingsInfoType>({} as FooterSettingsInfoType);
-  const [footerDatas, setFooterDatas] = useState<FooterInfoType>({} as FooterInfoType);
+  const [haveQuestions, setHaveQuestions] = useState<HaveQuestionsInfoType>({} as HaveQuestionsInfoType);
 
   const getReturnExchange = useCallback(() => {
     baseAPI.fetchAll<ReturnExchangeResType>(returnExchangeUrl)
@@ -37,34 +36,25 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
   }, []);
 
 
-  const getFooterSettings = useCallback(() => {
-    baseAPI.fetchAll<FooterSettingsResType>(footerSettingsUrl)
+  const getHaveQuestions = useCallback(() => {
+    baseAPI.fetchAll<HaveQuestionsResType>(haveQuestionsUrl)
       .then((res) => {
         if (res.data.status === 200) {
-          setFooterSettings(res.data.data);
+          setHaveQuestions(res.data.data);
         }
       })
-  }, [])
-
-
-  const getFooterDatas = useCallback(() => {
-    baseAPI.fetchAll<FooterResType>(footerDataUrl)
-      .then((res) => {
-        if (res.data.status === 200) {
-          setFooterDatas(res.data.data);
-        }
-      })
+      .catch((err) => console.log("err", err))
   }, [])
 
   useEffect(() => {
     getReturnExchange();
     getPaymentList();
-    getFooterSettings();
-    getFooterDatas();
-  }, [getReturnExchange, getPaymentList, getFooterSettings, getFooterDatas])
+    getHaveQuestions();
+  }, [getReturnExchange, getPaymentList, getHaveQuestions])
 
   const { title, url, description } = returnExchange;
-  const { phone, email, } = footerSettings;
+
+  const { managers, emails, phonesNumbers } = haveQuestions;
 
   return (
     <div className="product_view_right_info">
@@ -93,19 +83,47 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
             Есть вопросы?
           </h5>
           <p className="content">
-            Телефон: <a href={`tel:${phone}`} className="social_link">
-              {phone}
-            </a>
+            <span>Телефон:</span>
+            <ul>
+              {
+                phonesNumbers?.split(",").map((phone, idx) => (
+                  <li key={idx}>
+                    <a href={`tel:${phone}`} className="social_link">
+                      {phone}
+                    </a>
+                  </li>
+                ))
+              }
+
+            </ul>
           </p>
           <p className="content">
-            Телеграм: <a href={footerDatas?.telegram_url} className="social_link">
-              @{footerDatas?.telegram_url?.slice(13)}
-            </a>
+            <span>Телеграм:</span>  <ul>
+              {
+                managers?.split(",").map((manager, idx) => (
+                  <li key={idx}>
+                    <a href={`https://t.me/${manager.slice(1)}`} className="social_link">
+                      {manager}
+                    </a>
+                  </li>
+                ))
+              }
+
+            </ul>
           </p>
           <p className="content">
-            Эл. почта: <a href={`mailto:${email}`} className="social_link">
-              {email}
-            </a>
+            <span>Эл. почта:</span>  <ul>
+              {
+                emails?.split(",").map((email, idx) => (
+                  <li key={idx}>
+                    <a href={`mailto:${email}`} className="social_link">
+                      {email}
+                    </a>
+                  </li>
+                ))
+              }
+
+            </ul>
           </p>
         </div>
       </div>

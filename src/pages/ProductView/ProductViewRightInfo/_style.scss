@@ -45,6 +45,18 @@
 
   .have_questions {
     margin-top: 20px;
+
+    .content {
+      display: flex;
+
+      ul {
+        margin-left: 10px;
+
+        .social_link {
+          margin-left: 0px;
+        }
+      }
+    }
   }
 
   .delivery_payment {

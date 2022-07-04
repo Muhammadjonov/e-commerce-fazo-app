@@ -35,12 +35,8 @@ function SearchComp(props: ISearchComp) {
     setSearchValues(prev => ({ ...prev, key: e.target.value.trim() }));
   }
 
-
-  // let body = document.querySelector("body")!;
   const onSelect = (value: any) => {
     setSearchValues(prev => ({ ...prev, category: value }));
-    // body.style.overflowY = "auto";
-
   };
 
   const onSearch = () => {

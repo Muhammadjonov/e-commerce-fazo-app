@@ -32,6 +32,7 @@ import AllNewCommersProduct from './pages/AllNewCommersProduct';
 import Profile from './pages/Profile';
 import { setLoading } from './features/loading/loadingSlice';
 import { getFavourites } from './features/favourites/favouritesSlice';
+import Feedback from './pages/HeaderTopMenus/Feedback';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -165,6 +166,7 @@ function App() {
           <Route path="product/detail/:product_slug" element={<ProductView />} loading />
           <Route path="page" element={<HeaderTopMenus />} >
             <Route path=":page_slug" element={<HeaderMenusContent />} loading />
+            <Route path="feedback/contact" element={<Feedback />} />
           </Route>
           <Route path="favorites" element={<Favorites />} />
           <Route path="balance" element={<ProductComparison />} />

@@ -82,6 +82,9 @@ function Footer(props: IFooter) {
                     </li>
                   ))
                 }
+                <li>
+                  <Link to={`/page/feedback/contact`}>Обратная связь</Link>
+                </li>
               </ul>
             </div>
           </Col>

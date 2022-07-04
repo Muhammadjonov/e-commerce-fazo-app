@@ -10,18 +10,19 @@ interface ISelectComp {
   name: string,
   register: UseFormRegister<any>,
   errors: any,
-  control: Control<any>
+  control: Control<any>,
+  select: any,
+  required?: boolean
 }
 
 const SelectComp = (props: ISelectComp) => {
-  const { label, name, register, errors, control } = props;
-
+  const { label, name, register, errors, control, select, required = true } = props;
   return (
     <div className="select__wrapper">
-
       <Controller
         name={name}
         control={control}
+        rules={{ required }}
         render={({ field }) => (<Select
           {...field}
           size='large'
@@ -36,12 +37,11 @@ const SelectComp = (props: ISelectComp) => {
               .localeCompare((optionB!.children as unknown as string).toLowerCase())
           }
         >
-          <Option value="1">Not Identified</Option>
-          <Option value="2">Closed</Option>
-          <Option value="3">Communicated</Option>
-          <Option value="4">Identified</Option>
-          <Option value="5">Resolved</Option>
-          <Option value="6">Cancelled</Option>
+          {
+            Object.keys(select)?.map(item => (
+              <Option key={item} value={item}>{select[item]}</Option>
+            ))
+          }
         </Select>)}
       />
       <label className="custom__label">{label}</label>

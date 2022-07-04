@@ -33,7 +33,6 @@ function HeaderTop(props: IHeaderTop) {
                       {headerTopMenu.name}
                     </Link>
                   </li>
-
                 ))
               }
             </ul>

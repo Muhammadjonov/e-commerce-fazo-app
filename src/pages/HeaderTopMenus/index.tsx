@@ -30,7 +30,7 @@ function HeaderTopMenus() {
   const [leftMenus, setLeftMenus] = useState<LeftMenuInfoType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   let { page_slug } = useParams();
-  let headerMenu = page_slug!.slice(1)!;
+  let headerMenu = page_slug?.slice(1)!;
   const loadingContext = useContext(LoadingContext);
 
   const getLeftMenus = useCallback(() => {
@@ -98,6 +98,19 @@ function HeaderTopMenus() {
                     </NavLink>
                   </li>
                 ))}
+                <li className="header_top_menus__body__left__item" >
+                  <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/feedback/contact`}>
+                    <img className='header_top_menus__body__left__item__link__img' src={""} alt={"feedback"} />
+                    <div className="header_top_menus__body__left__item__link__content">
+                      <h4 className="title16_bold header_top_menus__body__left__item__link__content__title">
+                        {"Обратная связь"}
+                      </h4>
+                      <p className="header_top_menus__body__left__item__link__content__text">
+                        {/* {leftMenu.short_description} */}
+                      </p>
+                    </div>
+                  </NavLink>
+                </li>
               </ul>
             </Col>
             <Col xs={24} lg={19}>
@@ -122,7 +135,14 @@ function HeaderTopMenus() {
               <Divider className="header_top_menus__drawer__list__item__divider" />
             </li>
           ))}
+          <li className="header_top_menus__drawer__list__item">
+            <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__drawer__list__item__link"} to={`/page/feedback/contact`}>
+              Обратная связь
+            </NavLink>
+            <Divider className="header_top_menus__drawer__list__item__divider" />
+          </li>
         </ul>
+        Обратная связь
       </Drawer>
     </section>
   )

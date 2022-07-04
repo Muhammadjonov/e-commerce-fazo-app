@@ -12,6 +12,7 @@ import { AuthContext } from '../../App';
 import { useAppSelector } from '../../Store/hooks';
 import { logout } from '../../features/authSlice';
 import { useDispatch } from 'react-redux';
+import { deleteAllFavourites } from '../../features/favourites/favouritesSlice';
 
 interface IHeaderCenter {
   logo: string,
@@ -31,7 +32,11 @@ function HeaderCenter(props: IHeaderCenter) {
   const authContext = useContext(AuthContext);
 
 
-  const handleOpen = (value: boolean) => setIsOpenHeaderCentrDrower(value)
+  const handleOpen = (value: boolean) => {
+    let fazoWrapper = document.querySelector(".mixel_wrapper")!;
+    setIsOpenHeaderCentrDrower(value);
+
+  }
 
   const drowerTitle = (
     <Link
@@ -53,6 +58,7 @@ function HeaderCenter(props: IHeaderCenter) {
     removeUserFromLocalStorage();
     removeTokens();
     dispatch(logout());
+    dispatch(deleteAllFavourites());
   }
   // userDropdown menu
   const userMenu = (
@@ -199,32 +205,50 @@ function HeaderCenter(props: IHeaderCenter) {
             className={"header_top_drower"}
           >
             <div className="reg_area">
-              <div className="left">
-                <button
-                  type="button"
-                  className={"sign_in_btn"}
-                  onClick={handleOpenDrawerSignIn}
-                >
-                  <span className="user_wrapper">
-                    <img src="/assets/icons/user.svg" alt="user" />
-                  </span>
-                  <span className="p14_regular sign_in_text" >{t(`signIn.${lang}`)}</span>
-                </button>
-              </div>
-              <div className="right">
-                <button
-                  type="button"
-                  className={"sign_up_btn"}
-                  onClick={handleOpenDrawerSignUp}
-                >
-                  <span className="p14_regular sign_up_text">{t(`registration.${lang}`)}</span>
-                </button>
-              </div>
+              {
+                !userData?.authorized ?
+                  (
+                    <>
+                      <div className="left">
+                        <button
+                          type="button"
+                          className={"sign_in_btn"}
+                          onClick={handleOpenDrawerSignIn}
+                        >
+                          <span className="user_wrapper">
+                            <img src="/assets/icons/user.svg" alt="user" />
+                          </span>
+                          <span className="p14_regular sign_in_text" >{t(`signIn.${lang}`)}</span>
+                        </button>
+                      </div>
+                      <div className="right">
+                        <button
+                          type="button"
+                          className={"sign_up_btn"}
+                          onClick={handleOpenDrawerSignUp}
+                        >
+                          <span className="p14_regular sign_up_text">{t(`registration.${lang}`)}</span>
+                        </button>
+                      </div>
+                    </>) : (
+                    <Dropdown
+                      overlay={userMenu}
+                      trigger={['click']}
+                    >
+                      <div className="right_item">
+                        <img src="/assets/icons/user.svg" alt="user" />
+                        <span className="reg_area__user__text">
+                          {userData?.user?.first_name}
+                        </span>
+                      </div>
+                    </Dropdown>
+                  )
+              }
             </div>
             <ul className="menu_wrapper">
               {
                 headerTopMenus.map((headerTopMenu) => (
-                  <li key={headerTopMenu.urlType} className='menu'>
+                  <li key={headerTopMenu.name} className='menu'>
                     <Link
                       to={`/page/${headerTopMenu.urlValue}`}
                       className="p14_regular"

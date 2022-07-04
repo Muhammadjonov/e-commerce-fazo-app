@@ -1,0 +1,46 @@
+.feedback {
+  &__title {
+    margin-bottom: 30px;
+  }
+
+  &__form {
+    &__btns {
+      text-align: end;
+
+      &__cancel.ant-btn.ant-btn-link {
+        border       : 1px solid var(--brand_color_red);
+        border-radius: 5px;
+        color        : var(--brand_color_red);
+        margin-right : 30px;
+      }
+
+      &__send.ant-btn.ant-btn-link {
+        border          : 1px solid var(--brand_color_red);
+        border-radius   : 5px;
+        color           : #fff;
+        background-color: var(--brand_color_red);
+      }
+    }
+
+    &__error__message {
+      margin : 10px 0px;
+      color  : var(--brand_color_red);
+      display: block;
+    }
+  }
+
+  .react-tel-input {
+    .form-control {
+      height      : 44px;
+      width       : 100%;
+      border-color: #d5d8df;
+      color       : #393b3f;
+      padding-left: 17px;
+    }
+
+    .flag-dropdown {
+      display: none;
+    }
+  }
+
+}
