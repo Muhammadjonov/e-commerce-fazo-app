@@ -1,5 +1,4 @@
 import React from 'react'
-import ModalCounter from '../../Counter'
 import './_style.scss'
 export default function ModalTop() {
     return (
@@ -13,7 +12,7 @@ export default function ModalTop() {
                     </div>
                 </div>
                 <div className="modal_option_block">
-                    <ModalCounter />
+                    {/* <ModalCounter /> */}
                     <img src="/assets/icons/favorite.svg" alt="outlined_heart" />
                     <img className='delete_icon' src="/assets/icons/delete.svg" alt="outlined_heart" />
                 </div>

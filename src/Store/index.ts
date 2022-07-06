@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from '../features/authSlice'
+import basketSlice from '../features/basket/basketSlice'
+import comparesSlice from '../features/Compares/comparesSlice'
 import favouritesSlice from '../features/favourites/favouritesSlice'
 import loadingSlice from '../features/loading/loadingSlice'
 
@@ -7,7 +9,9 @@ export const store = configureStore({
 	reducer: {
 		auth: authSlice,
 		loading: loadingSlice,
-		favourites: favouritesSlice
+		favourites: favouritesSlice,
+		compares: comparesSlice,
+		basket: basketSlice,
 	},
 })
 

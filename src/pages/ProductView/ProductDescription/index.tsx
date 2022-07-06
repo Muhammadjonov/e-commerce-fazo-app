@@ -11,19 +11,20 @@ import { useAppDispatch, useAppSelector } from "../../../Store/hooks";
 import { AuthContext } from "../../../App";
 import { isFavourite } from "../../../helpers";
 import { addToFavoutires, removeFromFavourites } from "../../../features/favourites/favouritesSlice";
+import { addToBasket } from "../../../features/basket/basketSlice";
 
 
 interface IProductDescription {
   name: string,
-  price: number | null,
+  price: number,
   characterAssigns: CharacterAssignsType[],
   description: string,
   short_description: string,
   id: number,
   slug: string,
   brandName: string,
-  old_price: number | null,
-  imageUrl: string | null,
+  old_price: number,
+  imageUrl: string,
   userSaveProduct?: boolean
 }
 
@@ -66,9 +67,14 @@ const ProductDescription = (props: IProductDescription) => {
     }
   };
 
+  const handleAddBasket = () => {
+    dispatch(addToBasket({ id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, count: 1 }))
+  }
+
+
   return (
     <div className="product_desc">
-      <h2 className="product_name title36_bold">
+      <h2 className="product_name title34_bold">
         {name}
       </h2>
       <Row gutter={[16, 16]}>
@@ -81,7 +87,10 @@ const ProductDescription = (props: IProductDescription) => {
               <div className="card_footer">
                 <ul>
                   <li>
-                    <button type='button'>
+                    <button
+                      type='button'
+                      onClick={handleAddBasket}
+                    >
                       <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
                     </button>
                   </li>
@@ -116,12 +125,11 @@ const ProductDescription = (props: IProductDescription) => {
           </div>
 
           <div className="title_contact">
-            <p className="p14_regular left">
-              Название для договора
+            <p className="title20_bold left">
+              Описание:
             </p>
-            <p className="p14_regular right">
-              {short_description}
-            </p>
+            <p className="p14_regular right" dangerouslySetInnerHTML={{ __html: description }} />
+
           </div>
           {
             characterAssigns?.length !== 0 && (

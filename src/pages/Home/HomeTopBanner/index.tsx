@@ -5,8 +5,8 @@ import CategoryButton from '../../../components/CategoryButton';
 import { Collapse, Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import baseAPI from '../../../api/baseAPI';
-import { bannersUrl, categoriesUrl } from '../../../api/apiUrls';
-import { BannerInfoType, BannerResType, CategoriesInfoType, CategoriesResType } from '../../../types';
+import { bannersUrl, categoriesUrl, headerSettingsUrl } from '../../../api/apiUrls';
+import { BannerInfoType, BannerResType, CategoriesInfoType, CategoriesResType, HeaderInfoType, HeaderResType } from '../../../types';
 import "./_style.scss";
 import useWindowSize from '../../../custom/hooks/useWindowSize';
 import { LoadingContext } from "react-router-loading";
@@ -17,6 +17,8 @@ const { Panel } = Collapse;
 function HomeTopBanner() {
   const [banner, setBanner] = useState<BannerInfoType[]>([]);
   const [isOpenCategoriesDrower, setIsOpenCategoriesDrower] = useState<boolean>(false);
+  const [headerSettings, setHeaderSettings] = useState<HeaderInfoType>({} as HeaderInfoType);
+
   const { width } = useWindowSize();
   // get categories
   const [categories, setCategories] = useState<CategoriesInfoType>([])
@@ -30,12 +32,12 @@ function HomeTopBanner() {
       .then((res) => {
         if (res.data.status === 200) {
           setBanner(res.data.data);
-          loadingContext.done();
+          // loadingContext.done();
         }
       })
       .catch((err) => console.log("err", err))
       .finally(() => {
-        loadingContext.done();
+        // loadingContext.done();
       })
   }, [])
 
@@ -50,10 +52,24 @@ function HomeTopBanner() {
       })
   }, [])
 
+  const getHeaderSettings = useCallback(() => {
+    baseAPI.fetchAll<HeaderResType>(headerSettingsUrl)
+      .then((res) => {
+        if (res.data.status === 200) {
+          setHeaderSettings(res.data.data);
+        }
+      })
+      .catch((e) => console.log("err", e))
+      .finally(() => {
+      })
+  }, [])
   useEffect(() => {
     getBanners();
     getCategories();
-  }, [getBanners, getCategories])
+    getHeaderSettings();
+  }, [getBanners, getCategories, getHeaderSettings])
+
+  const { logo } = headerSettings;
 
   const handleOpen = (value: boolean) => setIsOpenCategoriesDrower(value)
 
@@ -62,7 +78,7 @@ function HomeTopBanner() {
       onClick={() => handleOpen(false)}
       className="logo"
       to={"/"}>
-      <img className="logo_img" src="/assets/icons/Logo.svg" alt="logo" />
+      <img className="logo_img" src={logo} alt="logo" />
     </Link>
   )
 
@@ -124,11 +140,11 @@ function HomeTopBanner() {
             >
               {
                 categories.map(category => (
-                  <Panel header={<Link to={category.slug}><img src={`/assets/icons/${category.imageUrl}.svg `} alt="icon" /> {category.title}</Link>} key={category.id}>
+                  <Panel header={<div className="mobile_categories_drower__panel__header"><i className={category.icon}></i><span>{category.title}</span></div>} key={category.id}>
                     {
                       category.subCategories.map(subcategory => (
 
-                        <Link key={subcategory.id} to={subcategory.slug} onClick={() => handleOpen(false)}>{subcategory.title}</Link>
+                        <Link key={subcategory.id} to={`/category/${subcategory.slug}`} onClick={() => handleOpen(false)}>{subcategory.title}</Link>
 
                       ))
                     }

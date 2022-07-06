@@ -6,16 +6,11 @@ export type ProductTypeBasket = ProductType & { count: number, options?: string 
 
 export type ProductsTypeBasket = Array<ProductTypeBasket>;
 
-type ShopType = {
-  shop_id: string,
-  shop_name: string | undefined
-}
 export type InitialBasketStateType = {
   products: ProductsTypeBasket;
   totalPrice: number;
   totalElements: number;
   totalProductCount: number;
-  // shopsInBasket: Array<ShopType>
   isLoading: boolean;
 };
 
@@ -24,7 +19,6 @@ const initialState: InitialBasketStateType = {
   totalPrice: 0,
   totalElements: 0,
   totalProductCount: 0,
-  // shopsInBasket: [],
   isLoading: false,
 };
 
@@ -33,12 +27,11 @@ export const basketSlice = createSlice({
   initialState,
   reducers: {
     setBasket(state, action: PayloadAction<{ data: any }>) {
-      const { products, totalPrice, totalElements, totalProductCount, shopsInBasket, isLoading } = action.payload.data
+      const { products, totalPrice, totalElements, totalProductCount, isLoading } = action.payload.data
       state.products = products
       state.totalPrice = totalPrice
       state.totalElements = totalElements
       state.totalProductCount = totalProductCount
-      // state.shopsInBasket = shopsInBasket
       state.isLoading = isLoading
     },
     addToBasket(state, action: PayloadAction<ProductTypeBasket>) {
@@ -81,7 +74,6 @@ export const basketSlice = createSlice({
       state.totalPrice = 0
       state.totalElements = 0
       state.totalProductCount = 0
-      // state.shopsInBasket = []
       state.isLoading = false
       removeBasketFromLocalStorage()
     }
@@ -93,10 +85,10 @@ function setTotals(basket: InitialBasketStateType) {
   basket.totalProductCount = basket.products.reduce((acc, product) => {
     return acc + product.count;
   }, 0);
-  // basket.totalPrice = basket.products.reduce((acc, cv) => {
-  //   if (cv.discount) return acc + cv.price * (1 - cv.discount / 100) * cv.count;
-  //   return acc + cv.price * cv.count;
-  // }, 0);
+  basket.totalPrice = basket.products.reduce((acc, cv) => {
+    // if (cv.discount) return acc + cv.price * (1 - cv.discount / 100) * cv.count;
+    return acc + cv.price * cv.count;
+  }, 0);
 
   // let shops: ShopType[] = [];
   // basket.products.forEach(p => {

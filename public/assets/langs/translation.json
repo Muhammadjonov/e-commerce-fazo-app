@@ -67,10 +67,6 @@
     "ru": "Все категории",
     "uz": "Barcha kategoriyalar"
   },
-  "profile": {
-    "ru": "Личный кабинет",
-    "uz": "Shaxsiy kabinet"
-  },
   "logout": {
     "ru": "Выйти",
     "uz": "Chiqish"
@@ -142,5 +138,85 @@
   "send": {
     "ru": "Отправить",
     "uz": "Jo'natish"
+  },
+  "deleteAll": {
+    "ru": "Удалит все",
+    "uz": "Barchasini o'chirish"
+  },
+  "filter": {
+    "ru": "Фильтр",
+    "uz": "Filtrlash"
+  },
+  "checkout": {
+    "ru": "Оформить покупку",
+    "uz": "Sotib olish"
+  },
+  "yourData": {
+    "ru": "Ваши данные",
+    "uz": "Sizning ma'lumotlaringiz"
+  },
+  "yourOrder": {
+    "ru": "Ваш заказ",
+    "uz": "Sizning buyurtmangiz"
+  },
+  "selectPayMeth": {
+    "ru": "Выберите способ оплаты",
+    "uz": "To'lov usullarini tanlang"
+  },
+  "howToObtain": {
+    "ru": "Способ получения",
+    "uz": "Qabul qilish usuli"
+  },
+  "enterDeliveryAddress": {
+    "ru": "Укажите адрес доставки",
+    "uz": "Yetkazib berish manzilini kiriting"
+  },
+  "address": {
+    "ru": "Адрес",
+    "uz": "Manzil"
+  },
+  "floor": {
+    "ru": "Этаж",
+    "uz": "Qavat"
+  },
+  "dateDelivery": {
+    "ru": "Дата доставки",
+    "uz": "Yetkazib berish sanasi"
+  },
+  "regionOblast": {
+    "ru": "Регион / Область",
+    "uz": "Viloyat"
+  },
+  "cityDistr": {
+    "ru": "Город  / Район",
+    "uz": "Shahar / Tuman"
+  },
+  "totalPayment": {
+    "ru": "Всего к оплате",
+    "uz": "Jami to'lov"
+  },
+  "goodForAmount": {
+    "ru": "товара на сумму",
+    "uz": "tovar narxga"
+  },
+  "ty": {
+    "ru": "шт",
+    "uz": "ta"
+  },
+  "delivery": {
+    "ru": " Доставка",
+    "uz": "Yetkazib berish"
+  },
+  "free": {
+    "ru": "бесплатно",
+    "uz": "bepul"
+  },
+  "onlineOrders": {
+    "ru": "Онлайн заказы",
+    "uz": "Onlayn buyurtmalar"
+  },
+  "emptyOrderText": {
+    "ru": "У вас нет покупок",
+    "uz": "Sizda xaridlar yo'q"
   }
 }

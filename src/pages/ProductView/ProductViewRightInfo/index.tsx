@@ -102,7 +102,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
               {
                 managers?.split(",").map((manager, idx) => (
                   <li key={idx}>
-                    <a href={`https://t.me/${manager.slice(1)}`} className="social_link">
+                    <a href={`https://t.me/${manager.slice(1)}`} className="social_link" target="_blank" rel="noopener noreferrer">
                       {manager}
                     </a>
                   </li>

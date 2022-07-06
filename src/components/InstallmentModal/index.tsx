@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import ModalTop from "./ModalTop";
 import "./_style.scss";
 import ModalBottom from "./ModalBottom";
+import { useT } from "../../custom/hooks/useT";
 
 interface IInstallmentModal {
   isOpenInstallmentModal: boolean,
@@ -11,11 +12,11 @@ interface IInstallmentModal {
 }
 
 export default function InstallmentModal(props: IInstallmentModal) {
-
+  const { t, lang } = useT();
   const { isOpenInstallmentModal, onOpenInstallmentModal, onCloseInstallmentModal } = props;
 
   const handleOk = () => {
-    onCloseInstallmentModal()
+    onCloseInstallmentModal();
   };
 
   const handleCancel = () => {
@@ -42,7 +43,7 @@ export default function InstallmentModal(props: IInstallmentModal) {
           Продолжить покупки
         </button>
         <button className="modal_make_purchase" onClick={handleOk}>
-          Оформить покупку
+          {t(`checkout.${lang}`)}
         </button>
       </div>
     </Modal>

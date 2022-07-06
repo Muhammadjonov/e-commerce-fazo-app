@@ -1,0 +1,36 @@
+.cart__modal__product__card__right__count {
+  .decr {
+    background-color: transparent;
+    border          : 1px solid var(--gray4);
+    border-radius   : 8px;
+    width           : 32px;
+    height          : 32px;
+    line-height     : 32px;
+  }
+
+  .incr:disabled,
+  .decr:disabled {
+    cursor: not-allowed;
+  }
+
+  &__total {
+    margin       : 0px 10px;
+    width        : 35px;
+    height       : 35px;
+    border-radius: 8px;
+    border       : 1px solid var(--gray4);
+    color        : var(--brand_color_red);
+    display      : inline-block;
+    text-align   : center;
+    line-height  : 35px;
+  }
+
+  .incr {
+    background-color: transparent;
+    border          : 1px solid var(--gray4);
+    border-radius   : 8px;
+    width           : 32px;
+    height          : 32px;
+    line-height     : 32px;
+  }
+}

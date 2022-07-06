@@ -11,6 +11,7 @@ import { ProductType } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import EmptyFavourites from './EmptyFavourites';
 import PaginationComp from '../../components/PaginationComp';
+import { useT } from '../../custom/hooks/useT';
 
 const breadcrumbs = [
   {
@@ -30,8 +31,9 @@ type FavouritesResType = {
   data: ProductType[]
 }
 const Favorites = () => {
+  const { t, lang } = useT();
   const [page, setPage] = useState<number>(1);
-  let slicePage = (page - 1) * 20
+  let slicePage = (page - 1) * 20;
   // const [favourites, setFavourites] = useState<FavouritesType>([]);
   const loadingContext = useContext(LoadingContext);
   const { data: favourites, loading } = useAppSelector(
@@ -65,6 +67,11 @@ const Favorites = () => {
 
   let page_count = Math.ceil(favourites.length / 20);
 
+  if (page_count < page) {
+    setPage(prev => prev - 1)
+  }
+
+
   const dispatch = useAppDispatch();
 
   const deleteAllFavourites = () => dispatch(removeAllFavourites())
@@ -81,20 +88,20 @@ const Favorites = () => {
               className="delete_all_favorites"
               onClick={deleteAllFavourites}
             >
-              Удалит все
+              {t(`deleteAll.${lang}`)}
             </button>
           }
         </div>
         <div className="favorites_body">
           <h4 className="title20_bold favorite_title">
-            Избранное
+            {t(`favorite.${lang}`)}
           </h4>
           {
             favourites.length !== 0 ? (
               <>
                 <Row gutter={[30, 30]}>
                   {
-                    favourites.slice(slicePage, page + 20).map((favourite) => (
+                    favourites.slice(slicePage, slicePage + 20).map((favourite) => (
                       <Col lg={6} md={8} sm={12} xs={24} key={favourite.id}>
                         <FavoriteProductCard {...favourite} />
                       </Col>

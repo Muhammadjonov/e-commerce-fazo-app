@@ -92,10 +92,10 @@ export type ProductType = {
 	name: string,
 	brandName: string,
 	slug: string,
-	price: number | null,
-	old_price: number | null,
-	imageUrl: string | null,
-	userSaveProduct?: boolean
+	price: number,
+	old_price: number,
+	imageUrl: string,
+	userSaveProduct?: boolean,
 }
 
 export type BestsellerResType = {
@@ -340,8 +340,8 @@ export type ProductDetailInfoType = {
 	meta_title: string,
 	meta_description: string,
 	meta_keyword: string,
-	price: number | null,
-	old_price: number | null,
+	price: number,
+	old_price: number,
 	category: string,
 	categorySlug: string,
 	subCategory: string,
@@ -407,4 +407,23 @@ export type HaveQuestionsResType = {
 	status: number,
 	message: string,
 	data: HaveQuestionsInfoType
+}
+
+export type MyOrderInfoType = {
+	id: number,
+	user: UserType,
+	paymentMethod: string,
+	statusLabel: string,
+	orderItems: {
+		id: number,
+		product: ProductType,
+		amount: number,
+		price: number
+	}[]
+}[]
+
+export type MyOrderResType = {
+	status: number,
+	message: string,
+	data: MyOrderInfoType
 }

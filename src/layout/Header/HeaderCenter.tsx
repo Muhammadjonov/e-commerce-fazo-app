@@ -8,7 +8,7 @@ import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, removeTokens, removeUserFromLocalStorage, setLang } from '../../helpers';
 import { CategoriesInfoType, HeaderTopMenuInfoType, } from '../../types';
-import { AuthContext } from '../../App';
+import { AuthContext, CartContext } from '../../App';
 import { useAppSelector } from '../../Store/hooks';
 import { logout } from '../../features/authSlice';
 import { useDispatch } from 'react-redux';
@@ -28,9 +28,10 @@ function HeaderCenter(props: IHeaderCenter) {
   const dispatch = useDispatch();
   const userData = useAppSelector(state => state.auth);
   const { data: favoutites } = useAppSelector(state => state.favourites);
+  const { products: inBasketProducts } = useAppSelector(state => state.basket);
 
   const authContext = useContext(AuthContext);
-
+  const cartContext = useContext(CartContext);
 
   const handleOpen = (value: boolean) => {
     let fazoWrapper = document.querySelector(".mixel_wrapper")!;
@@ -65,7 +66,7 @@ function HeaderCenter(props: IHeaderCenter) {
     <Menu
       items={[
         {
-          label: <Link to="/profile">{t(`profile.${lang}`)}</Link>,
+          label: <Link to="/profile">{t(`personalCabinet.${lang}`)}</Link>,
           key: '0',
         },
         {
@@ -73,7 +74,7 @@ function HeaderCenter(props: IHeaderCenter) {
           key: '1',
         },
         {
-          label: <Link to={"#"}>Mening buyurtmalarim</Link>,
+          label: <Link to={"/profile/order-history"}>Mening buyurtmalarim</Link>,
           key: '2',
         },
         {
@@ -96,6 +97,12 @@ function HeaderCenter(props: IHeaderCenter) {
   const handleOpenDrawerSignUp = () => {
     authContext.onOpenSignUpModal();
     handleOpen(false);
+  }
+
+  // cart modal
+
+  const handleOpenCart = () => {
+    cartContext.onOpenCartModal();
   }
 
   return (
@@ -149,7 +156,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       to={"/balance"}
                     >
                       <Badge count={11}>
-                        <img src="/assets/icons/compare.svg" alt="compare-icon" />
+                        <img src="/assets/icons/banance.svg" alt="banance-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`comparison.${lang}`)}</span>
                     </Link>
@@ -166,15 +173,16 @@ function HeaderCenter(props: IHeaderCenter) {
                     </Link>
                   </li>
                   <li>
-                    <Link
+                    <button
+                      type="button"
                       className="right_item"
-                      to={""}
+                      onClick={handleOpenCart}
                     >
-                      <Badge count={11}>
+                      <Badge count={inBasketProducts?.length}>
                         <img src="/assets/icons/shopping-cart.svg" alt="shopping-cart-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`cart.${lang}`)}</span>
-                    </Link>
+                    </button>
                   </li>
 
                 </ul>

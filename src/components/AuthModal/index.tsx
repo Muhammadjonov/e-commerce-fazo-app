@@ -262,6 +262,7 @@ const AuthModal = (props: IAuthModal) => {
           setUserToLocalStorage(res.data?.data);
           setToken(res.data?.data?.auth_key)
           onCancelSignIn();
+          setResetPswCurrent(0);
           setIsLoadings(prev => ({ ...prev, resetPsw: false }));
         } else if (res.data.status === 403) {
           setResetErrors(prev => ({ ...prev, pswErr: res.data.message }));

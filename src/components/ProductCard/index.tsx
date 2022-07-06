@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import { addToFavoutires, removeFromFavourites } from '../../features/favourites/favouritesSlice';
 import { AuthContext } from '../../App';
 import { isFavourite } from '../../helpers';
+import { addToBasket } from '../../features/basket/basketSlice';
 
 
 interface IProductCard {
@@ -46,6 +47,10 @@ function ProductCard(props: IProductCard) {
     }
   };
 
+  const handleAddBasket = () => {
+    dispatch(addToBasket({ ...props.product, count: 1 }))
+  }
+
   return (
     <Card className="product_card" bordered={false} hoverable>
       <div className="card_body" title={name}>
@@ -67,7 +72,10 @@ function ProductCard(props: IProductCard) {
       <div className="card_footer">
         <ul>
           <li>
-            <button type='button'>
+            <button
+              type='button'
+              onClick={handleAddBasket}
+            >
               <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
             </button>
           </li>

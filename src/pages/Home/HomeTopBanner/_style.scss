@@ -85,6 +85,14 @@
           .ant-drawer-header-title {
             flex-direction: row-reverse;
 
+            .logo {
+              .logo_img {
+                width     : 140px;
+                height    : 30px;
+                object-fit: contain;
+              }
+            }
+
             .ant-drawer-close {
               margin-right: 0;
             }
@@ -99,11 +107,11 @@
 
               .ant-collapse-header {
 
-                a {
+                .mobile_categories_drower__panel__header {
                   color: var(--brand_color_black);
 
-                  img {
-                    margin-right: 15px;
+                  span {
+                    margin-left: 15px;
                   }
                 }
 

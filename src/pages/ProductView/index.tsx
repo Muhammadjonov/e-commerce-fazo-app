@@ -5,6 +5,8 @@ import { LoadingContext } from 'react-router-loading';
 import { productDetailUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
+import LightboxComp from '../../components/LightboxComp';
+import { useT } from '../../custom/hooks/useT';
 import { ProductDetailInfoType, ProductDetailResType } from '../../types';
 import ProductDescription from './ProductDescription';
 import ProductViewCarusel from './ProductViewCarusel';
@@ -14,6 +16,7 @@ import RecentlyWatched from './RecentlyWatched';
 import "./_style.scss";
 
 function ProductView() {
+  const { t, lang } = useT();
   let { product_slug } = useParams();
   const [productDetail, setProductDetail] = useState<ProductDetailInfoType>({} as ProductDetailInfoType);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +47,7 @@ function ProductView() {
     {
       id: "1",
       toUrl: "/",
-      text: "Главная"
+      text: t(`home.${lang}`)
     },
     {
       id: "2",
@@ -77,13 +80,13 @@ function ProductView() {
           </Col>
 
           <Col xs={24} lg={17}>
-            <Row>
-              <Col xs={24} lg={17}>
+            <Row gutter={[20, 20]}>
+              <Col xs={24} lg={16}>
                 <ProductDescription
                   {...productDetail}
                 />
               </Col>
-              <Col xs={24} lg={7}>
+              <Col xs={24} lg={8}>
                 <ProductViewRightInfo delivery_price={delivery_price} />
               </Col>
             </Row>

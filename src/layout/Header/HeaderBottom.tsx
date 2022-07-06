@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu';
 import CategoryMenus from '../../components/CategoryButton';
+import { useT } from '../../custom/hooks/useT';
 import { CategoriesInfoType, MenuCategoriesInfoType } from "../../types";
 
 interface IHeaderBottom {
@@ -10,6 +11,7 @@ interface IHeaderBottom {
 }
 
 function HeaderBottom(props: IHeaderBottom) {
+  const { t, lang } = useT();
   const { categories, menuCategories } = props;
   const [isShowBurgerMenu, setIsShowBurgerMenu] = useState<boolean>(false);
   let { category_slug } = useParams();

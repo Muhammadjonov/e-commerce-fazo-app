@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../../App';
 import { useT } from '../../../../custom/hooks/useT';
+import { addToBasket } from '../../../../features/basket/basketSlice';
 import { addToFavoutires, removeFromFavourites } from '../../../../features/favourites/favouritesSlice';
 import { isFavourite } from '../../../../helpers';
 import { useAppDispatch, useAppSelector } from '../../../../Store/hooks';
@@ -92,6 +93,10 @@ function HotDealsCard(props: IHotDealsCard) {
     }
   };
 
+  const handleAddBasket = () => {
+    dispatch(addToBasket({ ...props.product, count: 1 }))
+  }
+
   return (
     <Card className="hot_deals_card" bordered={false} hoverable>
 
@@ -129,7 +134,10 @@ function HotDealsCard(props: IHotDealsCard) {
       <div className="card_footer">
         <ul>
           <li>
-            <button type='button'>
+            <button
+              onClick={handleAddBasket}
+              type='button'
+            >
               <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
             </button>
           </li>
@@ -142,7 +150,9 @@ function HotDealsCard(props: IHotDealsCard) {
             </button>
           </li>
           <li>
-            <button type='button'>
+            <button
+              type='button'
+            >
               <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
             </button>
           </li>

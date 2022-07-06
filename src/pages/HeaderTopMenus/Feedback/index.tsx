@@ -97,6 +97,7 @@ const Feedback = () => {
                 placeholder="+998"
               />
             )} />
+            {errors["phone"] && <span className='feedback__form__error__message'>This field is required</span>}
           </Col>
           <Col lg={10} md={12} sm={24} xs={24}>
             <InputComp type='email' label={t(`yourEmail.${lang}`)} name="email" register={register} errors={errors} />

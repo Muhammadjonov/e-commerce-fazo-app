@@ -1,4 +1,4 @@
-.ant-btn.ant-btn-background-ghost.category_btn {
+.ant-btn.ant-btn-link.category_btn {
   padding         : 12px 79px 10px;
   height          : auto;
   border          : none;
@@ -6,21 +6,7 @@
   background-color: var(--brand_color_yellow);
   display         : flex;
   align-items     : center;
-
-  &:hover {
-    background-color: var(--brand_color_yellow);
-    color           : #fff;
-  }
-
-  &:active {
-    background-color: var(--brand_color_yellow);
-    color           : #fff;
-  }
-
-  &:focus {
-    background-color: var(--brand_color_yellow);
-    color           : #fff;
-  }
+  color           : #fff;
 
   .btn_text {
     margin-left: 11px;

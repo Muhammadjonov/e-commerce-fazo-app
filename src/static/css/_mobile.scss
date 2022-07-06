@@ -292,12 +292,22 @@
     }
 
     .order__card {
-      &__order__count {
-        margin-top: 20px;
-      }
+      &__right {
+        &__name {
+          &__text {
+            margin-left: 10px;
+          }
 
-      &__order__price {
-        margin-top: 20px;
+          .order__price {
+            margin-left: 10px;
+          }
+        }
+
+        &__info {
+          &__order__price {
+            display: none;
+          }
+        }
       }
     }
 

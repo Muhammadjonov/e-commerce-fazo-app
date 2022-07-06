@@ -351,7 +351,7 @@ function Filter() {
 
                             {
                               width < 992 && (
-                                <DrawerOpenBtn setState={setIsOpenFilterDrawer} icon={<AlignLeftOutlined />} text={"Фильтр"} />
+                                <DrawerOpenBtn setState={setIsOpenFilterDrawer} icon={<AlignLeftOutlined />} text={t(`filter.${lang}`)} />
                               )
                             }
 

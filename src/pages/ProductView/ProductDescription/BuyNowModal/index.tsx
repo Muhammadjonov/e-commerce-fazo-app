@@ -66,7 +66,7 @@ const BuyNowModal = (props: IBuyNowModal) => {
 
   return (
     <Modal
-      title="Оформить покупку"
+      title={t(`checkout.${lang}`)}
       visible={isOpenBuyNowModal}
       onOk={handleOk}
       onCancel={handleCancel}

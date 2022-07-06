@@ -21,7 +21,7 @@ const Profile = () => {
       id: "2",
       toUrl: "#",
       text: t(`personalCabinet.${lang}`),
-    },
+    }
   ];
 
   const { user } = useAppSelector(state => state.auth)
@@ -33,12 +33,20 @@ const Profile = () => {
       id: "1",
       text: `${first_name} ${last_name} <br/>
       +${username}`,
-      img: '/assets/icons/user.svg'
+      img: '/assets/icons/user.svg',
+      toUrl: "/profile"
     },
     {
       id: "2",
       text: t(`myInstallments.${lang}`),
-      img: '/assets/icons/personal_cart.svg'
+      img: '/assets/icons/personal_cart.svg',
+      toUrl: "#"
+    },
+    {
+      id: "3",
+      text: t(`onlineOrders.${lang}`),
+      img: '/assets/icons/clock.svg',
+      toUrl: "/profile/order-history"
     }
   ]
   return (

@@ -44,7 +44,6 @@ const PersonalData = () => {
       })
   }
   // console.log(watch("home")); // watch input value by passing the name of it
-  console.log("profileErr", profileUpdateErr)
   return (
     <Col lg={12}>
       <div className="personal__data__card">
