@@ -1,27 +1,40 @@
-import { Card } from 'antd';
-import React from 'react';
+import { Card, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { useT } from '../../../custom/hooks/useT';
+import { addToBasket } from '../../../features/basket/basketSlice';
 import { removeFromFavourites } from '../../../features/favourites/favouritesSlice';
+import { isInBasket } from '../../../helpers';
 import { useAppDispatch, useAppSelector } from '../../../Store/hooks';
 import { ProductType } from '../../../types';
 import "./_style.scss";
 
-const FavoriteProductCard = (props: ProductType) => {
+interface IFavoriteProductCard {
+  product: ProductType
+}
+
+const FavoriteProductCard = (props: IFavoriteProductCard) => {
   const {
     imageUrl,
     old_price,
     price,
     name,
-    slug
-  } = props;
+    slug,
+    id
+  } = props.product;
 
-  const { t } = useT();
+  const { t, lang } = useT();
   const dispatch = useAppDispatch();
+  const { products } = useAppSelector((state) => state.basket)
+  let isThereInBasket = isInBasket(products, id);
 
   const removeFavourite = () => {
-    dispatch(removeFromFavourites(slug));
+    dispatch(removeFromFavourites(props.product));
   };
+
+
+  const handleAddBasket = () => {
+    dispatch(addToBasket({ ...props.product, count: 1 }));
+  }
 
   return (
     <Card className="favorite_product_card" bordered={false} hoverable>
@@ -38,25 +51,31 @@ const FavoriteProductCard = (props: ProductType) => {
             <img src={imageUrl ?? ""} alt={name} className="product_card_img" />
           </figure>
           <p className="price title18_bold">
-            {price} сум
+            {price} {t(`sum.${lang}`)}
           </p>
-          <del className='old_price p14_regular'>{old_price} сум</del>
+          <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>
           <h5 className="product_name">
             {name}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam officia harum amet?
           </h5>
         </div>
         <div className="card_footer">
           <ul>
             <li>
-              <button type='button'>
-                <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
-              </button>
+              <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
+                <button
+                  type='button'
+                  onClick={handleAddBasket}
+                >
+                  <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
+                </button>
+              </Tooltip>
             </li>
             <li>
-              <button type='button'>
-                <img src={"/assets/icons/compare-gray.svg"} alt="cart" />
-              </button>
+              <Tooltip placement='top' title={t(`compare.${lang}`)} >
+                <button type='button'>
+                  <img src={"/assets/icons/compare-gray.svg"} alt="cart" />
+                </button>
+              </Tooltip>
             </li>
           </ul>
         </div>

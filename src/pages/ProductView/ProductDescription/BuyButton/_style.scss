@@ -1,21 +1,16 @@
-.buy_button {
+.buy_button.ant-btn.ant-btn-link {
   border          : none;
   outline         : none;
   background-color: var(--brand_color_red);
   color           : #fff;
-  padding         : 12px 50px;
   border-radius   : 5px;
   font-family     : 'Nunito';
   font-style      : normal;
   font-weight     : 600;
   font-size       : 16px;
-  line-height     : 22px;
-  max-width       : 156px;
   cursor          : pointer;
 }
 
-.buy_button.checkout {
+.buy_button.checkout.ant-btn.ant-btn-link {
   background-color: var(--brand_color_black);
-  margin-left     : 20px;
-  max-width       : 256px;
 }

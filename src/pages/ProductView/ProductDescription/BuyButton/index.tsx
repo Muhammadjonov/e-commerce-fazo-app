@@ -1,4 +1,4 @@
-import React from 'react'
+import { Button } from 'antd';
 import "./_style.scss";
 
 interface IBuyButton {
@@ -11,9 +11,9 @@ function BuyButton(props: IBuyButton) {
   const { text, className = "", onClick } = props;
 
   return (
-    <button onClick={onClick} type='button' className={`buy_button ${className}`}>
+    <Button onClick={onClick} type='link' size="large" className={`buy_button ${className}`}>
       {text}
-    </button>
+    </Button>
   )
 }
 

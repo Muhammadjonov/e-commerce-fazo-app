@@ -34,7 +34,7 @@ const Feedback = () => {
     let { name, last_name, phone, email, type_id, text } = data;
     formData.append("name", name);
     formData.append("last_name", last_name);
-    formData.append("phone", phone);
+    formData.append("phone", `+${phone}`);
     formData.append("email", email);
     formData.append("type_id", type_id);
     formData.append("text", text);
@@ -75,7 +75,7 @@ const Feedback = () => {
   return (
     <div className="feedback">
       <h3 className="feedback__title title24_bold">
-        Обратная связь
+        {t(`feedback.${lang}`)}
       </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="feedback__form">
@@ -103,7 +103,7 @@ const Feedback = () => {
             <InputComp type='email' label={t(`yourEmail.${lang}`)} name="email" register={register} errors={errors} />
           </Col>
           <Col sm={24} xs={24}>
-            <SelectComp select={contactTypes} label={"Тема обращения"} name="type_id" register={register} errors={errors} control={control} />
+            <SelectComp select={contactTypes} label={t(`topic.${lang}`)} name="type_id" register={register} errors={errors} control={control} />
           </Col>
           <Col sm={24} xs={24}>
             <Textarea label={t(`yourMessage.${lang}`)} name="text" register={register} errors={errors} />

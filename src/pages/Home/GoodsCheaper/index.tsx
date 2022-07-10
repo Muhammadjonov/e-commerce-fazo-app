@@ -5,11 +5,12 @@ import { bestsellerUrl } from '../../../api/apiUrls';
 import baseAPI from '../../../api/baseAPI';
 import CardsTitleTop from '../../../components/CardsTitleTop';
 import ProductCard from '../../../components/ProductCard';
+import { useT } from '../../../custom/hooks/useT';
 import { ProductType, BestsellerResType } from '../../../types';
 import "./_style.scss";
 
 function GoodCheaper() {
-
+  const { t, lang } = useT();
   const [bestsellers, setBestsellers] = useState<ProductType[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // const loadingContext = useContext(LoadingContext);
@@ -36,8 +37,8 @@ function GoodCheaper() {
   return (
     <div className="good_cheaper">
       <div className="container">
-        <CardsTitleTop title="Товары дешевле:" toUrl="/more-products/bestseller-view" />
-        <Row gutter={[30, 30]}>
+        <CardsTitleTop title={t(`xitProducts.${lang}`)} toUrl="/more-products/bestseller-view" />
+        <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
           {
             bestsellers.map(bestseller => (
               <Col key={bestseller.id} lg={6} md={8} sm={12} xs={24} >

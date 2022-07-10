@@ -1,5 +1,5 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useT } from '../../../custom/hooks/useT';
 import { RecommendedCategoriesInfoType } from '../../../types';
 import "./_style.scss";
 
@@ -9,10 +9,11 @@ interface IPopularModels {
 
 export default function PopularModels(props: IPopularModels) {
   const { popularCategories } = props;
+  const { t, lang } = useT()
   return (
     <>
       <div className="popular_models">
-        <h2 className='popular_modal_title title24_bold'>Популярные категории и модели</h2>
+        <h2 className='popular_modal_title title24_bold'>{t(`popularModelAndCategory.${lang}`)}</h2>
         <div className="popular_models_content">
           {
             popularCategories.map((category) => (

@@ -6,19 +6,8 @@ import CompareItem from './CompareItem';
 import "./_style.scss";
 import productComparisonData from "./productComparisonData.json"
 import ProductComparisonCard from './ProductComparisonCard';
+import { useT } from '../../custom/hooks/useT';
 
-const breadcrumbs = [
-  {
-    id: "1",
-    toUrl: "/",
-    text: "Главная",
-  },
-  {
-    id: "2",
-    toUrl: "#",
-    text: "Сравнить",
-  },
-];
 
 const compareItemData = [
   {
@@ -40,11 +29,26 @@ const compareItemData = [
 ]
 
 const ProductComparison = () => {
-
+  const { t, lang } = useT();
 
   const onDifferenceChange = (checked: boolean) => {
     console.log(`switch to ${checked}`);
   }
+  // breadcrumb
+  const breadcrumbs = [
+    {
+      id: "1",
+      toUrl: "/",
+      text: "Главная",
+      className: ""
+    },
+    {
+      id: "2",
+      toUrl: "#",
+      text: t(`compare.${lang}`),
+      className: ""
+    },
+  ];
 
   return (
     <section className="product_comparison">
@@ -75,7 +79,7 @@ const ProductComparison = () => {
             </Link>
           </div>
 
-          <Row gutter={[30, 30]}>
+          <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
             {
               productComparisonData.map((product) => (
                 <Col flex={1} key={product.id}>

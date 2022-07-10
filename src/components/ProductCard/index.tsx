@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Card } from 'antd';
+import { Card, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { useT } from '../../custom/hooks/useT';
 import { ProductType } from '../../types';
@@ -7,7 +7,7 @@ import "./_style.scss";
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import { addToFavoutires, removeFromFavourites } from '../../features/favourites/favouritesSlice';
 import { AuthContext } from '../../App';
-import { isFavourite } from '../../helpers';
+import { getBasketFromLocalStorage, isFavourite, isInBasket } from '../../helpers';
 import { addToBasket } from '../../features/basket/basketSlice';
 
 
@@ -29,16 +29,16 @@ function ProductCard(props: IProductCard) {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
   const { data: favourites } = useAppSelector((state) => state.favourites);
+  const { products } = useAppSelector((state) => state.basket);
   let isFavorite = isFavourite(favourites, id);
+  let isThereInBasket = isInBasket(products, id);
   const { onOpenSignInModal } = useContext(AuthContext);
-
   const { t, lang } = useT();
 
   const onFavouriteClick = () => {
     if (auth.authorized) {
-
       if (isFavorite) {
-        dispatch(removeFromFavourites(slug));
+        dispatch(removeFromFavourites(props.product));
       } else {
         dispatch(addToFavoutires(props.product));
       }
@@ -48,7 +48,7 @@ function ProductCard(props: IProductCard) {
   };
 
   const handleAddBasket = () => {
-    dispatch(addToBasket({ ...props.product, count: 1 }))
+    dispatch(addToBasket({ ...props.product, count: 1 }));
   }
 
   return (
@@ -72,25 +72,31 @@ function ProductCard(props: IProductCard) {
       <div className="card_footer">
         <ul>
           <li>
-            <button
-              type='button'
-              onClick={handleAddBasket}
-            >
-              <img src={"/assets/icons/shopping-cart-gray.svg"} alt="cart" />
-            </button>
+            <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
+              <button
+                type='button'
+                onClick={handleAddBasket}
+              >
+                <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
+              </button>
+            </Tooltip>
           </li>
           <li>
-            <button
-              type='button'
-              onClick={onFavouriteClick}
-            >
-              <img src={`/assets/icons/heart-${isFavorite ? 'red' : 'gray'}.svg`} alt="heart" />
-            </button>
+            <Tooltip placement='top' title={t(`addToFavourites.${lang}`)} >
+              <button
+                type='button'
+                onClick={onFavouriteClick}
+              >
+                <img src={`/assets/icons/heart-${isFavorite ? 'red' : 'gray'}.svg`} alt="heart" />
+              </button>
+            </Tooltip>
           </li>
           <li>
-            <button type='button'>
-              <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
-            </button>
+            <Tooltip placement='top' title={t(`compare.${lang}`)} >
+              <button type='button'>
+                <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
+              </button>
+            </ Tooltip>
           </li>
         </ul>
       </div>

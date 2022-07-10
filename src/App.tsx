@@ -90,7 +90,6 @@ function App() {
       setIsProfileLoading(false);
     }
     basket = getBasketFromLocalStorage();
-    console.log("bas", basket);
     // window.addEventListener("load", function (e) {
     if (basket) {
       dispatch(setBasket({ data: { ...basket } }));
@@ -196,7 +195,7 @@ function App() {
                   <Route path=":page_slug" element={<HeaderMenusContent />} loading />
                   <Route path="feedback/contact" element={<Feedback />} />
                 </Route>
-                <Route path="favorites" element={<Favorites />} />
+                <Route path="favorites" element={<Favorites />} loading />
                 <Route path="balance" element={<ProductComparison />} />
                 <Route path="profile" element={
                   // <ProtectedProfile isLoggedIn={auth.authorized}>

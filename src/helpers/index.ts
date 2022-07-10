@@ -1,3 +1,4 @@
+import { ProductType } from './../types/index';
 import { FavouritesType } from './../features/favourites/favouritesSlice';
 import i18next from 'i18next';
 import { UserType } from '../features/authSlice';
@@ -79,4 +80,12 @@ export const isFavourite = (
   id: number
 ): boolean => {
   return favourites?.find((f) => f.id === id) ? true : false;
+};
+
+
+export const isInBasket = (
+  products: ProductType[],
+  id: number
+): boolean => {
+  return products?.find((f: any) => f.id === id) ? true : false;
 };

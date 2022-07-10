@@ -233,6 +233,16 @@
         display: block;
       }
     }
+
+    .profile {
+      &__sidebar {
+        display: none;
+      }
+
+      .open_drower_btn.ant-btn-link {
+        display: block;
+      }
+    }
   }
 
   .ant-drawer-left.ant-drawer-open.mobile_categories_drower {
@@ -246,6 +256,7 @@
       max-width: 100%;
     }
   }
+
 
 }
 
@@ -359,6 +370,260 @@
 
           .swiper-button-prev {
             display: none;
+          }
+        }
+      }
+    }
+
+    .profile {
+      .order__history {
+        &__body {
+          &__collapse.ant-collapse {
+            .ant-collapse-item {
+              .ant-collapse-header {
+                .ant-collapse-header-text {
+                  .order__history__body__collapse__header {
+                    padding: 15px 15px 40px;
+                    display: block;
+
+                    &__right {
+                      width  : 100%;
+                      display: block;
+
+                      &__left,
+                      &__price {
+                        flex-direction : row;
+                        justify-content: space-between;
+                        align-items    : flex-end;
+                      }
+
+                    }
+
+                    &__status {
+                      flex-direction : row;
+                      justify-content: space-between;
+                      align-items    : flex-end;
+                      max-width      : unset;
+                      width          : 100%;
+                    }
+                  }
+
+                  .order__history__body__collapse__expandebtn {
+                    right: 50%;
+                    top  : 80%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .filter_wrapper {
+
+      .filter_breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .ant-breadcrumb-link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .favorites {
+
+      .favorite_breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .ant-breadcrumb-link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .checkout_wrapper {
+
+      .checkout_breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .ant-breadcrumb-link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .product_comparison {
+
+      .product_comparison_breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .ant-breadcrumb-link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .search_result_wrapper {
+
+      .breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .ant-breadcrumb-link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .product_view {
+
+      .breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              position: relative;
+
+              span {
+                display: none;
+              }
+
+              .ant-breadcrumb-separator {
+                position: absolute;
+                left    : 0;
+                top     : 0;
+                display : block;
+
+                i {
+                  transform: rotate(180deg);
+                }
+              }
+
+              .ant-breadcrumb-link {
+                margin-left: 25px;
+              }
+
+              span.last__one {
+                display    : block;
+                position   : relative;
+                margin-left: 25px;
+
+              }
+
+              &:last-child {
+                display: none;
+              }
+            }
           }
         }
       }

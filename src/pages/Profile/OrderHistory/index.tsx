@@ -38,17 +38,17 @@ const OrderHistory = () => {
   }, [getMyOrders])
 
   return (
-    <Col lg={24}>
+    <Col sm={24} xs={24}>
       <div className="order__history">
         <h3 className="order__history__title title24_bold">
           {t(`onlineOrders.${lang}`)}
         </h3>
 
         <div className="order__history__body">
-          {
+          {myOrders?.length !== 0 ?
             myOrders?.map((order) => (
-              <>
-                <Collapse expandIconPosition='right' className={"order__history__body__collapse"}>
+              <React.Fragment key={order.id}>
+                <Collapse accordion expandIconPosition='end' className={"order__history__body__collapse"}>
                   <Panel header={<>
                     <div onClick={event => event.stopPropagation()} className="order__history__body__collapse__header">
                       <div className="order__history__body__collapse__header__status">
@@ -69,7 +69,7 @@ const OrderHistory = () => {
                             Buyurtma narxi
                           </span>
                           <span className="order__history__body__collapse__header__right__price__text">
-                            {formatPrice(1234567)} {t(`sum.${lang}`)}
+                            {formatPrice(order.totalPrice)} {t(`sum.${lang}`)}
                           </span>
                         </div>
                       </div>
@@ -129,14 +129,16 @@ const OrderHistory = () => {
 
                 </Collapse>
                 <Divider />
-              </>
-            ))
+              </React.Fragment>
+            )) : (
+              <p className="order__history__empty__text">
+                {t(`emptyOrderText.${lang}`)}
+              </p>
+            )
           }
 
         </div>
-        {/* <p className="order__history__empty__text">
-          {t(`emptyOrderText.${lang}`)}
-        </p> */}
+
       </div>
     </Col>
   )

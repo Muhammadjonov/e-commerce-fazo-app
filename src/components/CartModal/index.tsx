@@ -22,7 +22,7 @@ const CartModal = (props: ICartModal) => {
   const data = getBasketFromLocalStorage();
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
-  const { products, totalElements, totalPrice, totalProductCount } = useAppSelector((store) => store.basket);
+  const { products, totalPrice, totalProductCount } = useAppSelector((store) => store.basket);
   const { data: favourites } = useAppSelector((state) => state.favourites);
   const { onOpenSignInModal } = useContext(AuthContext);
   let navigete = useNavigate();
@@ -30,7 +30,7 @@ const CartModal = (props: ICartModal) => {
     if (auth.authorized) {
 
       if (isFavorite) {
-        dispatch(removeFromFavourites(product.slug));
+        dispatch(removeFromFavourites(product));
       } else {
         dispatch(addToFavoutires(product));
       }
@@ -51,7 +51,7 @@ const CartModal = (props: ICartModal) => {
 
   return (
     <Modal
-      title={<h3 className="title20_bold cart__title">Купить сейчас</h3>}
+      title={<h3 className="title20_bold cart__title">{t(`buyNow.${lang}`)}</h3>}
       visible={isOpenCart}
       footer={null}
       className="cart__modal"
@@ -110,7 +110,7 @@ const CartModal = (props: ICartModal) => {
                         <button
                           type='button'
                           className="cart__modal__product__card__right__btns__delete"
-                          onClick={() => dispatch(deleteFromBasket({ id: product.id }))}
+                          onClick={() => dispatch(deleteFromBasket({ ...product }))}
                         >
                           <img src={`/assets/icons/delete.svg`} alt="delete" />
                         </button>

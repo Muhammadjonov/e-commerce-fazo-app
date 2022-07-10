@@ -414,6 +414,7 @@ export type MyOrderInfoType = {
 	user: UserType,
 	paymentMethod: string,
 	statusLabel: string,
+	totalPrice: number,
 	orderItems: {
 		id: number,
 		product: ProductType,

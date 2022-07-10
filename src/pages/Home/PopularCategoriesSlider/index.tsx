@@ -9,12 +9,14 @@ import { RecommendedCategoriesInfoType, RecommendedCategoriesResType } from '../
 import baseAPI from '../../../api/baseAPI';
 import { recommendedCategoriesUrl } from '../../../api/apiUrls';
 import { LoadingContext } from 'react-router-loading';
+import { useT } from '../../../custom/hooks/useT';
 
 
 function PopularCategoriesSlider() {
   const [popularCategories, setPopularCategories] = useState<RecommendedCategoriesInfoType>([]);
   // const [isLoading, setIsLoading] = useState(true);
   // const loadingContext = useContext(LoadingContext);
+  const { t, lang } = useT();
 
   const getPopularCategories = useCallback(() => {
     // setIsLoading(true);
@@ -40,7 +42,7 @@ function PopularCategoriesSlider() {
     <div className="popular_categories_slider">
       <div className="container">
         <h4 className="title24_bold popular_slider_title">
-          Популярные категории
+          {t(`popularCategories.${lang}`)}
         </h4>
         <div className="slider_wrapper">
           <Swiper

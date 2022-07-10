@@ -1,3 +1,4 @@
+import { AddedFavouritesNotif, RemovedFavouritesNotif } from './../../components/Notifications/index';
 import { addFavoritesUrl, deleteAllFavoritesUrl } from './../../api/apiUrls';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getFavouritesUrl } from "../../api/apiUrls";
@@ -12,16 +13,18 @@ export const getFavourites = createAsyncThunk('favourites/get', async () => {
 export const addToFavoutires = createAsyncThunk('favourites/add', async (product: ProductType) => {
   let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: product.slug });
   if (res.data.status === 200) {
+    AddedFavouritesNotif(product.name);
     return product;
   } else {
     throw new Error('Favorite create error')
   }
 });
 
-export const removeFromFavourites = createAsyncThunk('favourites/remove', async (slug: string) => {
-  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: slug });
+export const removeFromFavourites = createAsyncThunk('favourites/remove', async (product: ProductType) => {
+  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: product.slug });
   if (res.data.status === 200) {
-    return { slug }
+    RemovedFavouritesNotif(product.name);
+    return { slug: product.slug }
   }
 });
 

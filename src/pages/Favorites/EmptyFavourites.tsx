@@ -1,9 +1,10 @@
-import React from 'react'
+import { useT } from '../../custom/hooks/useT'
 
 const EmptyFavourites = () => {
+  const { t, lang } = useT();
   return (
     <div style={{ height: "45vh" }}>
-      <h3 style={{ color: "var(--color_black2)", textAlign: "center" }}>Нет избранных товаров</h3>
+      <h3 style={{ color: "var(--color_black2)", textAlign: "center" }}>{t(`noFavourites.${lang}`)}</h3>
     </div>
   )
 }

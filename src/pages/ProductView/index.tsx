@@ -47,22 +47,26 @@ function ProductView() {
     {
       id: "1",
       toUrl: "/",
-      text: t(`home.${lang}`)
+      text: t(`home.${lang}`),
+      className: ""
     },
     {
       id: "2",
       toUrl: "#",
-      text: productDetail?.category
+      text: productDetail?.category,
+      className: ""
     },
     {
       id: "3",
       toUrl: `/category/${productDetail?.subCategorySlug}`,
-      text: productDetail?.subCategory
+      text: productDetail?.subCategory,
+      className: "last__one"
     },
     {
       id: "4",
       toUrl: `#`,
-      text: productDetail?.name
+      text: productDetail?.name,
+      className: ""
     }
   ]
 
@@ -74,7 +78,7 @@ function ProductView() {
         <div className="breadcrumb_area">
           <BreadcrumbComp breadcrumbs={breadcrumbs} />
         </div>
-        <Row gutter={[30, 30]}>
+        <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
           <Col xs={24} lg={7}>
             <ProductViewCarusel image={productDetail?.images} />
           </Col>

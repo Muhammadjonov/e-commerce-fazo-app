@@ -18,11 +18,13 @@ const breadcrumbs = [
     id: "1",
     toUrl: "/",
     text: "Главная",
+    className: ""
   },
   {
     id: "2",
     toUrl: "#",
     text: "Изброанное",
+    className: ""
   }
 ];
 type FavouritesResType = {
@@ -34,30 +36,30 @@ const Favorites = () => {
   const { t, lang } = useT();
   const [page, setPage] = useState<number>(1);
   let slicePage = (page - 1) * 20;
-  // const [favourites, setFavourites] = useState<FavouritesType>([]);
+  const [favourites, setFavourites] = useState<FavouritesType>([] as FavouritesType);
   const loadingContext = useContext(LoadingContext);
-  const { data: favourites, loading } = useAppSelector(
-    (store) => store.favourites
-  );
-  // const getFavourites = useCallback(() => {
+  const dispatch = useAppDispatch();
+  const { data } = useAppSelector((state) => state.favourites)
 
-  //   baseAPI.fetchAll<FavouritesResType>(getFavouritesUrl)
-  //     .then((res) => {
-  //       if (res.data.status === 200) {
-  //         setFavourites(res.data?.data);
-  //         loadingContext.done();
-  //       }
-  //     })
-  // }, [])
-
-  // useEffect(() => {
-  //   getFavourites();
-  // }, [getFavourites])
+  const getFavourites = useCallback(() => {
+    baseAPI.fetchAll<FavouritesResType>(getFavouritesUrl)
+      .then((res) => {
+        if (res.data.status === 200) {
+          setFavourites(res.data.data);
+          loadingContext.done();
+        }
+      })
+      .catch((e) => console.log("err", e))
+      .finally(() => {
+        loadingContext.done();
+      })
+  }, [data])
 
   useEffect(() => {
-    !loading && loadingContext.done();
-  }, [loading])
+    getFavourites();
+  }, [getFavourites])
 
+  let page_count = Math.ceil(favourites.length / 20);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -65,16 +67,12 @@ const Favorites = () => {
     })
   }, [page])
 
-  let page_count = Math.ceil(favourites.length / 20);
 
-  if (page_count < page) {
-    setPage(prev => prev - 1)
-  }
+  // if (page_count < page) {
+  //   setPage(prev => prev - 1)
+  // }
 
-
-  const dispatch = useAppDispatch();
-
-  const deleteAllFavourites = () => dispatch(removeAllFavourites())
+  const deleteAllFavourites = () => dispatch(removeAllFavourites());
 
   return (
     <section className="favorites">
@@ -99,11 +97,11 @@ const Favorites = () => {
           {
             favourites.length !== 0 ? (
               <>
-                <Row gutter={[30, 30]}>
+                <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
                   {
                     favourites.slice(slicePage, slicePage + 20).map((favourite) => (
                       <Col lg={6} md={8} sm={12} xs={24} key={favourite.id}>
-                        <FavoriteProductCard {...favourite} />
+                        <FavoriteProductCard product={favourite} />
                       </Col>
                     ))
                   }

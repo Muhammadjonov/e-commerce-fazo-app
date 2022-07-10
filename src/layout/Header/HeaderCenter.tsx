@@ -67,14 +67,10 @@ function HeaderCenter(props: IHeaderCenter) {
       items={[
         {
           label: <Link to="/profile">{t(`personalCabinet.${lang}`)}</Link>,
-          key: '0',
-        },
-        {
-          label: <Link to={"#"}>To'lov tarixi</Link>,
           key: '1',
         },
         {
-          label: <Link to={"/profile/order-history"}>Mening buyurtmalarim</Link>,
+          label: <Link to={"/profile/order-history"}>{t(`myOrders.${lang}`)}</Link>,
           key: '2',
         },
         {

@@ -132,11 +132,13 @@ const Checkout = () => {
       id: "1",
       toUrl: "/",
       text: t(`home.${lang}`),
+      className: ""
     },
     {
       id: "2",
       toUrl: "#",
       text: t(`checkout.${lang}`),
+      className: ""
     }
   ];
 
@@ -148,7 +150,7 @@ const Checkout = () => {
         </div>
         <div className="checkout_body">
           <form className="checkout_form" onSubmit={handleSubmit(onSubmit)}>
-            <Row gutter={[30, 30]}>
+            <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
               <Col md={17} sm={24} xs={24}>
                 <div className="checkout_form_wrapper">
                   <h3 className="checkout_form_title title28_bold">

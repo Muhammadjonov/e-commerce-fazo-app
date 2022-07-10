@@ -196,17 +196,20 @@ function Filter() {
       {
         id: "1",
         toUrl: "/",
-        text: "Главная",
+        text: t(`home.${lang}`),
+        className: ""
       },
       {
         id: "2",
         toUrl: "#",
-        text: category?.title
+        text: category?.title,
+        className: ""
       },
       {
         id: "3",
         toUrl: `/category/${subCategory?.slug}`,
-        text: subCategory?.title
+        text: subCategory?.title,
+        className: ""
       }
     ]
   }
@@ -223,7 +226,7 @@ function Filter() {
           <ProductCountComp total={products?._meta?.totalCount} perCount={products?._meta?.perPage < products?._meta?.totalCount ? products?._meta?.perPage : products?._meta?.totalCount} />
         </div>
         <div className="filter_body">
-          <Row gutter={[30, 30]}>
+          <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
             <Col lg={5} sm={0} xs={0}>
               {/* <h3 className="title20_bold" onClick={clearassignFilter}>Clear</h3> */}
               <form className="filter_form" onSubmit={handleSubmit(onSubmit)}>
@@ -233,7 +236,7 @@ function Filter() {
                   expandIconPosition="end"
                 >
                   <Panel
-                    header={<p className="p18_regular">Цена ({t(`sum.${lang}`)})</p>}
+                    header={<p className="p18_regular">{t(`price.${lang}`)} ({t(`sum.${lang}`)})</p>}
                     key="1"
                   >
                     <div className='slider_filter'>
@@ -273,7 +276,7 @@ function Filter() {
                   {
                     brands && brands?.length !== 0 && (
                       <Panel
-                        header={<p className="p18_regular">Бренд</p>}
+                        header={<p className="p18_regular">{t(`brand.${lang}`)}</p>}
                         key="2"
                       >
                         <Checkbox.Group onChange={handleBrandChange}>
@@ -334,7 +337,7 @@ function Filter() {
                   }
                 </Collapse>
                 <button type='submit' className="filter_submit_btn">
-                  Показать
+                  {t(`view.${lang}`)}
                 </button>
               </form>
             </Col>
@@ -343,7 +346,7 @@ function Filter() {
               {
                 products?.items.length !== 0 ? (
                   <>
-                    <Row gutter={[30, 30]}>
+                    <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
                       <Col sm={24} xs={24}>
                         <div className="right_top">
                           <div className="right_top_filter">
@@ -369,7 +372,7 @@ function Filter() {
                                   expandIconPosition="end"
                                 >
                                   <Panel
-                                    header={<p className="p18_regular">Цена ({t(`sum.${lang}`)})</p>}
+                                    header={<p className="p18_regular">{t(`price.${lang}`)} ({t(`sum.${lang}`)})</p>}
                                     key="1"
                                   >
                                     <div className='slider_filter'>
@@ -403,7 +406,7 @@ function Filter() {
                                   {
                                     brands && brands?.length !== 0 && (
                                       <Panel
-                                        header={<p className="p18_regular">Бренд</p>}
+                                        header={<p className="p18_regular">{t(`price.${lang}`)}</p>}
                                         key="2"
                                       >
                                         <Checkbox.Group onChange={handleBrandChange}>
@@ -464,7 +467,7 @@ function Filter() {
                                   }
                                 </Collapse>
                                 <button type='submit' className="filter_submit_btn">
-                                  Показать
+                                  {t(`view.${lang}`)}
                                 </button>
                               </form>
                             </Drawer>
@@ -480,7 +483,7 @@ function Filter() {
                                 src="/assets/icons/money_filter.svg"
                                 alt="monoy_filter"
                               />{" "}
-                              <span className="p16_regular">По цене</span>
+                              <span className="p16_regular">{t(`byPrice.${lang}`)}</span>
                             </button>
                             <button
                               onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
@@ -488,7 +491,7 @@ function Filter() {
                               className="by_popular"
                             >
                               <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
-                              <span className="p16_regular">По алфавиту</span>
+                              <span className="p16_regular">{t(`alphabetically.${lang}`)}</span>
                             </button>
                           </div>
 
@@ -514,7 +517,7 @@ function Filter() {
                         ))
                         : products?.items.map((product) => (
                           <Col sm={24} xs={24} key={product.id}>
-                            <ProductCardCol {...product} />
+                            <ProductCardCol product={product} />
                           </Col>
                         ))}
                     </Row>

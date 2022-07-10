@@ -124,12 +124,12 @@
     "uz": "Telefon:"
   },
   "yourEmail": {
-    "ru": "",
+    "ru": "Email",
     "uz": "Emailingiz"
   },
   "topic": {
     "ru": "Тема обращения",
-    "uz": "Mavzu"
+    "uz": "Murojaatlar mavzusi"
   },
   "yourMessage": {
     "ru": "Ваше собшение",
@@ -218,5 +218,121 @@
   "emptyOrderText": {
     "ru": "У вас нет покупок",
     "uz": "Sizda xaridlar yo'q"
+  },
+  "compare": {
+    "ru": "К сравнению",
+    "uz": "Taqqoslash"
+  },
+  "addToCart": {
+    "ru": "В корзину",
+    "uz": "Savatchaga qo'shish"
+  },
+  "addToFavourites": {
+    "ru": "В избранные",
+    "uz": "Sevimlilarga qo'shish"
+  },
+  "searchResults": {
+    "ru": "Результаты поиска",
+    "uz": "Qidiruv natijalari"
+  },
+  "myOrders": {
+    "ru": "Мои заказы",
+    "uz": "Mening buyurtmalarim"
+  },
+  "callCenter": {
+    "ru": "Колл-центр:",
+    "uz": "Call-markaz:"
+  },
+  "callCenterWorkingDays": {
+    "ru": "График работы колл-центра",
+    "uz": "Call-markaz ish vaqti"
+  },
+  "buyers": {
+    "ru": "Покупателям",
+    "uz": "Xaridorlar"
+  },
+  "feedback": {
+    "ru": "Обратная связь",
+    "uz": "Qayta aloqa"
+  },
+  "general": {
+    "ru": "Общее",
+    "uz": "Umumiy"
+  },
+  "desc": {
+    "ru": " Описание:",
+    "uz": "Tavsif:"
+  },
+  "brand": {
+    "ru": "Торговая марка:",
+    "uz": "Brend:"
+  },
+  "noFavourites": {
+    "ru": "Нет избранных товаров",
+    "uz": "Tanlangan mahsulotlar yo'q"
+  },
+  "noSearchingResult": {
+    "ru": "Результаты поиска не найдены",
+    "uz": " Qidiruv bo'yicha hech narsa topilmadi"
+  },
+  "newCommers": {
+    "ru": "Новые поступления",
+    "uz": "Yangi kelganlar"
+  },
+  "viewAll": {
+    "ru": "Посмотреть всё",
+    "uz": "Barchasini ko'rish"
+  },
+  "popularCategories": {
+    "ru": "Популярные категории",
+    "uz": "Ommabop toifalar"
+  },
+  "xitProducts": {
+    "ru": "Хит продаж",
+    "uz": "Ommabop mahsulotlar"
+  },
+  "viewMore": {
+    "ru": "Показать еще",
+    "uz": "Ko'proq ko'rsatish"
+  },
+  "brands": {
+    "ru": "Бренды",
+    "uz": "Brendlar"
+  },
+  "recommended": {
+    "ru": "Рекомендуем",
+    "uz": "Tavsiya qilinadi"
+  },
+  "price": {
+    "ru": "Цена",
+    "uz": "Narx"
+  },
+  "products": {
+    "ru": "Товаров",
+    "uz": "Tovarlar"
+  },
+  "byPrice": {
+    "ru": "По цене",
+    "uz": "Narxiga ko'ra"
+  },
+  "alphabetically": {
+    "ru": "По алфавиту",
+    "uz": "Alifbo tartibida"
+  },
+  "view": {
+    "ru": "Показать",
+    "uz": "Ko'rsatish"
+  },
+  "productMayInter": {
+    "ru": "Товары которые так же могут быть интересны",
+    "uz": "Shuningdek, qiziqarli bo'lishi mumkin bo'lgan mahsulotlar"
+  },
+  "popularModelAndCategory": {
+    "ru": "Популярные категории и модели",
+    "uz": "Ommabop toifalar va modellar"
+  },
+  "buyNow": {
+    "ru": "Купить сейчас",
+    "uz": "Hoziroq sotib olish"
   }
 }

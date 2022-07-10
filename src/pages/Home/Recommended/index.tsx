@@ -1,20 +1,18 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react'
 import { Col, Row } from 'antd';
 import ProductCard from '../../../components/ProductCard';
-import "./_style.scss";
 import CardsTitleTop from '../../../components/CardsTitleTop';
 import baseAPI from '../../../api/baseAPI';
 import { recommendedProductsUrl, stockUrl } from '../../../api/apiUrls';
 import { ProductType, RecommendedProductsResType, StockInfoType, StockResType } from '../../../types';
-import { LoadingContext } from 'react-router-loading';
+import { useT } from '../../../custom/hooks/useT';
+import "./_style.scss";
 
 function Recommended() {
-
+  const { t, lang } = useT();
   const [recommendedProducts, setRecommendedProducts] = useState<ProductType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [stock, setStock] = useState<StockInfoType>({} as StockInfoType);
-  // const loadingContext = useContext(LoadingContext);
 
   // get Recommended products
   const getNewProducts = useCallback(() => {
@@ -56,8 +54,8 @@ function Recommended() {
   return (
     <div className="recommended">
       <div className="container">
-        <CardsTitleTop title="Рекомендуем" toUrl="/more-products/recommended-view" />
-        <Row gutter={[30, 30]}>
+        <CardsTitleTop title={t(`recommended.${lang}`)} toUrl="/more-products/recommended-view" />
+        <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
           <Col lg={6} md={0} sm={0} xs={0}>
             <div className="left">
 
@@ -67,7 +65,7 @@ function Recommended() {
             </div>
           </Col>
           <Col lg={18} md={24}>
-            <Row gutter={[30, 30]}>
+            <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
               {
                 recommendedProducts.map(recommendedProduct => (
                   <Col lg={6} md={8} sm={12} xs={24} key={recommendedProduct.id}>

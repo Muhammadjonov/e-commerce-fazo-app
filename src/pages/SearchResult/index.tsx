@@ -13,6 +13,7 @@ import baseAPI from "../../api/baseAPI";
 import { SearchInfoType, SearchResType } from "../../types";
 import { searchUrl } from "../../api/apiUrls";
 import { LoadingContext } from "react-router-loading";
+import { useT } from "../../custom/hooks/useT";
 
 const { Panel } = Collapse;
 
@@ -26,20 +27,9 @@ type GridType = {
   one: boolean;
 };
 
-const breadcrumbs = [
-  {
-    id: "1",
-    toUrl: "/",
-    text: "Главная",
-  },
-  {
-    id: "2",
-    toUrl: "#",
-    text: "Результаты поиска",
-  },
-];
 
 function SearchResult() {
+  const { t, lang } = useT();
   const [searchParams] = useSearchParams();
   let category = searchParams.get("category");
   let key = searchParams.get("key");
@@ -95,15 +85,32 @@ function SearchResult() {
     })
   }, [page])
 
+  //breadcrumb
+
+  const breadcrumbs = [
+    {
+      id: "1",
+      toUrl: "/",
+      text: t(`home.${lang}`),
+      className: ""
+    },
+    {
+      id: "2",
+      toUrl: "#",
+      text: t(`searchResults.${lang}`),
+      className: ""
+    },
+  ];
+
   let { items, _meta } = searchResultProducts;
 
   return (
     <section className="search_result_wrapper">
       <div className="container">
         <div className="search_result_body">
-          <Row gutter={[30, 30]}>
+          <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
             <Col lg={30}>
-              <Row gutter={[30, 30]}>
+              <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
                 <Col sm={24} xs={24}>
                   <div className="search_right_top">
                     <div className="breadcrumb_area">
@@ -134,13 +141,13 @@ function SearchResult() {
                         ))
                         : items?.map((product) => (
                           <Col sm={24} xs={24} key={product.id}>
-                            <ProductCardCol {...product} />
+                            <ProductCardCol product={product} />
                           </Col>
                         ))
 
                     ) : (
                       <Col xs={24}>
-                        Qidiruv bo'yicha hech narsa topilmadi
+                        {t(`noSearchingResult.${lang}`)}
                       </Col>
                     )
                 }

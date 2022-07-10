@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AddedCartNotif, RemovedCartNotif } from "../../components/Notifications";
 import { removeBasketFromLocalStorage, setBasketLocalStorage } from "../../helpers";
 import { ProductType } from "../../types";
 
@@ -39,10 +40,15 @@ export const basketSlice = createSlice({
         (prod) => prod.id === action.payload.id
       );
       if (productInBasket) {
-        productInBasket.count += action.payload.count;
+        state.products = state.products.filter(
+          (prod) => prod.id !== action.payload.id
+        );
+        RemovedCartNotif(action.payload.name);
       } else {
         state.products.push(action.payload);
+        AddedCartNotif(action.payload.name);
       }
+
       setTotals(state);
     },
     increment(state, action: PayloadAction<{ id: number }>) {
@@ -63,10 +69,11 @@ export const basketSlice = createSlice({
         setTotals(state);
       }
     },
-    deleteFromBasket(state, action: PayloadAction<{ id: number }>) {
+    deleteFromBasket(state, action: PayloadAction<ProductTypeBasket>) {
       state.products = state.products.filter(
         (prod) => prod.id !== action.payload.id
       );
+      RemovedCartNotif(action.payload.name);
       setTotals(state);
     },
     dropBasket(state) {
@@ -97,7 +104,7 @@ function setTotals(basket: InitialBasketStateType) {
   //   }
   // })
   // basket.shopsInBasket = [...shops];
-  setBasketLocalStorage(basket)
+  setBasketLocalStorage(basket);
 }
 
 export const { addToBasket, increment, decrement, deleteFromBasket, dropBasket, setBasket } =

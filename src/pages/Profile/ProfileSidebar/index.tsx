@@ -1,5 +1,4 @@
 import { Avatar } from 'antd';
-import React from 'react'
 import { Link } from 'react-router-dom';
 import "./_style.scss";
 
@@ -21,6 +20,7 @@ const ProfileSidebar = (props: IProfileSidebar) => {
           <Link
             to={sidebar.toUrl}
             className="profile__sidebar__item"
+            key={sidebar.id}
           >
             <Avatar className="profile_avatar" size={50} icon={<img src={sidebar.img} alt={sidebar.text} />} /> <div className="profile__sidebar__item__body">
               <p dangerouslySetInnerHTML={{ __html: sidebar.text }}>

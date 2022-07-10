@@ -22,11 +22,13 @@ const breadcrumbs = [
     id: "1",
     toUrl: "/",
     text: "Главная",
+    className: ""
   },
   {
     id: "2",
     toUrl: "#",
     text: "Горящие предложения",
+    className: ""
   },
 ];
 
@@ -83,9 +85,9 @@ function AllNewCommersProduct() {
     <section className="search_result_wrapper">
       <div className="container">
         <div className="search_result_body">
-          <Row gutter={[30, 30]}>
+          <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
             <Col lg={30}>
-              <Row gutter={[30, 30]}>
+              <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
                 <Col sm={24} xs={24}>
                   <div className="search_right_top">
                     <div className="breadcrumb_area">
@@ -110,7 +112,7 @@ function AllNewCommersProduct() {
                     ))
                     : items?.map((product) => (
                       <Col sm={24} xs={24} key={product.id}>
-                        <ProductCardCol {...product} />
+                        <ProductCardCol product={product} />
                       </Col>
                     ))
                 }

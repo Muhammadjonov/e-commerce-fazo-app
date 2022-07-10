@@ -1,5 +1,5 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
+import { useT } from '../../custom/hooks/useT';
 import "./_style.scss";
 
 interface ICardsTitleTop {
@@ -10,7 +10,7 @@ interface ICardsTitleTop {
 
 function CardsTitleTop(props: ICardsTitleTop) {
   const { title, toUrl, isShow = true } = props;
-
+  const { t, lang } = useT();
   return (
     <div className="cards_title_top">
       <h4 className="title24_bold hot_deals_title">
@@ -19,7 +19,7 @@ function CardsTitleTop(props: ICardsTitleTop) {
       {
         isShow && (
           <Link className="show_more p18_regular" to={toUrl}>
-            Посмотреть все <i className="fa-solid fa-right-long"></i>
+            {t(`viewAll.${lang}`)} <i className="fa-solid fa-right-long"></i>
           </Link>
         )
       }

@@ -9,7 +9,8 @@ interface IBreadcrumbComp {
   {
     id: string,
     toUrl: string,
-    text: string
+    text: string,
+    className: string
   }[]
 
 }
@@ -28,7 +29,7 @@ function BreadcrumbComp(props: IBreadcrumbComp) {
         breadcrumbs.map((breadcrumb) => {
           let last = breadcrumbs[breadcrumbs?.length - 1].id === breadcrumb.id;
           return (
-            <Breadcrumb.Item key={breadcrumb.id}>
+            <Breadcrumb.Item key={breadcrumb.id} className={breadcrumb.className}>
               {
                 last ? (breadcrumb.text)
                   : (

@@ -3,8 +3,9 @@ import ProductCard from '../../../components/ProductCard'
 import { ProductType } from '../../../types';
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "./_style.scss";
 import { FreeMode, Autoplay, Navigation } from "swiper";
+import { useT } from '../../../custom/hooks/useT';
+import "./_style.scss";
 
 interface IInterestedProduct {
   categoryLikeProducts: ProductType[]
@@ -12,9 +13,11 @@ interface IInterestedProduct {
 
 function InterestedProduct(props: IInterestedProduct) {
   const { categoryLikeProducts } = props;
+  const { t, lang } = useT();
+
   return (
     <div className="interested_products">
-      <CardsTitleTop title="Товары которые так же могут быть интересны" toUrl="#" isShow={false} />
+      <CardsTitleTop title={t(`productMayInter.${lang}`)} toUrl="#" isShow={false} />
       <div className="category__interested__swiper">
         <Swiper
           breakpoints={{
