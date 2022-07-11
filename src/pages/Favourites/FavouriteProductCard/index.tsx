@@ -8,11 +8,11 @@ import { useAppDispatch, useAppSelector } from '../../../Store/hooks';
 import { ProductType } from '../../../types';
 import "./_style.scss";
 
-interface IFavoriteProductCard {
+interface IFavouriteProductCard {
   product: ProductType
 }
 
-const FavoriteProductCard = (props: IFavoriteProductCard) => {
+const FavouriteProductCard = (props: IFavouriteProductCard) => {
   const {
     imageUrl,
     old_price,
@@ -85,4 +85,4 @@ const FavoriteProductCard = (props: IFavoriteProductCard) => {
   )
 }
 
-export default FavoriteProductCard
+export default FavouriteProductCard

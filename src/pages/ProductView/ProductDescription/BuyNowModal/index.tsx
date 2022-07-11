@@ -47,7 +47,7 @@ const BuyNowModal = (props: IBuyNowModal) => {
       .then((res) => {
         if (res.data.status === 200) {
           setIsLoading(false);
-          // NotificationComp("Ваша заявка принята!", "Мы свяжемся с Вами в ближайшее время!", "red_bg", "top")
+          NotificationComp(t(`buyNowNotif1`), t(`buyNowNotif2`), "top")
           handleCancel();
         }
         else if (res.data.status === 403) {
@@ -80,13 +80,13 @@ const BuyNowModal = (props: IBuyNowModal) => {
         onFinish={onFinishBuyNow}
         initialValues={{ phone: user?.username }}
       >
-        <Form.Item label="Ваше имя"
+        <Form.Item label={t(`yourName.${lang}`)}
           name="full_name"
           rules={[{ required: true }]}
           className="buy__now__modal__form__fullname"
         >
-          <Input placeholder='Ваше имя' />
-        </Form.Item> <Form.Item label="Номер телефона"
+          <Input placeholder={t(`yourName.${lang}`)} />
+        </Form.Item> <Form.Item label={t(`phoneNumber.${lang}`)}
           name="phone"
           rules={[{ required: true }]}
           className="buy__now__modal__form__phone"
@@ -111,7 +111,7 @@ const BuyNowModal = (props: IBuyNowModal) => {
             htmlType='submit'
             loading={isLoading}
           >
-            Оформить
+            {t(`checkout.${lang}`)}
           </Button>
         </div>
 

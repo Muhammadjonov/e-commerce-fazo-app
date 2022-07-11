@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Input } from "antd"
-import "./_style.scss";
 import { useNavigate } from 'react-router-dom';
+import "./_style.scss";
 
 const { Search } = Input;
 

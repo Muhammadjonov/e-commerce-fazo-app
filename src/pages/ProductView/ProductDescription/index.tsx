@@ -132,7 +132,7 @@ const ProductDescription = (props: IProductDescription) => {
 
           <div className="button_area">
             <BuyButton text={t(`buyNow.${lang}`)} onClick={onOpenBuyNowModal} />
-            <BuyButton onClick={onOpenInstallmentModal} text="Купить в рассрочку сейчас" className="checkout" />
+            <BuyButton onClick={() => { console.log("") }} text={t(`buyInstallment.${lang}`)} className="checkout" />
           </div>
 
           {

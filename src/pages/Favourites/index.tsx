@@ -1,8 +1,7 @@
 import { Col, Row } from 'antd';
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import BreadcrumbComp from '../../components/BreadcrumbComp';
-import FavoriteProductCard from './FavoriteProductCard';
-import "./_style.scss";
+import FavouriteProductCard from './FavouriteProductCard';
 import { FavouritesType, removeAllFavourites } from '../../features/favourites/favouritesSlice';
 import baseAPI from '../../api/baseAPI';
 import { getFavouritesUrl } from '../../api/apiUrls';
@@ -12,27 +11,14 @@ import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import EmptyFavourites from './EmptyFavourites';
 import PaginationComp from '../../components/PaginationComp';
 import { useT } from '../../custom/hooks/useT';
+import "./_style.scss";
 
-const breadcrumbs = [
-  {
-    id: "1",
-    toUrl: "/",
-    text: "Главная",
-    className: ""
-  },
-  {
-    id: "2",
-    toUrl: "#",
-    text: "Изброанное",
-    className: ""
-  }
-];
 type FavouritesResType = {
   status: number,
   message: string,
   data: ProductType[]
 }
-const Favorites = () => {
+const Favourites = () => {
   const { t, lang } = useT();
   const [page, setPage] = useState<number>(1);
   let slicePage = (page - 1) * 20;
@@ -74,6 +60,21 @@ const Favorites = () => {
 
   const deleteAllFavourites = () => dispatch(removeAllFavourites());
 
+  const breadcrumbs = [
+    {
+      id: "1",
+      toUrl: "/",
+      text: t(`home.${lang}`),
+      className: ""
+    },
+    {
+      id: "2",
+      toUrl: "#",
+      text: t(`favorite.${lang}`),
+      className: ""
+    }
+  ];
+
   return (
     <section className="favorites">
       <div className="container">
@@ -101,7 +102,7 @@ const Favorites = () => {
                   {
                     favourites.slice(slicePage, slicePage + 20).map((favourite) => (
                       <Col lg={6} md={8} sm={12} xs={24} key={favourite.id}>
-                        <FavoriteProductCard product={favourite} />
+                        <FavouriteProductCard product={favourite} />
                       </Col>
                     ))
                   }
@@ -123,4 +124,4 @@ const Favorites = () => {
   )
 }
 
-export default Favorites
+export default Favourites

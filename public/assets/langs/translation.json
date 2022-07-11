@@ -73,7 +73,7 @@
   },
   "signInOrCreateAccount": {
     "ru": " Войти или создать профиль",
-    "uz": "Tizimga kiring yoki profil yarating"
+    "uz": "Kirish yoki ro'yhatdan o'tish"
   },
   "newPassword": {
     "ru": " Новый пароль",
@@ -122,6 +122,14 @@
   "phone": {
     "ru": "Телефон:",
     "uz": "Telefon:"
+  },
+  "telegram": {
+    "ru": "Телеграм:",
+    "uz": "Telegram:"
+  },
+  "email": {
+    "ru": "Эл.адрес:",
+    "uz": "Email:"
   },
   "yourEmail": {
     "ru": "Email",
@@ -334,5 +342,73 @@
   "buyNow": {
     "ru": "Купить сейчас",
     "uz": "Hoziroq sotib olish"
+  },
+  "orderPrice": {
+    "ru": "Сумма заказа",
+    "uz": "Buyurtma narxi"
+  },
+  "orderContent": {
+    "ru": "Содержимое заказа",
+    "uz": "Buyurtma tarkibi"
+  },
+  "contactInfo": {
+    "ru": "Контанктная информация",
+    "uz": "Bog'lanish uchun ma'lumot"
+  },
+  "payment": {
+    "ru": "Оплата",
+    "uz": "To'lov"
+  },
+  "paymentMethod": {
+    "ru": "Метод оплаты:",
+    "uz": "To'lov uslubi:"
+  },
+  "buyInstallment": {
+    "ru": "Купить в рассрочку",
+    "uz": "Muddatli to'lovga xarid"
+  },
+  "haveQuestions": {
+    "ru": "Есть вопросы?",
+    "uz": "Savollaringiz bormi?"
+  },
+  "moreAboutProgram": {
+    "ru": "Подробнее о программе.",
+    "uz": "Dastur haqida batafsil."
+  },
+  "continueShopping": {
+    "ru": "Продолжить покупки",
+    "uz": "Xaridlarni davom ettirish"
+  },
+  "total": {
+    "ru": "Итого",
+    "uz": "Jami"
+  },
+  "product": {
+    "ru": "товара",
+    "uz": "mahsulot"
+  },
+  "next": {
+    "ru": "Далее",
+    "uz": "Keyingisi"
+  },
+  "resetPassword": {
+    "ru": "Восстановление пароля",
+    "uz": "Parolni qayta tiklash"
+  },
+  "createProfile": {
+    "ru": "Создание аккаунта",
+    "uz": "Akkauntni yaratish"
+  },
+  "enterRecSmsCode": {
+    "ru": "Введите полученный код",
+    "uz": "SMS da borgan kodni kriting"
+  },
+  "buyNowNotif1": {
+    "ru": "Ваша заявка принята!",
+    "uz": "Sizning arizangiz qabul qilindi!"
+  },
+  "buyNowNotif2": {
+    "ru": "Мы свяжемся с Вами в ближайшее время!",
+    "uz": "Imkon qadar tezroq siz bilan bog'lanamiz"
   }
 }

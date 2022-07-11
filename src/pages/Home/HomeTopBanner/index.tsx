@@ -10,6 +10,7 @@ import { BannerInfoType, BannerResType, CategoriesInfoType, CategoriesResType, H
 import "./_style.scss";
 import useWindowSize from '../../../custom/hooks/useWindowSize';
 import { LoadingContext } from "react-router-loading";
+import { MobileCategoriesContext } from '../../../App';
 
 
 const { Panel } = Collapse;
@@ -24,6 +25,7 @@ function HomeTopBanner() {
   const [categories, setCategories] = useState<CategoriesInfoType>([])
   const [isCategoriesLoading, setIsCategoriesLoading] = useState<boolean>(true);
 
+  const mobileCategoriesContext = useContext(MobileCategoriesContext);
   const loadingContext = useContext(LoadingContext);
 
 
@@ -71,7 +73,13 @@ function HomeTopBanner() {
 
   const { logo } = headerSettings;
 
-  const handleOpen = (value: boolean) => setIsOpenCategoriesDrower(value)
+  const handleOpen = (value: boolean) => {
+    if (value) {
+      mobileCategoriesContext.onOpenMobileCategories();
+    } else {
+      mobileCategoriesContext.onCloseMobileCategories();
+    }
+  }
 
   const drowerTitle = (
     <Link
@@ -129,7 +137,7 @@ function HomeTopBanner() {
             title={drowerTitle}
             placement="left"
             onClose={() => handleOpen(false)}
-            visible={isOpenCategoriesDrower}
+            visible={mobileCategoriesContext.isOpenMobileCategories}
             className="mobile_categories_drower"
           >
             <Collapse

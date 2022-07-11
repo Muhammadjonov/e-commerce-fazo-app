@@ -1,6 +1,6 @@
 import { AlignLeftOutlined } from '@ant-design/icons';
 import { Col, Divider, Drawer, Row } from 'antd';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
 import DrawerOpenBtn from '../../components/Buttons/DrawerOpenBtn';

@@ -8,6 +8,7 @@ import { categoriesUrl, headerSettingsUrl, headerTopMenuUrl } from "../../api/ap
 import baseAPI from "../../api/baseAPI";
 import { LoadingContext } from 'react-router-loading';
 import { Affix } from 'antd';
+import MobileMenu from './MobileMenu';
 
 interface IHeader {
   menuCategories: MenuCategoriesInfoType
@@ -78,13 +79,16 @@ function Header(props: IHeader) {
 
 
   return (
-    <header className="header">
-      <HeaderTop {...headerSettings} headerTopMenus={headerTopMenus} />
-      <Affix offsetTop={0}>
-        <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
-      </Affix>
-      <HeaderBottom categories={categories} menuCategories={menuCategories} />
-    </header >
+    <>
+      <header className="header">
+        <HeaderTop {...headerSettings} headerTopMenus={headerTopMenus} />
+        <Affix offsetTop={0}>
+          <HeaderCenter headerTopMenus={headerTopMenus} categories={categories} {...headerSettings} />
+        </Affix>
+        <HeaderBottom categories={categories} menuCategories={menuCategories} />
+      </header >
+      <MobileMenu />
+    </>
   )
 }
 

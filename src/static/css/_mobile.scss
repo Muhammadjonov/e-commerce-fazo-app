@@ -218,6 +218,10 @@
 
     .footer {
       margin-top: 40px;
+
+      .social_links_box {
+        padding-bottom: 30px;
+      }
     }
 
     .cards_title_top {
@@ -243,6 +247,10 @@
         display: block;
       }
     }
+
+    .fazo__back__top.ant-back-top {
+      bottom: 100px;
+    }
   }
 
   .ant-drawer-left.ant-drawer-open.mobile_categories_drower {
@@ -257,7 +265,9 @@
     }
   }
 
-
+  .mobile__menu {
+    display: block;
+  }
 }
 
 @media screen and (max-width:768px) {
@@ -443,7 +453,7 @@
                   }
                 }
 
-                .ant-breadcrumb-link {
+                .breadcrm_link {
                   margin-left: 25px;
                 }
               }
@@ -476,7 +486,40 @@
                   }
                 }
 
-                .ant-breadcrumb-link {
+                .breadcrm_link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .profile {
+
+      .profile_breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .breadcrm_link {
                   margin-left: 25px;
                 }
               }
@@ -509,7 +552,7 @@
                   }
                 }
 
-                .ant-breadcrumb-link {
+                .breadcrm_link {
                   margin-left: 25px;
                 }
               }
@@ -542,7 +585,7 @@
                   }
                 }
 
-                .ant-breadcrumb-link {
+                .breadcrm_link {
                   margin-left: 25px;
                 }
               }
@@ -575,7 +618,7 @@
                   }
                 }
 
-                .ant-breadcrumb-link {
+                .breadcrm_link {
                   margin-left: 25px;
                 }
               }
@@ -607,10 +650,6 @@
                 i {
                   transform: rotate(180deg);
                 }
-              }
-
-              .ant-breadcrumb-link {
-                margin-left: 25px;
               }
 
               span.last__one {

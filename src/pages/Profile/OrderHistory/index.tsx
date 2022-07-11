@@ -66,7 +66,7 @@ const OrderHistory = () => {
                         </div>
                         <div className="order__history__body__collapse__header__right__price">
                           <span className="order__history__body__collapse__header__right__price__title">
-                            Buyurtma narxi
+                            {t(`orderPrice.${lang}`)}
                           </span>
                           <span className="order__history__body__collapse__header__right__price__text">
                             {formatPrice(order.totalPrice)} {t(`sum.${lang}`)}
@@ -86,7 +86,7 @@ const OrderHistory = () => {
                     <div className="order__body">
                       <div className="order__body__product">
                         <h3 className="order__body__title order__detail title20_bold" >
-                          Buyurtma Tarkibi
+                          {t(`orderContent.${lang}`)}
                         </h3>
                         {
                           order?.orderItems?.map((orderItem) => (
@@ -106,7 +106,7 @@ const OrderHistory = () => {
                       <Divider />
                       <div className="order__body__user__info">
                         <h3 className="order__body__title title20_bold" >
-                          Bog'lanish uchun ma'lumot
+                          {t(`contactInfo.${lang}`)}
                         </h3>
                         <p className="order__body__user__info__username">
                           {order?.user?.first_name} {order?.user?.last_name}
@@ -116,10 +116,10 @@ const OrderHistory = () => {
                         </p>
                         <div className="order__body__user__info__payment__method">
                           <h3 className="order__body__title title20_bold" >
-                            To'lov
+                            {t(`payment.${lang}`)}
                           </h3>
                           <p className="order__body__user__info__payment__method__content">
-                            To'lov uslubi:<b>{order?.paymentMethod}</b>
+                            {t(`paymentMethod.${lang}`)}<b>{order?.paymentMethod}</b>
                           </p>
                         </div>
                       </div>

@@ -139,7 +139,7 @@ function HeaderCenter(props: IHeaderCenter) {
                           <div className="right_item">
                             <img src="/assets/icons/user.svg" alt="user" />
                             <span className="user_nav_text">
-                              {userData?.user?.first_name?.slice(0, 7)}...
+                              {userData?.user?.first_name?.slice(0, 7)}{(userData?.user?.first_name?.length) && (userData?.user?.first_name?.length > 7) ? "..." : ""}
                             </span>
                           </div>
                         </Dropdown>
@@ -160,7 +160,7 @@ function HeaderCenter(props: IHeaderCenter) {
                   <li>
                     <Link
                       className="right_item"
-                      to={"/favorites"}
+                      to={"/favourites"}
                     >
                       <Badge count={favoutites?.length}>
                         <img src="/assets/icons/heart.svg" alt="heart-icon" />

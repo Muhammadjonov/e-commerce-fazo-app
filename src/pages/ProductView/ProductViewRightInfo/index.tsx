@@ -71,7 +71,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
           <a href={url} target="_blank" rel="noopener noreferrer"
             className="more_about_program"
           >
-            Подробнее о программе.
+            {t(`moreAboutProgram.${lang}`)}
           </a>
         </div>
       </div>
@@ -80,10 +80,10 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
         <i className="fa-solid fa-headset"></i>
         <div className="product_view_right_info_card_body">
           <h5 className="card_title">
-            Есть вопросы?
+            {t(`haveQuestions.${lang}`)}
           </h5>
           <p className="content">
-            <span>Телефон:</span>
+            <span>{t(`phone.${lang}`)}</span>
             <ul>
               {
                 phonesNumbers?.split(",").map((phone, idx) => (
@@ -98,7 +98,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
             </ul>
           </p>
           <p className="content">
-            <span>Телеграм:</span>  <ul>
+            <span>{t(`telegram.${lang}`)}</span>  <ul>
               {
                 managers?.split(",").map((manager, idx) => (
                   <li key={idx}>
@@ -112,7 +112,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
             </ul>
           </p>
           <p className="content">
-            <span>Эл. почта:</span>  <ul>
+            <span>{t(`email.${lang}`)}</span>  <ul>
               {
                 emails?.split(",").map((email, idx) => (
                   <li key={idx}>
@@ -134,7 +134,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
           <img src="/assets/icons/delivery.svg" alt="delivery" />
           <div className="product_view_right_info_card_body">
             <h5 className="card_title">
-              Доставка: <span className="content">
+              {t(`delivery.${lang}`)}: <span className="content">
                 {formatPrice(delivery_price)}
               </span>
             </h5>
@@ -145,7 +145,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
           <img src="/assets/icons/payment.svg" alt="payment" />
           < div className="product_view_right_info_card_body">
             <h5 className="card_title">
-              Cпособ оплаты:
+              {t(`paymentMethod.${lang}`)}
             </h5>
             <ul>
               {

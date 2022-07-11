@@ -75,7 +75,7 @@ const CartModal = (props: ICartModal) => {
                           {product.name}
                         </h3>
                         <p className="cart__modal__product__card__left__info__product__price title18_bold">
-                          {formatPrice(product.price)} cум
+                          {formatPrice(product.price)} {t(`sum.${lang}`)}
                         </p>
                       </div>
                     </div>
@@ -126,7 +126,7 @@ const CartModal = (props: ICartModal) => {
 
             <div className="cart__modal__total__count__price">
               <p className="cart__modal__total__count__price__text">
-                <span className="p18_regular">Итого {totalProductCount} товара</span> <span className="title24_bold">
+                <span className="p18_regular">{t(`total.${lang}`)} {totalProductCount} {t(`product.${lang}`)}</span> <span className="title24_bold">
                   {formatPrice(totalPrice)} {t(`sum.${lang}`)}
                 </span>
               </p>
@@ -138,7 +138,7 @@ const CartModal = (props: ICartModal) => {
                 onClick={onCloseCartModal}
                 size="large"
               >
-                Продолжить покупки
+                {t(`continueShopping.${lang}`)}
               </Button>
               <Button
                 className="cart__modal__btns__checkout__btn"

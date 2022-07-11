@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 interface IProtectedProfile {
-  isLoggedIn: boolean,
+  isLoggedIn: string,
   children: any
 }
 
