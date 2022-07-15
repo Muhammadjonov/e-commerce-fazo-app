@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
+import { getAccessToken } from "../../helpers";
 
 interface IProtectedProfile {
-  isLoggedIn: string,
   children: any
 }
 
 const ProtectedProfile = (props: IProtectedProfile) => {
-  const { isLoggedIn, children } = props;
+  const { children } = props;
+  let isLoggedIn = getAccessToken();
 
   if (!isLoggedIn) {
     return <Navigate to="/" replace />;

@@ -1,3 +1,4 @@
+import { UnorderedListOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom'
@@ -25,7 +26,7 @@ const MobileMenu = () => {
             className='mobile__menu__list__item__link'
             onClick={() => mobileCategoriesContext.onOpenMobileCategories()}
           >
-            <img className='mobile__menu__list__item__link__img' src="/assets/icons/hamburger.svg" alt="menu" />
+            <UnorderedListOutlined className='mobile__menu__list__item__link__img' />
             <span className="mobile__menu__list__item__link__text">
               {t(`category.${lang}`)}
             </span>
@@ -34,7 +35,7 @@ const MobileMenu = () => {
         <li className="mobile__menu__list__item">
           <Link to="/balance" className='mobile__menu__list__item__link'>
             <Badge count={11}>
-              <img className='mobile__menu__list__item__link__img' src="/assets/icons/compare-gray.svg" alt="compare" />
+              <img className='mobile__menu__list__item__link__img' src="/assets/icons/compare-outline.svg" alt="compare" />
             </Badge>
             <span className="mobile__menu__list__item__link__text">
               {t(`compare.${lang}`)}
@@ -48,7 +49,7 @@ const MobileMenu = () => {
             onClick={() => cartContext.onOpenCartModal()}
           >
             <Badge count={inBasketProducts?.length}>
-              <img className='mobile__menu__list__item__link__img' src="/assets/icons/shopping-cart-gray.svg" alt="cart" />
+              <img className='mobile__menu__list__item__link__img' src="/assets/icons/shopping-cart-outline.svg" alt="cart" />
             </Badge>
             <span className="mobile__menu__list__item__link__text">
               {t(`cart.${lang}`)}
@@ -58,7 +59,7 @@ const MobileMenu = () => {
         <li className="mobile__menu__list__item">
           <Link to="/favourites" className='mobile__menu__list__item__link'>
             <Badge count={favoutites?.length}>
-              <img className='mobile__menu__list__item__link__img' src="/assets/icons/heart-gray.svg" alt="heart" />
+              <img className='mobile__menu__list__item__link__img' src="/assets/icons/heart-outline.svg" alt="heart" />
             </Badge>
             <span className="mobile__menu__list__item__link__text">
               {t(`favorite.${lang}`)}
@@ -73,14 +74,14 @@ const MobileMenu = () => {
                 onClick={authContext.onOpenSignInModal}
                 className='mobile__menu__list__item__link'
               >
-                <img className='mobile__menu__list__item__link__img' src="/assets/icons/user.svg" alt="menu" />
+                <img className='mobile__menu__list__item__link__img' src="/assets/icons/user-outline.svg" alt="menu" />
                 <span className="mobile__menu__list__item__link__text">
                   {t(`signIn.${lang}`)}
                 </span>
               </button>
             ) : (
               <Link to="/profile" className='mobile__menu__list__item__link'>
-                <img className='mobile__menu__list__item__link__img' src="/assets/icons/user.svg" alt="menu" />
+                <img className='mobile__menu__list__item__link__img' src="/assets/icons/user-outline.svg" alt="menu" />
                 <span className="mobile__menu__list__item__link__text">
                   {userData?.user?.first_name?.slice(0, 7)}{(userData?.user?.first_name?.length) && (userData?.user?.first_name?.length > 7) ? "..." : ""}
                 </span>

@@ -268,6 +268,10 @@
   .mobile__menu {
     display: block;
   }
+
+  #__replain_widget {
+    inset: auto 20px 70px auto !important;
+  }
 }
 
 @media screen and (max-width:768px) {
@@ -666,6 +670,10 @@
           }
         }
       }
+    }
+
+    .fazo__back__top.ant-back-top {
+      bottom: 70px;
     }
   }
 }

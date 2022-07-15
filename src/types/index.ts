@@ -96,6 +96,8 @@ export type ProductType = {
 	old_price: number,
 	imageUrl: string,
 	userSaveProduct?: boolean,
+	category_id: number,
+	is_treaty: number
 }
 
 export type BestsellerResType = {
@@ -350,7 +352,9 @@ export type ProductDetailInfoType = {
 	images: string[],
 	is_delivery: number,
 	delivery_price: number,
-	brandName: string
+	brandName: string,
+	category_id: number,
+	is_treaty: number
 }
 
 export type ProductDetailResType = {
@@ -427,4 +431,28 @@ export type MyOrderResType = {
 	status: number,
 	message: string,
 	data: MyOrderInfoType
+}
+
+export type ComparesInfoType = {
+	categories: {
+		categoryId: number,
+		categoryName: string,
+		productCount: number
+	}[],
+	products: ProductType[],
+	characters: {
+		id: number,
+		name: string,
+		productAssigns: {
+			id: number,
+			product_id: number,
+			value: string
+		}[]
+	}[]
+}
+
+export type ComparesResType = {
+	status: number,
+	message: string,
+	data: ComparesInfoType
 }

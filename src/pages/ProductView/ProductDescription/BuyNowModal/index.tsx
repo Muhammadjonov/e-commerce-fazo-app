@@ -47,7 +47,7 @@ const BuyNowModal = (props: IBuyNowModal) => {
       .then((res) => {
         if (res.data.status === 200) {
           setIsLoading(false);
-          NotificationComp(t(`buyNowNotif1`), t(`buyNowNotif2`), "top")
+          NotificationComp(t(`buyNowNotif1.${lang}`), t(`buyNowNotif2.${lang}`), "top")
           handleCancel();
         }
         else if (res.data.status === 403) {
@@ -80,12 +80,12 @@ const BuyNowModal = (props: IBuyNowModal) => {
         onFinish={onFinishBuyNow}
         initialValues={{ phone: user?.username }}
       >
-        <Form.Item label={t(`yourName.${lang}`)}
+        <Form.Item label={t(`yourFirstName.${lang}`)}
           name="full_name"
           rules={[{ required: true }]}
           className="buy__now__modal__form__fullname"
         >
-          <Input placeholder={t(`yourName.${lang}`)} />
+          <Input placeholder={t(`yourFirstName.${lang}`)} />
         </Form.Item> <Form.Item label={t(`phoneNumber.${lang}`)}
           name="phone"
           rules={[{ required: true }]}

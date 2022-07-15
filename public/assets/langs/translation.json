@@ -231,6 +231,10 @@
     "ru": "К сравнению",
     "uz": "Taqqoslash"
   },
+  "balance": {
+    "ru": "Сравнить",
+    "uz": "Таққослаш"
+  },
   "addToCart": {
     "ru": "В корзину",
     "uz": "Savatchaga qo'shish"
@@ -268,12 +272,12 @@
     "uz": "Umumiy"
   },
   "desc": {
-    "ru": " Описание:",
+    "ru": "Описание:",
     "uz": "Tavsif:"
   },
   "brand": {
-    "ru": "Торговая марка:",
-    "uz": "Brend:"
+    "ru": "Торговая марка",
+    "uz": "Brend"
   },
   "noFavourites": {
     "ru": "Нет избранных товаров",
@@ -281,7 +285,7 @@
   },
   "noSearchingResult": {
     "ru": "Результаты поиска не найдены",
-    "uz": " Qidiruv bo'yicha hech narsa topilmadi"
+    "uz": "Qidiruv bo'yicha hech narsa topilmadi"
   },
   "newCommers": {
     "ru": "Новые поступления",
@@ -410,5 +414,37 @@
   "buyNowNotif2": {
     "ru": "Мы свяжемся с Вами в ближайшее время!",
     "uz": "Imkon qadar tezroq siz bilan bog'lanamiz"
+  },
+  "productComparison": {
+    "ru": "Сравнение товаров",
+    "uz": "Mahsulotni taqqoslash"
+  },
+  "addProducts": {
+    "ru": "Добавить товары",
+    "uz": "Mahsulotlar qo'shish"
+  },
+  "productCharacteristics": {
+    "ru": "Характеристики товара",
+    "uz": "Mahsulot xususiyatlari"
+  },
+  "treaty": {
+    "ru": "Договорная",
+    "uz": "Kelishish mumkin"
+  },
+  "sendCodeAgain": {
+    "ru": "Отправить код еще раз",
+    "uz": "Kodni qayta yuboring"
+  },
+  "yourMessageHasBeenSent": {
+    "ru": "Ваше сообщение отправлено",
+    "uz": "Xabaringiz jo'natildi"
+  },
+  "requiredErrMessage": {
+    "ru": "Это поле является обязательным",
+    "uz": "Ushbu maydonni to'ldirish majburiy"
+  },
+  "shareYourOpinion": {
+    "ru": "Поделитесь мнением о нашей работе",
+    "uz": "Bizning ishimiz haqida fikringizni o`rtoqlashing"
   }
 }

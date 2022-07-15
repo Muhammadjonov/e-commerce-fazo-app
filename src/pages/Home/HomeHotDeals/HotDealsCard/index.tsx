@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../../App';
 import { useT } from '../../../../custom/hooks/useT';
 import { addToBasket } from '../../../../features/basket/basketSlice';
+import { addToCompare } from '../../../../features/Compares/comparesSlice';
 import { addToFavoutires, removeFromFavourites } from '../../../../features/favourites/favouritesSlice';
-import { isFavourite, isInBasket } from '../../../../helpers';
+import { formatPrice, isFavourite, isInBasket, isInCompare } from '../../../../helpers';
 import { useAppDispatch, useAppSelector } from '../../../../Store/hooks';
 import { ProductType } from '../../../../types';
 // import Countdown from 'react-countdown';
@@ -66,10 +67,10 @@ function HotDealsCard(props: IHotDealsCard) {
     id,
     name,
     slug,
-    brandName,
+    is_treaty,
     price,
-    old_price,
     imageUrl,
+    category_id
   } = props.product;
 
   const { t, lang } = useT();
@@ -77,9 +78,12 @@ function HotDealsCard(props: IHotDealsCard) {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
   const { data: favourites } = useAppSelector((state) => state.favourites);
-  const { products } = useAppSelector((state) => state.basket)
+  const { products } = useAppSelector((state) => state.basket);
+  const { compares } = useAppSelector((state) => state.compares);
   let isFavorite = isFavourite(favourites, id);
   let isThereInBasket = isInBasket(products, id);
+  let isThereCompare = isInCompare(compares, category_id, id);
+
   const { onOpenSignInModal } = useContext(AuthContext);
 
   const onFavouriteClick = () => {
@@ -99,6 +103,10 @@ function HotDealsCard(props: IHotDealsCard) {
     dispatch(addToBasket({ ...props.product, count: 1 }))
   }
 
+  const handleAddCompare = () => {
+    dispatch(addToCompare({ category_id, id, name }))
+  }
+
   return (
     <Card className="hot_deals_card" bordered={false} hoverable>
 
@@ -116,7 +124,14 @@ function HotDealsCard(props: IHotDealsCard) {
           </figure>
         </Link>
         <p className="price title18_bold">
-          <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>{price} {t(`sum.${lang}`)}
+          {/* <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del> */}
+          {
+            is_treaty !== 1 ? (
+              <>
+                {formatPrice(price)} {t(`sum.${lang}`)}
+              </>
+            ) : t(`treaty.${lang}`)
+          }
         </p>
         <Link className='product_view_link' to={`/product/detail/${slug}`}>
           <h5 className="product_name">
@@ -135,16 +150,21 @@ function HotDealsCard(props: IHotDealsCard) {
       </div>
       <div className="card_footer">
         <ul>
-          <li>
-            <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
-              <button
-                type='button'
-                onClick={handleAddBasket}
-              >
-                <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
-              </button>
-            </Tooltip>
-          </li>
+          {
+            is_treaty !== 1 && (
+              <li>
+                <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
+                  <button
+                    type='button'
+                    onClick={handleAddBasket}
+                  >
+                    <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
+                  </button>
+                </Tooltip>
+              </li>
+            )
+          }
+
           <li>
             <Tooltip placement='top' title={t(`addToFavourites.${lang}`)} >
               <button
@@ -157,8 +177,11 @@ function HotDealsCard(props: IHotDealsCard) {
           </li>
           <li>
             <Tooltip placement='top' title={t(`compare.${lang}`)} >
-              <button type='button'>
-                <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
+              <button
+                type='button'
+                onClick={handleAddCompare}
+              >
+                <img src={`/assets/icons/compare-${isThereCompare ? 'red' : 'gray'}.svg`} alt="compare" />
               </button>
             </ Tooltip>
           </li>

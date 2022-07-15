@@ -89,13 +89,13 @@ function HeaderTopMenus() {
                 ))}
                 <li className="header_top_menus__body__left__item" >
                   <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/feedback/contact`}>
-                    <img className='header_top_menus__body__left__item__link__img' src={""} alt={"feedback"} />
+                    <img className='header_top_menus__body__left__item__link__img' src={"/assets/icons/phone-red.svg"} alt={"feedback"} />
                     <div className="header_top_menus__body__left__item__link__content">
                       <h4 className="title16_bold header_top_menus__body__left__item__link__content__title">
                         {t(`feedback.${lang}`)}
                       </h4>
                       <p className="header_top_menus__body__left__item__link__content__text">
-                        {/* {leftMenu.short_description} */}
+                        {t(`shareYourOpinion.${lang}`)}
                       </p>
                     </div>
                   </NavLink>

@@ -3,7 +3,7 @@ import ProductCard from '../../../components/ProductCard'
 import { ProductType } from '../../../types';
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { FreeMode, Autoplay, Navigation } from "swiper";
+import { FreeMode, Navigation } from "swiper";
 import { useT } from '../../../custom/hooks/useT';
 import "./_style.scss";
 
@@ -45,11 +45,7 @@ function InterestedProduct(props: IInterestedProduct) {
           spaceBetween={30}
           freeMode={true}
           navigation={true}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
-          modules={[FreeMode, Autoplay, Navigation]}
+          modules={[FreeMode, Navigation]}
           className="mySwiper interested_carusel"
         >
           {

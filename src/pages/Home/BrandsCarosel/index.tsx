@@ -9,7 +9,6 @@ import { FreeMode, Autoplay, Navigation } from "swiper";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "./_style.scss";
 
 

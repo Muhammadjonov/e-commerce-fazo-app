@@ -7,13 +7,17 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import { BackTop } from 'antd';
 import { useAppDispatch, useAppSelector } from "./Store/hooks";
-import { getAccessToken, getBasketFromLocalStorage, setUserToLocalStorage } from "./helpers";
+import { getAccessToken, getBasketFromLocalStorage, getCompareLocalStorage, setUserToLocalStorage } from "./helpers";
 import { MenuCategoriesInfoType, MenuCategoriesResType } from './types';
 import { menuCategoriesUrl, profileUrl } from './api/apiUrls';
 import baseAPI from './api/baseAPI';
 import AuthModal from './components/AuthModal';
+import CartModal from './components/CartModal';
 import { request } from './api/config';
 import { setUser, UserResType } from './features/authSlice';
+import { getFavourites } from './features/favourites/favouritesSlice';
+import { setCompare } from './features/Compares/comparesSlice';
+import { setBasket } from './features/basket/basketSlice';
 // pages
 import Filter from './pages/Filter';
 import Home from './pages/Home';
@@ -30,14 +34,11 @@ import PageNotFound from './pages/PageNotFound';
 import BestsellerFilter from './pages/BestsellerFilter';
 import AllNewCommersProduct from './pages/AllNewCommersProduct';
 import Profile from './pages/Profile';
-import { setLoading } from './features/loading/loadingSlice';
-import { getFavourites } from './features/favourites/favouritesSlice';
 import Feedback from './pages/HeaderTopMenus/Feedback';
-import CartModal from './components/CartModal';
-import { setBasket } from './features/basket/basketSlice';
 import ProtectedCheckout from './pages/Checkout/ProtectedCheckout';
 import ProtectedProfile from './pages/Profile/ProtectedProfile';
 import OrderHistory from './pages/Profile/OrderHistory';
+import ProtectedFavourites from './pages/Favourites/ProtectedFavourites';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -70,7 +71,6 @@ function App() {
 
   const auth = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
-  let basket = getBasketFromLocalStorage();
   let accessToken = getAccessToken();
   useEffect(() => {
     const access_token = getAccessToken();
@@ -96,7 +96,11 @@ function App() {
     } else {
       setIsProfileLoading(false);
     }
-    basket = getBasketFromLocalStorage();
+    let basket = getBasketFromLocalStorage();
+    let compare = getCompareLocalStorage();
+    if (compare) {
+      dispatch(setCompare({ data: { ...compare } }))
+    }
     // window.addEventListener("load", function (e) {
     if (basket) {
       dispatch(setBasket({ data: { ...basket } }));
@@ -203,7 +207,6 @@ function App() {
         <MobileCategoriesContext.Provider value={mobileCategoriesContextValue}>
           <div className="mixel_wrapper">
             <Header menuCategories={menuCategories} />
-            {/* {element} */}
             {
               !isProfileLoading ? (
                 <Routes>
@@ -217,10 +220,18 @@ function App() {
                     <Route path=":page_slug" element={<HeaderMenusContent />} loading />
                     <Route path="feedback/contact" element={<Feedback />} />
                   </Route>
-                  <Route path="favourites" element={<Favourites />} loading />
-                  <Route path="balance" element={<ProductComparison />} />
+                  <Route
+                    path="favourites"
+                    element={
+                      <ProtectedFavourites>
+                        <Favourites />
+                      </ProtectedFavourites>
+                    }
+                    loading
+                  />
+                  <Route path="balance" element={<ProductComparison />} loading />
                   <Route path="profile" element={
-                    <ProtectedProfile isLoggedIn={accessToken}>
+                    <ProtectedProfile>
                       <Profile />
                     </ProtectedProfile>
 

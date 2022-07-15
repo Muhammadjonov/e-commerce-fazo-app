@@ -1,30 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { haveQuestionsUrl, paymentListUrl, returnExchangeUrl } from '../../../api/apiUrls';
+import { useState, useEffect, useCallback } from 'react'
+import { haveQuestionsUrl, paymentListUrl } from '../../../api/apiUrls';
 import baseAPI from '../../../api/baseAPI';
 import { useT } from '../../../custom/hooks/useT';
-import { formatPrice } from '../../../helpers';
 import { HaveQuestionsInfoType, HaveQuestionsResType, PaymentListInfoType, PaymentListResTyoe, ReturnExchangeInfoType, ReturnExchangeResType } from '../../../types';
 import "./_style.scss";
 
-interface IProductViewRightInfo {
-  delivery_price: number
-}
 
-function ProductViewRightInfo(props: IProductViewRightInfo) {
-  const { delivery_price } = props;
+function ProductViewRightInfo() {
   const { t, lang } = useT();
-  const [returnExchange, setReturnExchage] = useState<ReturnExchangeInfoType>({} as ReturnExchangeInfoType);
   const [paymentList, setPaymentList] = useState<PaymentListInfoType>([] as PaymentListInfoType);
   const [haveQuestions, setHaveQuestions] = useState<HaveQuestionsInfoType>({} as HaveQuestionsInfoType);
-
-  const getReturnExchange = useCallback(() => {
-    baseAPI.fetchAll<ReturnExchangeResType>(returnExchangeUrl)
-      .then((res) => {
-        if (res.data.status === 200) {
-          setReturnExchage(res.data.data);
-        }
-      })
-  }, []);
 
   const getPaymentList = useCallback(() => {
     baseAPI.fetchAll<PaymentListResTyoe>(paymentListUrl)
@@ -47,19 +32,16 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
   }, [])
 
   useEffect(() => {
-    getReturnExchange();
     getPaymentList();
     getHaveQuestions();
-  }, [getReturnExchange, getPaymentList, getHaveQuestions])
-
-  const { title, url, description } = returnExchange;
+  }, [getPaymentList, getHaveQuestions])
 
   const { managers, emails, phonesNumbers } = haveQuestions;
 
   return (
     <div className="product_view_right_info">
       {/* return and exchange */}
-      <div className="return_exchange product_view_right_info_card">
+      {/* <div className="return_exchange product_view_right_info_card">
         <i className="fa-solid fa-arrows-rotate"></i>
         <div className="product_view_right_info_card_body">
           <h5 className="card_title">
@@ -74,7 +56,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
             {t(`moreAboutProgram.${lang}`)}
           </a>
         </div>
-      </div>
+      </div> */}
       {/* have questions */}
       <div className="have_questions product_view_right_info_card">
         <i className="fa-solid fa-headset"></i>
@@ -82,7 +64,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
           <h5 className="card_title">
             {t(`haveQuestions.${lang}`)}
           </h5>
-          <p className="content">
+          <div className="content">
             <span>{t(`phone.${lang}`)}</span>
             <ul>
               {
@@ -94,11 +76,11 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
                   </li>
                 ))
               }
-
             </ul>
-          </p>
-          <p className="content">
-            <span>{t(`telegram.${lang}`)}</span>  <ul>
+          </div>
+          <div className="content">
+            <span>{t(`telegram.${lang}`)}</span>
+            <ul>
               {
                 managers?.split(",").map((manager, idx) => (
                   <li key={idx}>
@@ -110,9 +92,10 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
               }
 
             </ul>
-          </p>
-          <p className="content">
-            <span>{t(`email.${lang}`)}</span>  <ul>
+          </div>
+          <div className="content">
+            <span>{t(`email.${lang}`)}</span>
+            <ul>
               {
                 emails?.split(",").map((email, idx) => (
                   <li key={idx}>
@@ -122,15 +105,14 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
                   </li>
                 ))
               }
-
             </ul>
-          </p>
+          </div>
         </div>
       </div>
       {/* delivery and payment */}
       <div className="delivery_payment product_view_right_info_card">
 
-        <div className="delivery">
+        {/* <div className="delivery">
           <img src="/assets/icons/delivery.svg" alt="delivery" />
           <div className="product_view_right_info_card_body">
             <h5 className="card_title">
@@ -139,7 +121,7 @@ function ProductViewRightInfo(props: IProductViewRightInfo) {
               </span>
             </h5>
           </div>
-        </div>
+        </div> */}
 
         <div className="payment">
           <img src="/assets/icons/payment.svg" alt="payment" />

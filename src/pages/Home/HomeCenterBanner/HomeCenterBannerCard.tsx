@@ -51,9 +51,9 @@ function HomeCenterBannerCard(props: IHomeCenterBannerCard) {
               <h1 className="price title42_extra_bold">
                 {price} {t(`sum.${lang}`)}
               </h1>
-              <del className="old_price">
+              {/* <del className="old_price">
                 {oldPrice} {t(`sum.${lang}`)}
-              </del>
+              </del> */}
             </div>
             <Link className="banner_link" to={url}>
               {t(`viewMore.${lang}`)}

@@ -5,7 +5,6 @@ import { LoadingContext } from 'react-router-loading';
 import { productDetailUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
-import LightboxComp from '../../components/LightboxComp';
 import { useT } from '../../custom/hooks/useT';
 import { ProductDetailInfoType, ProductDetailResType } from '../../types';
 import ProductDescription from './ProductDescription';
@@ -70,7 +69,6 @@ function ProductView() {
     }
   ]
 
-  const { characterAssigns, meta_description, delivery_price } = productDetail;
 
   return (
     <section className="product_view">
@@ -91,7 +89,7 @@ function ProductView() {
                 />
               </Col>
               <Col xs={24} lg={8}>
-                <ProductViewRightInfo delivery_price={delivery_price} />
+                <ProductViewRightInfo />
               </Col>
             </Row>
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./_style.scss";
 
@@ -8,14 +8,12 @@ import PopularSliderCard from './PopularSliderCard';
 import { RecommendedCategoriesInfoType, RecommendedCategoriesResType } from '../../../types';
 import baseAPI from '../../../api/baseAPI';
 import { recommendedCategoriesUrl } from '../../../api/apiUrls';
-import { LoadingContext } from 'react-router-loading';
 import { useT } from '../../../custom/hooks/useT';
 
 
 function PopularCategoriesSlider() {
   const [popularCategories, setPopularCategories] = useState<RecommendedCategoriesInfoType>([]);
   // const [isLoading, setIsLoading] = useState(true);
-  // const loadingContext = useContext(LoadingContext);
   const { t, lang } = useT();
 
   const getPopularCategories = useCallback(() => {

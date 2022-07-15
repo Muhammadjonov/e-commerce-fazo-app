@@ -11,30 +11,18 @@ import baseAPI from "../../api/baseAPI";
 import { AllNewProductsInfoType, AllNewProductsResType, } from "../../types";
 import { newCommersProductsUrl } from "../../api/apiUrls";
 import { LoadingContext } from "react-router-loading";
+import useWindowSize from "../../custom/hooks/useWindowSize";
+import { useT } from "../../custom/hooks/useT";
 
 type GridType = {
   multiple: boolean;
   one: boolean;
 };
 
-const breadcrumbs = [
-  {
-    id: "1",
-    toUrl: "/",
-    text: "Главная",
-    className: ""
-  },
-  {
-    id: "2",
-    toUrl: "#",
-    text: "Горящие предложения",
-    className: ""
-  },
-];
-
 function AllNewCommersProduct() {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const { width } = useWindowSize();
+  const { t, lang } = useT();
   const [newCommers, setNewCommers] = useState<AllNewProductsInfoType>({} as AllNewProductsInfoType);
   const [page, setPage] = useState<number>(1);
   const loadingContext = useContext(LoadingContext);
@@ -79,10 +67,29 @@ function AllNewCommersProduct() {
     })
   }, [page])
 
+  useEffect(() => {
+    width < 768 && handleChangeGrid({ multiple: true, one: false })
+  }, [width])
+
   let { items, _meta } = newCommers;
 
+  const breadcrumbs = [
+    {
+      id: "1",
+      toUrl: "/",
+      text: t(`home.${lang}`),
+      className: ""
+    },
+    {
+      id: "2",
+      toUrl: "#",
+      text: t(`newCommers.${lang}`),
+      className: ""
+    },
+  ];
+
   return (
-    <section className="search_result_wrapper">
+    <section className="new__products">
       <div className="container">
         <div className="search_result_body">
           <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
@@ -93,14 +100,19 @@ function AllNewCommersProduct() {
                     <div className="breadcrumb_area">
                       <BreadcrumbComp breadcrumbs={breadcrumbs} />
                     </div>
-                    <div className="right_top_change_grid">
-                      <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
-                        <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
-                      </button>
-                      <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
-                        <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
-                      </button>
-                    </div>
+                    {
+                      width > 768 && (
+                        <div className="right_top_change_grid">
+                          <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
+                            <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
+                          </button>
+                          <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
+                            <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
+                          </button>
+                        </div>
+                      )
+                    }
+
                   </div>
                 </Col>
                 {

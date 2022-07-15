@@ -156,6 +156,13 @@ input[type=number] {
   padding-left: 35px;
 }
 
+.swiper-button-prev.swiper-button-disabled {
+  display: none;
+}
+
+.swiper-button-next.swiper-button-disabled {
+  display: none;
+}
 
 // mobile styles
 @import "mobile";

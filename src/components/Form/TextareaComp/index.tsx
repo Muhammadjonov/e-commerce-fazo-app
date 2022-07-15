@@ -1,5 +1,5 @@
-import React from 'react'
 import { UseFormRegister } from 'react-hook-form';
+import { useT } from '../../../custom/hooks/useT';
 import "./_style.scss";
 
 interface ITextarea {
@@ -13,7 +13,6 @@ interface ITextarea {
 }
 
 const Textarea = (props: ITextarea) => {
-
   const {
     name,
     label,
@@ -23,12 +22,13 @@ const Textarea = (props: ITextarea) => {
     disabled,
     type = "text"
   } = props;
+  const { t, lang } = useT();
 
   return (
     <div className="textarea__wrapper">
       <textarea className="custom_textarea" placeholder={label} id={name}  {...register(name, { required, disabled })} />
       <label className="custom_label" htmlFor={name}>{label}</label>
-      {errors[name] && <span className='error_message'>This field is required</span>}
+      {errors[name] && <span className='error_message'>{t(`requiredErrMessage.${lang}`)}</span>}
     </div>
   )
 }

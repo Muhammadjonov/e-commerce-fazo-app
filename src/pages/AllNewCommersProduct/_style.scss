@@ -1,4 +1,4 @@
-.search_result_wrapper {
+.new__products {
   min-height: calc(100vh - 634px);
   padding   : 30px 0px 0px;
   color     : var(--brand_color_black);
@@ -21,7 +21,7 @@
     .search_right_top {
       display        : flex;
       justify-content: space-between;
-      margin-bottom  : -15px;
+      margin-bottom  : 10px;
 
       .right_top_filter {
         display: flex;

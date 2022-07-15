@@ -83,9 +83,9 @@ function SearchComp(props: ISearchComp) {
         style={{ width: "70%" }}
         onChange={handleSearchValue}
       />
-      <button type="button" className="mic_btn">
+      {/* <button type="button" className="mic_btn">
         <AudioOutlined />
-      </button>
+      </button> */}
     </Input.Group>
   )
 }

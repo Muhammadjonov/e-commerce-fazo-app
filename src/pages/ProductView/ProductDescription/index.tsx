@@ -1,17 +1,18 @@
 import { Col, Row, Tooltip } from "antd";
 import ProductInfoComp from "./ProductInfoComp";
 import BuyButton from "./BuyButton";
-import "./_style.scss";
 import { useContext, useState } from "react";
 import InstallmentModal from "../../../components/InstallmentModal";
 import { CharacterAssignsType } from "../../../types";
 import BuyNowModal from "./BuyNowModal";
 import { useAppDispatch, useAppSelector } from "../../../Store/hooks";
 import { AuthContext } from "../../../App";
-import { isFavourite, isInBasket } from "../../../helpers";
+import { formatPrice, isFavourite, isInBasket, isInCompare } from "../../../helpers";
 import { addToFavoutires, removeFromFavourites } from "../../../features/favourites/favouritesSlice";
 import { addToBasket } from "../../../features/basket/basketSlice";
 import { useT } from "../../../custom/hooks/useT";
+import { addToCompare } from "../../../features/Compares/comparesSlice";
+import "./_style.scss";
 
 
 interface IProductDescription {
@@ -25,11 +26,13 @@ interface IProductDescription {
   brandName: string,
   old_price: number,
   imageUrl: string,
-  userSaveProduct?: boolean
+  userSaveProduct?: boolean,
+  category_id: number,
+  is_treaty: number
 }
 
 const ProductDescription = (props: IProductDescription) => {
-  const { id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, short_description, description, characterAssigns } = props;
+  const { id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, short_description, description, characterAssigns, category_id, is_treaty } = props;
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
   const [isOpenBuyNowModal, setIsOpenBuyNowModal] = useState<boolean>(false);
 
@@ -42,9 +45,11 @@ const ProductDescription = (props: IProductDescription) => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
   const { data: favourites } = useAppSelector((state) => state.favourites);
-  const { products } = useAppSelector((state) => state.basket)
+  const { products } = useAppSelector((state) => state.basket);
+  const { compares } = useAppSelector((state) => state.compares);
   let isFavorite = isFavourite(favourites, id);
   let isThereInBasket = isInBasket(products, id);
+  let isThereCompare = isInCompare(compares, category_id, id);
   const { onOpenSignInModal } = useContext(AuthContext);
   let product = {
     id,
@@ -54,7 +59,9 @@ const ProductDescription = (props: IProductDescription) => {
     price,
     old_price,
     imageUrl,
-    userSaveProduct
+    userSaveProduct,
+    category_id,
+    is_treaty,
   }
 
   const { t, lang } = useT();
@@ -73,7 +80,10 @@ const ProductDescription = (props: IProductDescription) => {
   };
 
   const handleAddBasket = () => {
-    dispatch(addToBasket({ id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, count: 1 }))
+    dispatch(addToBasket({ id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, count: 1, category_id, is_treaty }))
+  }
+  const handleAddCompare = () => {
+    dispatch(addToCompare({ category_id, id, name }))
   }
 
 
@@ -86,21 +96,32 @@ const ProductDescription = (props: IProductDescription) => {
         <Col>
           <div className="action_area">
             <h5 className="product_price title20_bold">
-              {price} {t(`sum.${lang}`)} <img src="/assets/icons/info.svg" alt="info" />
+              {
+                is_treaty !== 1 && (
+                  <>
+                    {formatPrice(price)} {t(`sum.${lang}`)} <img src="/assets/icons/info.svg" alt="info" />
+                  </>
+                )
+              }
             </h5>
             <div className="right">
               <div className="card_footer">
                 <ul>
-                  <li>
-                    <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
-                      <button
-                        type='button'
-                        onClick={handleAddBasket}
-                      >
-                        <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
-                      </button>
-                    </Tooltip>
-                  </li>
+                  {
+                    is_treaty !== 1 && (
+                      <li>
+                        <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
+                          <button
+                            type='button'
+                            onClick={handleAddBasket}
+                          >
+                            <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
+                          </button>
+                        </Tooltip>
+                      </li>
+                    )
+                  }
+
                   <li>
                     <Tooltip placement='top' title={t(`addToFavourites.${lang}`)} >
                       <button
@@ -113,8 +134,11 @@ const ProductDescription = (props: IProductDescription) => {
                   </li>
                   <li>
                     <Tooltip placement='top' title={t(`compare.${lang}`)} >
-                      <button type='button'>
-                        <img src={"/assets/icons/compare-gray.svg"} alt="compare" />
+                      <button
+                        type='button'
+                        onClick={handleAddCompare}
+                      >
+                        <img src={`/assets/icons/compare-${isThereCompare ? 'red' : 'gray'}.svg`} alt="compare" />
                       </button>
                     </Tooltip>
                   </li>
@@ -131,7 +155,7 @@ const ProductDescription = (props: IProductDescription) => {
           </div> */}
 
           <div className="button_area">
-            <BuyButton text={t(`buyNow.${lang}`)} onClick={onOpenBuyNowModal} />
+            <BuyButton text={t(`${is_treaty === 1 ? 'treaty' : 'buyNow'}.${lang}`)} onClick={onOpenBuyNowModal} />
             <BuyButton onClick={() => { console.log("") }} text={t(`buyInstallment.${lang}`)} className="checkout" />
           </div>
 

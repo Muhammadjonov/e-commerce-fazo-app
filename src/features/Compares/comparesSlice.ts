@@ -1,113 +1,93 @@
-import { addFavoritesUrl, deleteAllFavoritesUrl } from '../../api/apiUrls';
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getFavouritesUrl } from "../../api/apiUrls";
-import baseAPI from "../../api/baseAPI";
-import { ProductType, _links, _meta } from "../../types";
+import { AddedComparesNotif, RemovedComparesNotif } from './../../components/Notifications/index';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { removeBasketFromLocalStorage, setCompareLocalStorage } from "../../helpers";
 
-export const getFavourites = createAsyncThunk('favourites/get', async () => {
-  let res = await baseAPI.fetchAll<FavouritesReducerType>(getFavouritesUrl);
-  return res.data;
-});
-
-export const addToFavoutires = createAsyncThunk('favourites/add', async (product: ProductType) => {
-  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: product.slug });
-  if (res.data.status === 200) {
-    return product;
-  } else {
-    throw new Error('Favorite create error')
-  }
-});
-
-export const removeFromFavourites = createAsyncThunk('favourites/remove', async (slug: string) => {
-  let res = await baseAPI.createWithParams<AddFavouriteResType>(addFavoritesUrl, null, { key: slug });
-  if (res.data.status === 200) {
-    return { slug }
-  }
-});
-
-export const removeAllFavourites = createAsyncThunk('favourites/removeAll', async () => {
-  let res = await baseAPI.create<AddFavouriteResType>(deleteAllFavoritesUrl, {});
-  return res.data
-})
-
-export type AddFavouriteResType = {
-  status: number,
-  message: string,
-  data: null
+export type CompareType = {
+  category_id: number,
+  product_ids: number[]
 }
 
-export type FavouritesType = ProductType[]
+export type ComparesType = Array<CompareType>;
 
+export type InitialCompareStateType = {
+  compares: ComparesType;
+  totalElements: number
+};
 
-export type FavouritesReducerType = {
-  status: number,
-  data: FavouritesType,
-  message?: string,
-  loading: boolean;
-}
+const initialState: InitialCompareStateType = {
+  compares: [],
+  totalElements: 0
+};
 
-const initialState: FavouritesReducerType = {
-  data: [],
-  loading: false,
-  status: 200
-}
-
-export const favouritesSlice = createSlice({
-  name: 'favourites',
+export const basketSlice = createSlice({
+  name: "compare",
   initialState,
   reducers: {
-    deleteAllFavourites: (state) => {
-      state.data = []
+    setCompare(state, action: PayloadAction<{ data: any }>) {
+      const { compares, totalElements } = action.payload.data;
+      state.compares = compares;
+      state.totalElements = totalElements
+
+    },
+    addToCompare(state, action: PayloadAction<{ category_id: number, id: number, name: string }>) {
+      let { category_id, id, name } = action.payload;
+
+      const isCategory_id = state.compares.map(c => c.category_id).indexOf(category_id);
+      if (isCategory_id === -1 && category_id !== null) {
+        state.compares.push({ category_id: category_id, product_ids: [id] });
+        AddedComparesNotif(name);
+      } else {
+        let productIdx = state.compares.find(item => item.category_id === category_id)?.product_ids.map(product_id => product_id).indexOf(id)!;
+        if (productIdx === -1) {
+          state.compares[isCategory_id].product_ids.push(id);
+          AddedComparesNotif(name);
+        } else {
+          if (state.compares[isCategory_id]?.product_ids?.length === 1) {
+            state.compares.splice(isCategory_id, 1);
+          } else {
+            state.compares[isCategory_id]?.product_ids?.splice(productIdx, 1);
+          }
+          RemovedComparesNotif(name);
+        }
+      }
+
+      setTotals(state);
+    },
+    deleteFromCompare(state, action: PayloadAction<{ category_id: number, id: number, name: string }>) {
+      let { category_id, id, name } = action.payload;
+      const isCategory_id = state.compares.map(c => c.category_id).indexOf(category_id);
+      let productIdx = state.compares.find(item => item.category_id === category_id)?.product_ids.map(product_id => product_id).indexOf(id)!;
+      if (productIdx === -1) {
+        state.compares[isCategory_id].product_ids.push(id);
+        AddedComparesNotif(name);
+      } else {
+        if (state.compares[isCategory_id]?.product_ids?.length === 1) {
+          state.compares.splice(isCategory_id, 1);
+        } else {
+          state.compares[isCategory_id].product_ids.splice(productIdx, 1);
+        }
+        RemovedComparesNotif(name);
+      }
+      setTotals(state);
+    },
+    deleteByCategory(state, action: PayloadAction<{ category_id: number }>) {
+      let { category_id } = action.payload;
+      state.compares = state.compares.filter((compare => compare.category_id !== category_id));
+      setTotals(state);
+    },
+    dropCompare(state) {
+      state.compares = []
+      state.totalElements = 0;
+      removeBasketFromLocalStorage()
     }
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getFavourites.fulfilled, (state, action) => {
-        state.data = action.payload.data;
-        state.status = action.payload.status
-        state.loading = false;
-      })
-      .addCase(addToFavoutires.fulfilled, (state, action) => {
-        state.data.push(action.payload)
-        state.loading = false
-      })
-      .addCase(removeFromFavourites.fulfilled, (state, action: any) => {
-
-        state.data = state.data.filter(data => data.slug !== action.payload.slug)
-
-        state.loading = false
-      })
-      .addCase(removeAllFavourites.fulfilled, (state, action: any) => {
-        if (action.payload.status === 200) {
-          state.data = []
-          state.loading = false
-        }
-      })
-      .addCase(removeFromFavourites.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(addToFavoutires.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(getFavourites.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(removeAllFavourites.pending, (state) => {
-        state.loading = true
-      })
-      .addCase(removeFromFavourites.rejected, (state) => {
-        state.loading = false;
-      })
-      .addCase(addToFavoutires.rejected, (state) => {
-        state.loading = false;
-      })
-      .addCase(getFavourites.rejected, (state) => {
-        state.loading = false;
-      })
-      .addCase(removeAllFavourites.rejected, (state) => {
-        state.loading = false
-      })
-  }
 });
-export const { deleteAllFavourites } = favouritesSlice.actions;
-export default favouritesSlice.reducer;
+
+function setTotals(compare: InitialCompareStateType) {
+  compare.totalElements = compare.compares.reduce((acc: number, item: any) => { return acc + item.product_ids.length }, 0)
+  setCompareLocalStorage(compare);
+}
+
+export const { addToCompare, dropCompare, setCompare, deleteByCategory, deleteFromCompare } =
+  basketSlice.actions;
+export default basketSlice.reducer;

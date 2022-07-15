@@ -15,14 +15,13 @@ import { ByCategoryProductsInfoType, ByCategoryProductsResType, RecommendedCateg
 import baseAPI from "../../api/baseAPI";
 import { byCategoriesProductUrl, recommendedCategoriesUrl } from "../../api/apiUrls";
 import { useLocation, useParams } from "react-router-dom";
-import "./_style.scss";
-import { formatPrice } from "../../helpers";
 import { useT } from "../../custom/hooks/useT";
 import EmptyFilteredResult from "./EmplyFilteredResult";
 import useWindowSize from "../../custom/hooks/useWindowSize";
 import DrawerOpenBtn from "../../components/Buttons/DrawerOpenBtn";
 import { AlignLeftOutlined } from "@ant-design/icons";
 import { LoadingContext } from "react-router-loading";
+import "./_style.scss";
 
 const { Panel } = Collapse;
 
@@ -63,17 +62,14 @@ function Filter() {
   console.log("new", newObj)
 
   const {
-    register,
     control,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<any>({
     defaultValues: newObj
   });
   const onSubmit: SubmitHandler<any> = (items) => {
-    console.log("items", items)
     let filtered = Object.keys(items).filter(item => items[item])
     setFilter(filtered);
   };
@@ -343,208 +339,199 @@ function Filter() {
             </Col>
 
             <Col lg={19} sm={24} xs={24}>
+              <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
+                <Col sm={24} xs={24}>
+                  <div className="right_top">
+                    <div className="right_top_filter">
+                      {
+                        width < 992 && (
+                          <DrawerOpenBtn setState={setIsOpenFilterDrawer} icon={<AlignLeftOutlined />} text={t(`filter.${lang}`)} />
+                        )
+                      }
+                      <button
+                        onClick={() => setPriceSort(prev => prev === 3 ? 4 : 3)}
+                        type="button"
+                        className="by_money"
+                      >
+                        <img
+                          src="/assets/icons/money_filter.svg"
+                          alt="monoy_filter"
+                        />{" "}
+                        <span className="p16_regular">{t(`byPrice.${lang}`)}</span>
+                      </button>
+                      <button
+                        onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
+                        type="button"
+                        className="by_popular"
+                      >
+                        <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
+                        <span className="p16_regular">{t(`alphabetically.${lang}`)}</span>
+                      </button>
+                    </div>
+
+                    {width > 768 && (
+                      <div className="right_top_change_grid">
+                        <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
+                          <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
+                        </button>
+
+                        <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
+                          <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </Col>
+                {
+                  products?.items.length !== 0 ? (
+                    grid.multiple
+                      ? products?.items.map((product) => (
+                        <Col lg={6} md={8} sm={12} xs={24} key={product.id}>
+                          <ProductCard product={product} />
+                        </Col>
+                      ))
+                      : products?.items.map((product) => (
+                        <Col sm={24} xs={24} key={product.id}>
+                          <ProductCardCol product={product} />
+                        </Col>
+                      ))
+                  ) : (
+                    <EmptyFilteredResult />
+                  )
+                }
+              </Row>
+
               {
-                products?.items.length !== 0 ? (
-                  <>
-                    <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
-                      <Col sm={24} xs={24}>
-                        <div className="right_top">
-                          <div className="right_top_filter">
-                            {/* filter drawer  */}
-
-                            {
-                              width < 992 && (
-                                <DrawerOpenBtn setState={setIsOpenFilterDrawer} icon={<AlignLeftOutlined />} text={t(`filter.${lang}`)} />
-                              )
-                            }
-
-                            <Drawer
-                              title={"Фильтр"}
-                              placement="left"
-                              onClose={() => handleOpen(false)}
-                              visible={isOpenFilterDrawer}
-                              className="mobile__filter__drawer"
-                            >
-                              <form className="filter_form" onSubmit={handleSubmit(onSubmit)}>
-                                <Collapse
-                                  defaultActiveKey={["1"]}
-                                  ghost
-                                  expandIconPosition="end"
-                                >
-                                  <Panel
-                                    header={<p className="p18_regular">{t(`price.${lang}`)} ({t(`sum.${lang}`)})</p>}
-                                    key="1"
-                                  >
-                                    <div className='slider_filter'>
-                                      <div className="top">
-                                        <input
-                                          className="min_price"
-                                          value={minPrice}
-                                          name="minPrice"
-                                          onChange={handleMinPrice}
-                                          autoComplete="off"
-                                        />
-                                        <input
-                                          className="max_price"
-                                          value={maxPrice}
-                                          name="maxPrice"
-                                          onChange={handleMaxPrice}
-                                          autoComplete="off"
-                                        />
-                                      </div>
-                                      <Slider
-                                        className="max_min_slider"
-                                        range
-                                        min={+min_price ?? 0}
-                                        max={+max_price ?? 1000000}
-                                        value={[+minPrice, +maxPrice]}
-                                        tipFormatter={null}
-                                        onChange={handleMaxMinChange}
-                                      />
-                                    </div>
-                                  </Panel>
-                                  {
-                                    brands && brands?.length !== 0 && (
-                                      <Panel
-                                        header={<p className="p18_regular">{t(`price.${lang}`)}</p>}
-                                        key="2"
-                                      >
-                                        <Checkbox.Group onChange={handleBrandChange}>
-                                          {
-                                            brands?.map((brand) => (
-                                              <div
-                                                className="checkbox_filter"
-                                                key={brand.id}
-                                              >
-                                                <Checkbox
-                                                  className='checkbox_filter'
-                                                  value={brand.id}
-                                                >
-                                                  {brand.name}
-                                                  <span
-                                                    className="count"
-                                                  >
-                                                    ({brand.productCount})
-                                                  </span>
-                                                </Checkbox>
-                                              </div>
-                                            ))
-                                          }
-                                        </Checkbox.Group>
-                                      </Panel>
-                                    )
-                                  }
-
-                                  {
-                                    characters?.map((character) => (
-                                      <Panel
-                                        header={<p className="p18_regular">{character.name}</p>}
-                                        key={character.id}
-                                      >
-                                        {character?.assigns?.length !== 0 &&
-                                          character?.assigns?.map((assign) => (
-                                            <div
-                                              className="checkbox_filter"
-                                              key={assign.id}
-                                            >
-                                              <Controller
-                                                name={assign.value}
-                                                control={control}
-                                                render={({ field }) => (
-                                                  <Checkbox
-                                                    {...field}
-                                                    className='checkbox_filter'
-                                                  >
-                                                    {assign.value}
-                                                  </Checkbox>
-                                                )}
-                                              />
-                                            </div>
-                                          ))
-                                        }
-                                      </Panel>
-                                    ))
-                                  }
-                                </Collapse>
-                                <button type='submit' className="filter_submit_btn">
-                                  {t(`view.${lang}`)}
-                                </button>
-                              </form>
-                            </Drawer>
-
-
-
-                            <button
-                              onClick={() => setPriceSort(prev => prev === 3 ? 4 : 3)}
-                              type="button"
-                              className="by_money"
-                            >
-                              <img
-                                src="/assets/icons/money_filter.svg"
-                                alt="monoy_filter"
-                              />{" "}
-                              <span className="p16_regular">{t(`byPrice.${lang}`)}</span>
-                            </button>
-                            <button
-                              onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
-                              type="button"
-                              className="by_popular"
-                            >
-                              <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
-                              <span className="p16_regular">{t(`alphabetically.${lang}`)}</span>
-                            </button>
-                          </div>
-
-                          {width > 768 && (
-                            <div className="right_top_change_grid">
-                              <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
-                                <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
-                              </button>
-
-                              <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
-                                <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </Col>
-
-                      {grid.multiple
-                        ? products?.items.map((product) => (
-                          <Col lg={6} md={8} sm={12} xs={24} key={product.id}>
-                            <ProductCard product={product} />
-                          </Col>
-                        ))
-                        : products?.items.map((product) => (
-                          <Col sm={24} xs={24} key={product.id}>
-                            <ProductCardCol product={product} />
-                          </Col>
-                        ))}
-                    </Row>
-
-                    {
-                      products?._meta?.pageCount > 1 &&
-                      (<div className="button_area ">
-                        <ShowMoreBtn onChange={handleChangePerPage} />
-                      </div>)
-                    }
-
-                    <PaginationComp {...products?._meta} page={page} setPage={setPage} />
-
-                    <PopularModels popularCategories={popularCategories} />
-                    <InterestedProduct categoryLikeProducts={categoryLikeProducts} />
-                  </>
-                ) : (
-                  <EmptyFilteredResult />
-                )
+                products?._meta?.pageCount > 1 &&
+                (<div className="button_area ">
+                  <ShowMoreBtn onChange={handleChangePerPage} />
+                </div>)
               }
 
+              <PaginationComp {...products?._meta} page={page} setPage={setPage} />
+
+              <PopularModels popularCategories={popularCategories} />
+              <InterestedProduct categoryLikeProducts={categoryLikeProducts} />
               {/* <WhereBuying /> */}
             </Col>
           </Row>
         </div>
       </div>
-    </section>
+      {/* filter drawer  */}
+      <Drawer
+        title={t(`filter.${lang}`)}
+        placement="left"
+        onClose={() => handleOpen(false)}
+        visible={isOpenFilterDrawer}
+        className="mobile__filter__drawer"
+      >
+        <form className="filter_form" onSubmit={handleSubmit(onSubmit)}>
+          <Collapse
+            defaultActiveKey={["1"]}
+            ghost
+            expandIconPosition="end"
+          >
+            <Panel
+              header={<p className="p18_regular">{t(`price.${lang}`)} ({t(`sum.${lang}`)})</p>}
+              key="1"
+            >
+              <div className='slider_filter'>
+                <div className="top">
+                  <input
+                    className="min_price"
+                    value={minPrice}
+                    name="minPrice"
+                    onChange={handleMinPrice}
+                    autoComplete="off"
+                  />
+                  <input
+                    className="max_price"
+                    value={maxPrice}
+                    name="maxPrice"
+                    onChange={handleMaxPrice}
+                    autoComplete="off"
+                  />
+                </div>
+                <Slider
+                  className="max_min_slider"
+                  range
+                  min={+min_price ?? 0}
+                  max={+max_price ?? 1000000}
+                  value={[+minPrice, +maxPrice]}
+                  tipFormatter={null}
+                  onChange={handleMaxMinChange}
+                />
+              </div>
+            </Panel>
+            {
+              brands && brands?.length !== 0 && (
+                <Panel
+                  header={<p className="p18_regular">{t(`price.${lang}`)}</p>}
+                  key="2"
+                >
+                  <Checkbox.Group onChange={handleBrandChange}>
+                    {
+                      brands?.map((brand) => (
+                        <div
+                          className="checkbox_filter"
+                          key={brand.id}
+                        >
+                          <Checkbox
+                            className='checkbox_filter'
+                            value={brand.id}
+                          >
+                            {brand.name}
+                            <span
+                              className="count"
+                            >
+                              ({brand.productCount})
+                            </span>
+                          </Checkbox>
+                        </div>
+                      ))
+                    }
+                  </Checkbox.Group>
+                </Panel>
+              )
+            }
+
+            {
+              characters?.map((character) => (
+                <Panel
+                  header={<p className="p18_regular">{character.name}</p>}
+                  key={character.id}
+                >
+                  {character?.assigns?.length !== 0 &&
+                    character?.assigns?.map((assign) => (
+                      <div
+                        className="checkbox_filter"
+                        key={assign.id}
+                      >
+                        <Controller
+                          name={assign.value}
+                          control={control}
+                          render={({ field }) => (
+                            <Checkbox
+                              {...field}
+                              className='checkbox_filter'
+                            >
+                              {assign.value}
+                            </Checkbox>
+                          )}
+                        />
+                      </div>
+                    ))
+                  }
+                </Panel>
+              ))
+            }
+          </Collapse>
+          <button type='submit' className="filter_submit_btn">
+            {t(`view.${lang}`)}
+          </button>
+        </form>
+      </Drawer>
+    </section >
   );
 }
 

@@ -171,7 +171,7 @@ const Checkout = () => {
                             placeholder="+998"
                           />
                         )} />
-                        {errors["phone"] && <span className='your_data__error__message'>This field is required</span>}
+                        {errors["phone"] && <span className='your_data__error__message'>{t(`requiredErrMessage.${lang}`)}</span>}
                       </Col>
                       <Col md={12} sm={0} xs={0}></Col>
                       <Col md={12} sm={24} xs={24}>
@@ -214,7 +214,7 @@ const Checkout = () => {
                         </Radio.Group>
                       )}
                     />
-                    {errors["payment_type"] && <span className='error__message'>This field is required</span>}
+                    {errors["payment_type"] && <span className='error__message'>{t(`requiredErrMessage.${lang}`)}</span>}
                   </div>
 
                   {/* how to obtain */}
@@ -254,7 +254,7 @@ const Checkout = () => {
                             </Select>)}
                           />
                           <label className="custom__label">{t(`regionOblast.${lang}`)}</label>
-                          {errors["region_id"] && <span className='error_message'>This field is required</span>}
+                          {errors["region_id"] && <span className='error_message'>{t(`requiredErrMessage.${lang}`)}</span>}
                         </div>
                       </Col><Col md={12} sm={24} xs={24}>
                         <div className="select__wrapper">
@@ -284,7 +284,7 @@ const Checkout = () => {
                             </Select>)}
                           />
                           <label className="custom__label">{t(`cityDistr.${lang}`)}</label>
-                          {errors["district_id"] && <span className='error_message'>This field is required</span>}
+                          {errors["district_id"] && <span className='error_message'>{t(`requiredErrMessage.${lang}`)}</span>}
                         </div>
                       </Col>
                     </Row>

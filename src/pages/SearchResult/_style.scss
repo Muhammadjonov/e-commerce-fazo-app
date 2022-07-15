@@ -19,34 +19,53 @@
     }
 
     .search_right_top {
-      display        : flex;
-      justify-content: space-between;
-      margin-bottom  : -15px;
 
-      .right_top_filter {
-        display: flex;
+      .right_top {
+        display        : flex;
+        justify-content: space-between;
+        margin         : 20px 0px 10px;
 
-        button {
-          border          : none;
-          background-color: transparent;
-          cursor          : pointer;
-          display         : flex;
-          align-items     : center;
+        .right_top_filter {
+          display  : flex;
+          flex-wrap: wrap;
 
-          img {
-            margin-right: 8px;
+          .by_money {
+            margin-right: 30px;
+          }
+
+          .by_money,
+          .by_popular {
+            border          : none;
+            background-color: transparent;
+            cursor          : pointer;
+            display         : flex;
+            align-items     : center;
+
+            img {
+              margin-right: 8px;
+            }
+          }
+
+          .by_popular {
+
+            i {
+              margin-right: 8px;
+              font-size   : 20px;
+              color       : var(--color_black2);
+            }
           }
         }
-      }
 
-      .right_top_change_grid {
-        button {
-          border          : none;
-          background-color: transparent;
-          cursor          : pointer;
+        .right_top_change_grid {
+          button {
+            border          : none;
+            background-color: transparent;
+            cursor          : pointer;
 
-          &:last-child {
-            margin-left: 5px;
+            &:last-child {
+              margin-left: 5px;
+
+            }
           }
         }
       }

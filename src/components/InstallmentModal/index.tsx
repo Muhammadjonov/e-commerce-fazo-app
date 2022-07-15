@@ -20,7 +20,6 @@ export default function InstallmentModal(props: IInstallmentModal) {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     onCloseInstallmentModal()
   };
   return (

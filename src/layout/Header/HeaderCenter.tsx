@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Badge, Button, Col, Drawer, Dropdown, Menu, Row } from 'antd';
+import { Badge, Button, Col, Collapse, Drawer, Dropdown, Menu, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import MobileSearchComp from '../../components/MobileSearchComp';
@@ -8,12 +8,13 @@ import { useT } from "../../custom/hooks/useT";
 import PhoneComp from '../../components/PhoneComp';
 import { changeLang, LangType, removeTokens, removeUserFromLocalStorage, setLang } from '../../helpers';
 import { CategoriesInfoType, HeaderTopMenuInfoType, } from '../../types';
-import { AuthContext, CartContext } from '../../App';
+import { AuthContext, CartContext, MobileCategoriesContext } from '../../App';
 import { useAppSelector } from '../../Store/hooks';
 import { logout } from '../../features/authSlice';
 import { useDispatch } from 'react-redux';
 import { deleteAllFavourites } from '../../features/favourites/favouritesSlice';
 
+const { Panel } = Collapse;
 interface IHeaderCenter {
   logo: string,
   phone: string,
@@ -27,11 +28,12 @@ function HeaderCenter(props: IHeaderCenter) {
   const { t, lang } = useT();
   const dispatch = useDispatch();
   const userData = useAppSelector(state => state.auth);
-  const { data: favoutites } = useAppSelector(state => state.favourites);
+  const { data: favourites } = useAppSelector(state => state.favourites);
   const { products: inBasketProducts } = useAppSelector(state => state.basket);
-
+  const { compares, totalElements } = useAppSelector((state) => state.compares);
   const authContext = useContext(AuthContext);
   const cartContext = useContext(CartContext);
+  const mobileCategoriesContext = useContext(MobileCategoriesContext);
 
   const handleOpen = (value: boolean) => {
     let fazoWrapper = document.querySelector(".mixel_wrapper")!;
@@ -101,6 +103,25 @@ function HeaderCenter(props: IHeaderCenter) {
     cartContext.onOpenCartModal();
   }
 
+  // mobile categories 
+
+  const handleOpenCategories = (value: boolean) => {
+    if (value) {
+      mobileCategoriesContext.onOpenMobileCategories();
+    } else {
+      mobileCategoriesContext.onCloseMobileCategories();
+    }
+  }
+
+  const mobileCategoriesDrowerTitle = (
+    <Link
+      onClick={() => handleOpenCategories(false)}
+      className="logo"
+      to={"/"}>
+      <img className="logo_img" src={logo} alt="logo" />
+    </Link>
+  )
+
   return (
     <div className="header_center">
       <div className="container">
@@ -151,8 +172,8 @@ function HeaderCenter(props: IHeaderCenter) {
                       className="right_item"
                       to={"/balance"}
                     >
-                      <Badge count={11}>
-                        <img src="/assets/icons/banance.svg" alt="banance-icon" />
+                      <Badge count={totalElements}>
+                        <img src="/assets/icons/balance.svg" alt="balance-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`comparison.${lang}`)}</span>
                     </Link>
@@ -162,7 +183,7 @@ function HeaderCenter(props: IHeaderCenter) {
                       className="right_item"
                       to={"/favourites"}
                     >
-                      <Badge count={favoutites?.length}>
+                      <Badge count={favourites?.length}>
                         <img src="/assets/icons/heart.svg" alt="heart-icon" />
                       </Badge>
                       <span className="user_nav_text">{t(`favorite.${lang}`)}</span>
@@ -285,6 +306,36 @@ function HeaderCenter(props: IHeaderCenter) {
             <div className="tel_area">
               <PhoneComp phone={phone} iconName='mobile_tel' isShowNumber={true} />
             </div>
+          </Drawer>
+
+          {/* mobile category drower */}
+          <Drawer
+            title={mobileCategoriesDrowerTitle}
+            placement="left"
+            onClose={() => handleOpenCategories(false)}
+            visible={mobileCategoriesContext.isOpenMobileCategories}
+            className="mobile_categories_drower"
+          >
+            <Collapse
+              // defaultActiveKey={['1']}
+              accordion
+              ghost
+              expandIconPosition="end"
+            >
+              {
+                categories.map(category => (
+                  <Panel header={<div className="mobile_categories_drower__panel__header"><i className={category.icon}></i><span>{category.title}</span></div>} key={category.id}>
+                    {
+                      category.subCategories.map(subcategory => (
+
+                        <Link key={subcategory.id} to={`/category/${subcategory.slug}`} onClick={() => handleOpenCategories(false)}>{subcategory.title}</Link>
+
+                      ))
+                    }
+                  </Panel>
+                ))
+              }
+            </Collapse>
           </Drawer>
         </div>
       </div>

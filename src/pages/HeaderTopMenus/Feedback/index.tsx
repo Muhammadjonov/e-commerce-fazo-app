@@ -1,4 +1,4 @@
-import { Button, Col, Row, Select } from 'antd';
+import { Button, Col, Modal, Row, Select } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
@@ -28,6 +28,12 @@ const Feedback = () => {
     }
   })
 
+  const successFeedback = () => {
+    Modal.success({
+      content: t(`yourMessageHasBeenSent.${lang}`),
+    });
+  };
+
   const formData = new FormData();
 
   const onSubmit = (data: any) => {
@@ -41,7 +47,8 @@ const Feedback = () => {
     baseAPI.create<any>(feedBackUrl, formData)
       .then((res) => {
         if (res.data.status === 200) {
-
+          successFeedback();
+          reset();
         } else if (res.data.status === 403) {
           setError(res.data.message);
         }
@@ -51,7 +58,7 @@ const Feedback = () => {
   useEffect(() => {
     reset();
     return () => {
-      setError("")
+      setError("");
     }
   }, [pathname])
 
@@ -97,7 +104,7 @@ const Feedback = () => {
                 placeholder="+998"
               />
             )} />
-            {errors["phone"] && <span className='feedback__form__error__message'>This field is required</span>}
+            {errors["phone"] && <span className='feedback__form__error__message'>{t(`requiredErrMessage.${lang}`)}</span>}
           </Col>
           <Col lg={10} md={12} sm={24} xs={24}>
             <InputComp type='email' label={t(`yourEmail.${lang}`)} name="email" register={register} errors={errors} />

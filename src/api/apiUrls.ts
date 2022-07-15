@@ -43,3 +43,4 @@ export const regionsUrl = "order-manager/order/regions";
 export const districtsUrl = "order-manager/order/districts";
 export const orderUrl = "order-manager/order/by";
 export const myOrderUrl = "profile-manager/order/my-order";
+export const comparesUrl = "profile-manager/balance/index/";

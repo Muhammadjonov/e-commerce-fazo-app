@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useT } from "../../custom/hooks/useT";
 import "./__style.scss";
@@ -55,7 +54,7 @@ const CountDownComp = (props: ICountDownComp) => {
           onClick={onClickResendCode}
           className="countdown__comp__resendbtn"
         >
-          Отправить код еще раз
+          {t(`sendCodeAgain.${lang}`)}
         </button>
       ) : (
         <p className="countdown__comp__timer">

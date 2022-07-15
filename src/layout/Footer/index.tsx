@@ -53,10 +53,10 @@ function Footer(props: IFooter) {
     <div className='footer'>
       <div className='container'>
         <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
-          <Col lg={9} sm={24} xs={24}>
+          <Col lg={9} md={12} sm={24} xs={24}>
             <LeftBox />
           </Col>
-          <Col lg={5} sm={24} xs={24}>
+          <Col lg={5} md={12} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
               <h2 className="title20_bold">{t(`category.${lang}`)}</h2>
               <ul>
@@ -71,7 +71,7 @@ function Footer(props: IFooter) {
             </div>
           </Col>
 
-          <Col lg={5} sm={24} xs={24}>
+          <Col lg={5} md={12} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
               <h2 className="title20_bold">{t(`general.${lang}`)}</h2>
               <ul>
@@ -88,7 +88,7 @@ function Footer(props: IFooter) {
               </ul>
             </div>
           </Col>
-          <Col lg={5} sm={24} xs={24}>
+          <Col lg={5} md={12} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
               <h2 className="title20_bold">{t(`buyers.${lang}`)}</h2>
               <ul>

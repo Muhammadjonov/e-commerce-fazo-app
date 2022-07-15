@@ -1,6 +1,5 @@
 import { Col, Row } from 'antd'
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { LoadingContext } from 'react-router-loading';
+import { useCallback, useEffect, useState } from 'react';
 import { bestsellerUrl } from '../../../api/apiUrls';
 import baseAPI from '../../../api/baseAPI';
 import CardsTitleTop from '../../../components/CardsTitleTop';
@@ -13,7 +12,6 @@ function GoodCheaper() {
   const { t, lang } = useT();
   const [bestsellers, setBestsellers] = useState<ProductType[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const loadingContext = useContext(LoadingContext);
 
   const getBestsellers = useCallback(() => {
     baseAPI.fetchWithParams<BestsellerResType>(bestsellerUrl, { limit: 8 })

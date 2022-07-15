@@ -1,8 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Col, Row, Collapse } from "antd";
-
-import { useForm, SubmitHandler } from "react-hook-form";
-import "./_style.scss";
 import ProductCard from "../../components/ProductCard";
 import PaginationComp from "../../components/PaginationComp";
 import BreadcrumbComp from "../../components/BreadcrumbComp";
@@ -14,6 +11,8 @@ import { SearchInfoType, SearchResType } from "../../types";
 import { searchUrl } from "../../api/apiUrls";
 import { LoadingContext } from "react-router-loading";
 import { useT } from "../../custom/hooks/useT";
+import useWindowSize from "../../custom/hooks/useWindowSize";
+import "./_style.scss";
 
 const { Panel } = Collapse;
 
@@ -35,21 +34,15 @@ function SearchResult() {
   let key = searchParams.get("key");
   const [searchResultProducts, setSearchResultProducts] = useState<SearchInfoType>({} as SearchInfoType);
   const [page, setPage] = useState<number>(1);
+  const [priceSort, setPriceSort] = useState<number>(3);
+  const [nameSort, setNameSort] = useState<number>(3);
+  const { width } = useWindowSize();
   const loadingContext = useContext(LoadingContext);
-
 
   const [grid, setGrid] = useState<GridType>({
     multiple: true,
     one: false,
   });
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-
 
   // grid ni o'zgartirish logikasi
 
@@ -72,7 +65,7 @@ function SearchResult() {
       .finally(() => {
         loadingContext.done();
       })
-  }, [category, key])
+  }, [category, key, priceSort, nameSort])
 
   useEffect(() => {
     getSearchResultProducts();
@@ -84,6 +77,10 @@ function SearchResult() {
       behavior: "smooth"
     })
   }, [page])
+
+  useEffect(() => {
+    width < 768 && handleChangeGrid({ multiple: true, one: false })
+  }, [width])
 
   //breadcrumb
 
@@ -116,18 +113,41 @@ function SearchResult() {
                     <div className="breadcrumb_area">
                       <BreadcrumbComp breadcrumbs={breadcrumbs} />
                     </div>
-                    {
-                      items?.length !== 0 && (
-                        <div className="right_top_change_grid">
-                          <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
-                            <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
-                          </button>
-                          <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
-                            <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
-                          </button>
-                        </div>
-                      )
-                    }
+                    <div className="right_top">
+                      <div className="right_top_filter">
+                        <button
+                          onClick={() => setPriceSort(prev => prev === 3 ? 4 : 3)}
+                          type="button"
+                          className="by_money"
+                        >
+                          <img
+                            src="/assets/icons/money_filter.svg"
+                            alt="monoy_filter"
+                          />{" "}
+                          <span className="p16_regular">{t(`byPrice.${lang}`)}</span>
+                        </button>
+                        <button
+                          onClick={() => setNameSort(prev => prev === 3 ? 4 : 3)}
+                          type="button"
+                          className="by_popular"
+                        >
+                          <i className={`fa-solid fa-arrow-${nameSort === 3 ? "down" : "up"}-a-z`}></i>
+                          <span className="p16_regular">{t(`alphabetically.${lang}`)}</span>
+                        </button>
+                      </div>
+                      {width > 768 &&
+                        items?.length !== 0 && (
+                          <div className="right_top_change_grid">
+                            <button type='button' onClick={() => handleChangeGrid({ multiple: true, one: false })}>
+                              <img src={`/assets/icons/${grid.multiple ? "red_grid_multiple" : "grid_multiple"}.svg`} alt="grid_multiple" />
+                            </button>
+                            <button type='button' onClick={() => handleChangeGrid({ multiple: false, one: true })}>
+                              <img src={`/assets/icons/${grid.multiple ? "grid_one" : "red_grid_one"}.svg`} alt="grid_one" />
+                            </button>
+                          </div>
+                        )
+                      }
+                    </div>
                   </div>
                 </Col>
                 {

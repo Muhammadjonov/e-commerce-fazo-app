@@ -45,12 +45,12 @@
         text-align: center;
 
         .per_month {
-          color: var(--brand_color_red);
+          color        : var(--brand_color_red);
+          margin-bottom: 9px;
         }
 
         .price {
-          color        : var(--color_black2);
-          margin-bottom: 9px;
+          color: var(--color_black2);
         }
 
         .add_cart_btn {

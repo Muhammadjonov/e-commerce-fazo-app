@@ -1,6 +1,6 @@
-import React from 'react'
 import { Select } from 'antd';
 import { Control, Controller, UseFormRegister } from 'react-hook-form';
+import { useT } from '../../../custom/hooks/useT';
 import "./_style.scss";
 
 const { Option } = Select;
@@ -16,7 +16,8 @@ interface ISelectComp {
 }
 
 const SelectComp = (props: ISelectComp) => {
-  const { label, name, register, errors, control, select, required = true } = props;
+  const { label, name, errors, control, select, required = true } = props;
+  const { t, lang } = useT();
   return (
     <div className="select__wrapper">
       <Controller
@@ -45,7 +46,7 @@ const SelectComp = (props: ISelectComp) => {
         </Select>)}
       />
       <label className="custom__label">{label}</label>
-      {errors[name] && <span className='error_message'>This field is required</span>}
+      {errors[name] && <span className='error_message'>{t(`requiredErrMessage.${lang}`)}</span>}
     </div>
   )
 }
