@@ -216,7 +216,7 @@ function App() {
                   <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
                   <Route path="search" element={<SearchResult />} loading />
                   <Route path="product/detail/:product_slug" element={<ProductView />} loading />
-                  <Route path="page" element={<HeaderTopMenus />} >
+                  <Route path="page" element={<HeaderTopMenus />} loading>
                     <Route path=":page_slug" element={<HeaderMenusContent />} loading />
                     <Route path="feedback/contact" element={<Feedback />} />
                   </Route>

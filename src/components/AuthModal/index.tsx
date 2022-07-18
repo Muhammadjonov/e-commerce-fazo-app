@@ -86,12 +86,6 @@ const AuthModal = (props: IAuthModal) => {
       })
   };
 
-
-
-  const onFinishFailedSignIn = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
   const onFinishSignUp1 = (values: any) => {
     let { phone } = values;
     setPhone(phone);

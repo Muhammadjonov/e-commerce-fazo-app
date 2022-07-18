@@ -2,9 +2,8 @@ import { Link } from 'react-router-dom';
 import LanguageComp from '../../components/LanguageComp';
 import Logo from '../../components/Logo';
 import PhoneComp from '../../components/PhoneComp';
+import { useT } from '../../custom/hooks/useT';
 import { HeaderTopMenuInfoType } from '../../types';
-
-
 interface IHeaderTop {
   logo: string,
   phone: string,
@@ -13,6 +12,7 @@ interface IHeaderTop {
 
 function HeaderTop(props: IHeaderTop) {
   const { logo, phone, headerTopMenus } = props;
+  const { t, lang } = useT();
 
   return (
     <div className='header_top'>
@@ -30,7 +30,6 @@ function HeaderTop(props: IHeaderTop) {
                 ))
               }
             </ul>
-
           </div>
           <div className="right">
             <ul>

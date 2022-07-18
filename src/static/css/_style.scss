@@ -140,14 +140,25 @@ input[type=number] {
   }
 }
 
-.ant-switch-checked {
-  // background-color: var(--brand_color_red);
+button[type=submit].ant-btn-link {
+  font-family: "GothamPro-Medium", sans-serif;
 }
 
 .fazo__back__top.ant-back-top {
   bottom: 30px;
   right : unset;
   left  : 30px
+}
+
+// confirm modal
+
+.ant-modal-confirm-btns {
+  .ant-btn.ant-btn-primary {
+    background-color: var(--brand_color_red);
+    color           : #fff;
+    border-radius   : 5px;
+    border-color    : var(--brand_color_red);
+  }
 }
 
 // notificateion 

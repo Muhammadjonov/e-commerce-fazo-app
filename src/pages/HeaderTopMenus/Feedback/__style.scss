@@ -4,6 +4,12 @@
   }
 
   &__form {
+
+    .input_wrapper,
+    .textarea__wrapper {
+      margin: 0;
+    }
+
     &__btns {
       text-align: end;
 
@@ -21,11 +27,6 @@
         background-color: var(--brand_color_red);
       }
     }
-
-    &__error__message {
-      color  : var(--brand_color_red);
-      display: block;
-    }
   }
 
   .react-tel-input {
@@ -42,4 +43,7 @@
     }
   }
 
+  .error__message {
+    margin-bottom: 15px;
+  }
 }

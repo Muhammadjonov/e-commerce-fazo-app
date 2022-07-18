@@ -283,6 +283,10 @@
     "ru": "Нет избранных товаров",
     "uz": "Tanlangan mahsulotlar yo'q"
   },
+  "noCompares": {
+    "ru": "Нет сравнение товаров",
+    "uz": "Tanlangan mahsulotlar yo'q"
+  },
   "noSearchingResult": {
     "ru": "Результаты поиска не найдены",
     "uz": "Qidiruv bo'yicha hech narsa topilmadi"
@@ -446,5 +450,25 @@
   "shareYourOpinion": {
     "ru": "Поделитесь мнением о нашей работе",
     "uz": "Bizning ishimiz haqida fikringizni o`rtoqlashing"
+  },
+  "b2bDesc": {
+    "ru": "Полная информации об оплате перечислением с учётом НДС",
+    "uz": "QQS bilan pul o'tkazish haqida to'liq ma'lumot"
+  },
+  "companyName": {
+    "ru": "Название компании",
+    "uz": "Kompaniya nomi"
+  },
+  "b2bFormTitle": {
+    "ru": "Заявка на консультацию или заказ",
+    "uz": "Maslahat yoki buyurtma uchun ariza"
+  },
+  "b2bFormDesc": {
+    "ru": "Отправьте ключевую информацию, и мы перезвоним вам ближайшее время",
+    "uz": "Asosiy ma'lumotlarni yuboring va biz sizga imkon qadar tezroq qo'ng'iroq qilamiz"
+  },
+  "acceptYourApp": {
+    "ru": "Ваша заявка принята",
+    "uz": "Arizangiz qabul qilindi"
   }
 }

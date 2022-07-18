@@ -65,6 +65,59 @@
 
 }
 
+// b2b 
+
+.b2b {
+  &__title {
+    color: var(--brand_color_black);
+  }
+
+  &__body {
+    &__title {
+      color: var(--brand_color_black);
+    }
+
+    &__desc {
+      color: var(--brand_color_black);
+    }
+  }
+
+  &__form {
+    margin-top: 30px;
+
+    .input_wrapper {
+      margin: 0;
+    }
+
+    &__btn {
+      &__submit.ant-btn.ant-btn-link {
+        border          : 1px solid var(--brand_color_red);
+        border-radius   : 5px;
+        color           : #fff;
+        background-color: var(--brand_color_red);
+      }
+    }
+  }
+
+  .react-tel-input {
+    .form-control {
+      height      : 44px;
+      width       : 100%;
+      border-color: #d5d8df;
+      color       : #393b3f;
+      padding-left: 17px;
+    }
+
+    .flag-dropdown {
+      display: none;
+    }
+  }
+
+  .error__message {
+    margin-top: 15px;
+  }
+}
+
 .header__top__menus__drawer.ant-drawer {
 
   .ant-drawer-content-wrapper {

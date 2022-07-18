@@ -17,6 +17,7 @@ const Feedback = () => {
   const [error, setError] = useState<string>("");
   const { pathname } = useLocation();
   const [contactTypes, setContactTypes] = useState({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { register, control, handleSubmit, watch, formState: { errors }, reset } = useForm({
     defaultValues: {
       phone: "",
@@ -44,14 +45,23 @@ const Feedback = () => {
     formData.append("email", email);
     formData.append("type_id", type_id);
     formData.append("text", text);
+    setIsLoading(true);
     baseAPI.create<any>(feedBackUrl, formData)
       .then((res) => {
         if (res.data.status === 200) {
           successFeedback();
           reset();
+          setIsLoading(false);
         } else if (res.data.status === 403) {
           setError(res.data.message);
+          setIsLoading(false);
         }
+      })
+      .catch((e) => {
+        console.log("err", e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       })
   }
 
@@ -104,7 +114,7 @@ const Feedback = () => {
                 placeholder="+998"
               />
             )} />
-            {errors["phone"] && <span className='feedback__form__error__message'>{t(`requiredErrMessage.${lang}`)}</span>}
+            {errors["phone"] && <span className='error__message'>{t(`requiredErrMessage.${lang}`)}</span>}
           </Col>
           <Col lg={10} md={12} sm={24} xs={24}>
             <InputComp type='email' label={t(`yourEmail.${lang}`)} name="email" register={register} errors={errors} />
@@ -114,10 +124,10 @@ const Feedback = () => {
           </Col>
           <Col sm={24} xs={24}>
             <Textarea label={t(`yourMessage.${lang}`)} name="text" register={register} errors={errors} />
-            <span className='feedback__form__error__message'>{error}</span>
+            <span className='error__message'>{error}</span>
             <div className="feedback__form__btns">
               <Button onClick={() => reset()} className="feedback__form__btns__cancel" type="link">{t(`cancel.${lang}`)}</Button>
-              <Button htmlType='submit' className="feedback__form__btns__send" type="link">{t(`send.${lang}`)}</Button>
+              <Button loading={isLoading} htmlType='submit' className="feedback__form__btns__send" type="link">{t(`send.${lang}`)}</Button>
             </div>
           </Col>
         </Row>

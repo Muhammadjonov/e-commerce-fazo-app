@@ -54,7 +54,7 @@ function SearchResult() {
   };
 
   const getSearchResultProducts = useCallback(() => {
-    baseAPI.fetchWithPagination<SearchResType>({ url: searchUrl, page, params: { category, key } })
+    baseAPI.fetchWithPagination<SearchResType>({ url: searchUrl, page, params: { category, key, priceSort, nameSort } })
       .then((res) => {
         if (res.data.status === 200) {
           setSearchResultProducts(res.data.data);

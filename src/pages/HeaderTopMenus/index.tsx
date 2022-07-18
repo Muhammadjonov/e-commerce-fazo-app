@@ -1,7 +1,8 @@
 import { AlignLeftOutlined, } from '@ant-design/icons';
 import { Breadcrumb, Col, Divider, Drawer, Row } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
 import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
+import { LoadingContext } from 'react-router-loading';
 import { leftMenuUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import DrawerOpenBtn from '../../components/Buttons/DrawerOpenBtn';
@@ -17,6 +18,7 @@ function HeaderTopMenus() {
   let { page_slug } = useParams();
   let { pathname } = useLocation();
   let headerMenu = page_slug!;
+  const loadingContext = useContext(LoadingContext);
 
   const getLeftMenus = useCallback(() => {
     setIsLoading(true);
@@ -24,13 +26,16 @@ function HeaderTopMenus() {
       .then((res) => {
         if (res.data.status === 200) {
           setLeftMenus(res.data.data);
+          setIsLoading(false);
+          loadingContext.done()
         }
       })
       .catch((err) => {
         console.log("err", err)
       })
       .finally(() => {
-
+        setIsLoading(false);
+        loadingContext.done();
       })
   }, [])
 
@@ -44,10 +49,10 @@ function HeaderTopMenus() {
     setVisible(false);
   };
   let breadcr: string | undefined;
-  if (pathname !== "/page/feedback/contact") {
-    breadcr = leftMenus.find((leftMenu) => leftMenu.slug === headerMenu)?.title
-  } else {
+  if (pathname === "/page/feedback/contact") {
     breadcr = t(`feedback.${lang}`);
+  } else {
+    breadcr = leftMenus.find((leftMenu) => leftMenu.slug === headerMenu)?.title
   }
 
   return (
@@ -131,7 +136,6 @@ function HeaderTopMenus() {
             <Divider className="header_top_menus__drawer__list__item__divider" />
           </li>
         </ul>
-        Обратная связь
       </Drawer>
     </section>
   )

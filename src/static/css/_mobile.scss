@@ -672,6 +672,39 @@
       }
     }
 
+    .header_top_menus {
+
+      &_breadcrumb_area {
+
+        .ant-breadcrumb.breadcrumb_comp {
+          ol {
+            li {
+              display: none;
+
+              &:first-child {
+                display : block;
+                position: relative;
+
+                .ant-breadcrumb-separator {
+                  position: absolute;
+                  left    : 0;
+                  top     : 0;
+
+                  i {
+                    transform: rotate(180deg);
+                  }
+                }
+
+                .breadcrm_link {
+                  margin-left: 25px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     .fazo__back__top.ant-back-top {
       bottom: 70px;
     }
@@ -692,6 +725,29 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .ant-modal-wrap {
+    .cart__modal.ant-modal {
+      .ant-modal-content {
+        .ant-modal-body {
+          .cart__modal__product__card__right {
+            flex-direction: column;
+
+            &__count {
+              margin: 0px;
+
+            }
+
+            &__btns {
+              margin: 15px 0px;
+            }
+          }
+
+        }
+
       }
     }
   }

@@ -114,7 +114,7 @@ const Favourites = () => {
                 }
               </>
             ) : (
-              <EmptyFavourites />
+              <EmptyFavourites text={'noFavourites'} />
             )
           }
 

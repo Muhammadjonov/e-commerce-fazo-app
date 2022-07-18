@@ -6,7 +6,7 @@ import { useT } from '../../../custom/hooks/useT';
 import { addToBasket } from '../../../features/basket/basketSlice';
 import { deleteFromCompare } from '../../../features/Compares/comparesSlice';
 import { addToFavoutires, removeFromFavourites } from '../../../features/favourites/favouritesSlice';
-import { formatPrice, isFavourite, isInBasket, isInCompare } from '../../../helpers';
+import { formatPrice, isFavourite, isInBasket } from '../../../helpers';
 import { useAppDispatch, useAppSelector } from '../../../Store/hooks';
 import { ProductType } from '../../../types';
 import "./_style.scss";
@@ -69,7 +69,7 @@ const ProductComparisonCard = (props: IProductComparisonCard) => {
           className="fa-solid fa-xmark" ></i>
       </button>
       <div className="card_body">
-        <Link className="product_view_link" to={`#`}>
+        <Link className="product_view_link" to={`/product/detail/${slug}`}>
           <figure>
             <img src={imageUrl} alt={name} className="product_card_img" />
           </figure>

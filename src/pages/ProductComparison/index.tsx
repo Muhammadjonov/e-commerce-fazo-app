@@ -75,7 +75,14 @@ const ProductComparison = () => {
 
   const handleDeleteByCategory = (category_id: number) => {
     dispatch(deleteByCategory({ category_id }));
-    setCategoryId(initialCategoryId);
+    if (categoryId === category_id) {
+      if (categoryId === initialCategoryId && products.length !== 1) {
+        let initialCategoryId = products[1]?.category_id;
+        handleChangeCategoryId(initialCategoryId);
+      } else {
+        handleChangeCategoryId(initialCategoryId);
+      }
+    }
   }
 
   return (
@@ -87,97 +94,99 @@ const ProductComparison = () => {
         <h4 className="title20_bold product_comparison_title">
           {t(`productComparison.${lang}`)}
         </h4>
+
         {
-          !isLoading ?
-            <>
+          compares?.products?.length !== 0 && isErrLoading ? (
+            <div className="product_comparison_body">
+              <ul className="compare_nav">
+                {
+                  compares?.categories?.map((compare) => (
+                    <li
+                      className={`compare_nav_item ${compare.categoryId === categoryId ? "active" : ""}`}
+                      key={compare.categoryId}
+                    >
+                      <span
+                        className={`compare_item ${compare.categoryId === categoryId ? "active" : ""}`}
+                        onClick={() => handleChangeCategoryId(compare.categoryId)}
+                      >
+                        {compare.categoryName}{`  `}{compare.productCount}
+                      </span>
+                      <button
+                        type='button'
+                        className="detete_compare_item"
+                        onClick={() => handleDeleteByCategory(compare.categoryId)}
+                      >
+                        <i
+                          className="fa-solid fa-xmark"
+                        >
+                        </i>
+                      </button>
+                    </li>
+                  ))
+                }
+              </ul>
+              {/* <div className="compare_change"> */}
+              {/* <div className="compare_change_difference"> */}
+              {/* <Switch onChange={onDifferenceChange} /><span className='difference_text'>Только отличия</span> */}
+              {/* </div> */}
+              <div className="compare__product__add">
+                <Link to="/" className="compare__product__add__link">
+                  {t(`addProducts.${lang}`)}
+                </Link>
+              </div>
+              {/* </div> */}
               {
-                compares?.products?.length !== 0 && isErrLoading ? (
-                  <div className="product_comparison_body">
-                    <ul className="compare_nav">
+                // !isLoading ?
+                <>
+                  <div className="product_comparison_products">
+                    <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
                       {
-                        compares?.categories?.map((compare) => (
-                          <li
-                            className={`compare_nav_item ${compare.categoryId === categoryId ? "active" : ""}`}
-                            key={compare.categoryId}
-                          >
-                            <span
-                              className={`compare_item ${compare.categoryId === categoryId ? "active" : ""}`}
-                              onClick={() => handleChangeCategoryId(compare.categoryId)}
-                            >
-                              {compare.categoryName}{`  `}{compare.productCount}
-                            </span>
-                            <button
-                              type='button'
-                              className="detete_compare_item"
-                              onClick={() => handleDeleteByCategory(compare.categoryId)}
-                            >
-                              <i
-                                className="fa-solid fa-xmark"
-                              >
-                              </i>
-                            </button>
-                          </li>
+                        compares?.products?.map((product) => (
+                          <Col xs={24} sm={12} md={6} key={product.id}>
+                            <ProductComparisonCard product={product} />
+                          </Col>
                         ))
                       }
-                    </ul>
-                    {/* <div className="compare_change"> */}
-                    {/* <div className="compare_change_difference"> */}
-                    {/* <Switch onChange={onDifferenceChange} /><span className='difference_text'>Только отличия</span> */}
-                    {/* </div> */}
-                    <div className="compare__product__add">
-                      <Link to="/" className="compare__product__add__link">
-                        {t(`addProducts.${lang}`)}
-                      </Link>
-                    </div>
-                    {/* </div> */}
-                    <div className="product_comparison_products">
-                      <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
-                        {
-                          compares?.products?.map((product) => (
-                            <Col xs={24} sm={12} md={6} key={product.id}>
-                              <ProductComparisonCard product={product} />
-                            </Col>
-                          ))
-                        }
-                      </Row>
+                    </Row>
 
-                    </div>
-                    <h4 className="title18_bold description__product__title">
-                      {t(`productCharacteristics.${lang}`)}
-                    </h4>
-                    {
-                      compares?.characters?.map((character) => (
-                        <React.Fragment key={character.id}>
-                          <h4 className='description__product__row__title'>
-                            {character.name}
-                          </h4>
-                          <Row
-                            className="description__product__row"
-                            gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}
-                          >
-                            {
-                              character?.productAssigns?.map((assign) => (
-                                <Col xs={24} sm={12} md={6} key={assign.id}>
-                                  <p className="content">
-                                    {assign.value}
-                                  </p>
-                                </Col>
-                              ))
-                            }
-
-                          </Row>
-                        </React.Fragment>
-                      ))
-                    }
                   </div>
-                ) : (
-                  <EmptyFavourites />
-                )
+                  <h4 className="title18_bold description__product__title">
+                    {t(`productCharacteristics.${lang}`)}
+                  </h4>
+                  {
+                    compares?.characters?.map((character) => (
+                      <React.Fragment key={character.id}>
+                        <h4 className='description__product__row__title'>
+                          {character.name}
+                        </h4>
+                        <Row
+                          className="description__product__row"
+                          gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}
+                        >
+                          {
+                            character?.productAssigns?.map((assign) => (
+                              <Col xs={24} sm={12} md={6} key={assign.id}>
+                                <p className="content">
+                                  {assign.value}
+                                </p>
+                              </Col>
+                            ))
+                          }
+
+                        </Row>
+                      </React.Fragment>
+                    ))
+                  }
+                </>
+                // : <div style={{ height: "45vh" }}></div>
               }
-            </> : <div style={{ height: "45vh" }}></div>
+            </div>
+          ) : (
+            !isLoading && <EmptyFavourites text={'noCompares'} />
+          )
         }
       </div>
-    </section>
+    </section >
   )
 }
 
