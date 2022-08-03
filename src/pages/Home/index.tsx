@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import MoonLoading from '../../components/Loaders/MoonLoading';
 import BrandsCarusel from './BrandsCarosel';
 import GoodCheaper from './GoodsCheaper';
 import HomeCenterBanner from './HomeCenterBanner';
@@ -8,15 +10,26 @@ import Recommended from './Recommended';
 import "./_style.scss";
 
 function Home() {
+  const [isBannerLoading, setIsBannerLoading] = useState<boolean>(true);
   return (
     <section className="home">
-      <HomeTopBanner />
-      <HomeHotDeals />
-      <PopularCategoriesSlider />
-      <HomeCenterBanner />
-      <GoodCheaper />
-      <Recommended />
-      <BrandsCarusel />
+      <HomeTopBanner setIsBannerLoading={setIsBannerLoading} isBannerLoading={isBannerLoading} />
+      {
+        isBannerLoading ? (
+          <MoonLoading />
+        )
+          : (
+            <>
+              <HomeHotDeals />
+              <PopularCategoriesSlider />
+              <HomeCenterBanner />
+              <GoodCheaper />
+              <Recommended />
+              <BrandsCarusel />
+            </>
+          )
+      }
+
     </section>
   )
 }

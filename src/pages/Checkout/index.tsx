@@ -344,7 +344,7 @@ const Checkout = () => {
                       {t(`totalPayment.${lang}`)}
                     </p>
                     <h3 className="title18_bold">
-                      {totalPrc} {t(`sum.${lang}`)}
+                      {formatPrice(totalPrc)} {t(`sum.${lang}`)}
                     </h3>
                   </div>
 

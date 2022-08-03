@@ -93,6 +93,7 @@
               display      : inline-block;
               text-align   : center;
               line-height  : 35px;
+              font-family  : "GothamPro-Medium", sans-serif;
             }
 
             .incr {
@@ -120,6 +121,9 @@
           span {
             color: var(--brand_color_black);
 
+            &:last-child {
+              margin-left: 15px;
+            }
           }
 
           h3 {

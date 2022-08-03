@@ -363,19 +363,6 @@ export type ProductDetailResType = {
 	data: ProductDetailInfoType
 }
 
-export type ReturnExchangeInfoType = {
-	id: number,
-	url: string,
-	title: string,
-	description: string
-}
-
-export type ReturnExchangeResType = {
-	status: number,
-	message: string,
-	data: ReturnExchangeInfoType
-}
-
 export type PaymentListInfoType = {
 	id: number,
 	title: string
@@ -399,18 +386,6 @@ export type AllNewProductsResType = {
 	data: {
 		products: AllNewProductsInfoType
 	}
-}
-
-export type HaveQuestionsInfoType = {
-	managers: string,
-	phonesNumbers: string,
-	emails: string
-}
-
-export type HaveQuestionsResType = {
-	status: number,
-	message: string,
-	data: HaveQuestionsInfoType
 }
 
 export type MyOrderInfoType = {

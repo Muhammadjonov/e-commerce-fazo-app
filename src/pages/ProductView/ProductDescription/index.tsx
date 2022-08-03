@@ -35,10 +35,6 @@ const ProductDescription = (props: IProductDescription) => {
   const { id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, short_description, description, characterAssigns, category_id, is_treaty } = props;
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
   const [isOpenBuyNowModal, setIsOpenBuyNowModal] = useState<boolean>(false);
-
-  const onOpenInstallmentModal = () => setIsOpenInstallmentModal(true);
-  const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
-
   const onOpenBuyNowModal = () => setIsOpenBuyNowModal(true);
   const onCloseBuyNowModal = () => setIsOpenBuyNowModal(false);
 
@@ -63,12 +59,19 @@ const ProductDescription = (props: IProductDescription) => {
     category_id,
     is_treaty,
   }
+  const onOpenInstallmentModal = () => {
+    if (!isInBasket(products, id)) {
+      dispatch(addToBasket({ ...product, count: 1 }))
+    }
 
+
+    setIsOpenInstallmentModal(true);
+  }
+  const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
   const { t, lang } = useT();
 
   const onFavouriteClick = () => {
     if (auth.authorized) {
-
       if (isFavorite) {
         dispatch(removeFromFavourites(product));
       } else {
@@ -93,13 +96,13 @@ const ProductDescription = (props: IProductDescription) => {
         {name}
       </h2>
       <Row gutter={[16, 16]}>
-        <Col>
+        <Col xs={24} lg={24}>
           <div className="action_area">
             <h5 className="product_price title20_bold">
               {
                 is_treaty !== 1 && (
                   <>
-                    {formatPrice(price)} {t(`sum.${lang}`)} <img src="/assets/icons/info.svg" alt="info" />
+                    {formatPrice(price)} {t(`sum.${lang}`)}
                   </>
                 )
               }
@@ -146,26 +149,18 @@ const ProductDescription = (props: IProductDescription) => {
               </div>
             </div>
           </div>
-
-          {/* <div className="vip_discount">
-            <img src="/assets/icons/vip_discount.svg" alt="discount" />
-            <span className="vip_discount_text p16_regular">
-              VIP скидки для VIP клиентов
-            </span>
-          </div> */}
-
           <div className="button_area">
             <BuyButton text={t(`${is_treaty === 1 ? 'treaty' : 'buyNow'}.${lang}`)} onClick={onOpenBuyNowModal} />
-            <BuyButton onClick={() => { console.log("") }} text={t(`buyInstallment.${lang}`)} className="checkout" />
+            <BuyButton onClick={onOpenInstallmentModal} text={t(`buyInstallment.${lang}`)} className="checkout" />
           </div>
 
           {
             description ? (
-              <div className="title_contact">
-                <p className="title20_bold left">
+              <div className="product_desc__area">
+                <p className="title20_bold product_desc__area__title">
                   {t(`desc.${lang}`)}
                 </p>
-                <p className="p14_regular right" dangerouslySetInnerHTML={{ __html: description }} />
+                <p className="p14_regular product_desc__area__content" dangerouslySetInnerHTML={{ __html: description }} />
 
               </div>
             ) : null
@@ -179,7 +174,7 @@ const ProductDescription = (props: IProductDescription) => {
         </Col>
       </Row>
       <BuyNowModal product_id={id} isOpenBuyNowModal={isOpenBuyNowModal} onOpenBuyNowModal={onOpenBuyNowModal} onCloseBuyNowModal={onCloseBuyNowModal} />
-      <InstallmentModal isOpenInstallmentModal={isOpenInstallmentModal} onOpenInstallmentModal={onOpenInstallmentModal} onCloseInstallmentModal={onCloseInstallmentModal} />
+      <InstallmentModal product={product} isOpenInstallmentModal={isOpenInstallmentModal} onOpenInstallmentModal={onOpenInstallmentModal} onCloseInstallmentModal={onCloseInstallmentModal} />
     </div >
   )
 }

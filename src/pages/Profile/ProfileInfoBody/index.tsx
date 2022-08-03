@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
-import { Avatar, Button, Col, Switch } from 'antd'
-
-import "./_style.scss";
-import DeleteAddressModal from './DeleteAddressModal';
-import AddAddress from './AddAddress';
+import { Avatar, Col } from 'antd'
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../Store/hooks';
 import { useT } from '../../../custom/hooks/useT';
+import "./_style.scss";
 
 const ProfileInfoBody = () => {
   const { t, lang } = useT();
@@ -14,9 +10,9 @@ const ProfileInfoBody = () => {
 
   const { first_name, last_name, username, } = user;
 
-  const handleOnChangeNotif = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
-  }
+  // const handleOnChangeNotif = (checked: boolean) => {
+  //   console.log(`switch to ${checked}`);
+  // }
 
 
 

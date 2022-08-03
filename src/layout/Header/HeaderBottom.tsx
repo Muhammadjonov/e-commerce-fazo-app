@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import BurgerMenu from '../../components/BurgerMenu';
 import CategoryMenus from '../../components/CategoryButton';
-import { useT } from '../../custom/hooks/useT';
 import { CategoriesInfoType, MenuCategoriesInfoType } from "../../types";
 
 interface IHeaderBottom {
@@ -11,7 +10,6 @@ interface IHeaderBottom {
 }
 
 function HeaderBottom(props: IHeaderBottom) {
-  const { t, lang } = useT();
   const { categories, menuCategories } = props;
   const [isShowBurgerMenu, setIsShowBurgerMenu] = useState<boolean>(false);
   let { category_slug } = useParams();
@@ -23,12 +21,16 @@ function HeaderBottom(props: IHeaderBottom) {
     return category_slug === slug ? 'active' : '';
   }
 
+  const handleClickBurger = () => {
+    setIsShowBurgerMenu((prev) => !prev);
+  }
+
   return (
     <div className="header_bottom">
       <div className="container">
         <ul className="categories desktop_categories">
           <li className="category">
-            <span onClick={() => setIsShowBurgerMenu(prev => !prev)}>
+            <span onClick={handleClickBurger}>
               <CategoryMenus />
             </span>
           </li>

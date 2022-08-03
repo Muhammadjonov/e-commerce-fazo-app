@@ -16,7 +16,7 @@ const MobileMenu = () => {
   const mobileCategoriesContext = useContext(MobileCategoriesContext);
   const { data: favoutites } = useAppSelector(state => state.favourites);
   const { products: inBasketProducts } = useAppSelector(state => state.basket);
-
+  const { compares, totalElements } = useAppSelector((state) => state.compares);
   return (
     <div className='mobile__menu'>
       <ul className="mobile__menu__list">
@@ -34,7 +34,7 @@ const MobileMenu = () => {
         </li>
         <li className="mobile__menu__list__item">
           <Link to="/balance" className='mobile__menu__list__item__link'>
-            <Badge count={11}>
+            <Badge count={totalElements}>
               <img className='mobile__menu__list__item__link__img' src="/assets/icons/compare-outline.svg" alt="compare" />
             </Badge>
             <span className="mobile__menu__list__item__link__text">

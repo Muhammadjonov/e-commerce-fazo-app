@@ -45,3 +45,4 @@ export const orderUrl = "order-manager/order/by";
 export const myOrderUrl = "profile-manager/order/my-order";
 export const comparesUrl = "profile-manager/balance/index/";
 export const b2bUrl = "site/b2b-contact/";
+export const alifShopUrl = "v2/alif/alifs/";

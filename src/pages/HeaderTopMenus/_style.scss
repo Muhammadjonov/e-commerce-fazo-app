@@ -68,6 +68,8 @@
 // b2b 
 
 .b2b {
+  margin-top: 30px;
+
   &__title {
     color: var(--brand_color_black);
   }
@@ -85,8 +87,27 @@
   &__form {
     margin-top: 30px;
 
-    .input_wrapper {
+    .input_wrapper,
+    .textarea__wrapper {
       margin: 0;
+    }
+
+    .ant-upload.ant-upload-select {
+      display         : block;
+      width           : 100%;
+      background-color: #fff;
+      border          : 1px solid #d5d8df;
+      box-sizing      : border-box;
+      border-radius   : 6px;
+      font-size       : 14px;
+      line-height     : 24px;
+      height          : 44px;
+
+      .upload__btn.ant-btn.ant-btn-link {
+        padding: 0;
+        height : 100%;
+        color  : var(--brand_color_black);
+      }
     }
 
     &__btn {

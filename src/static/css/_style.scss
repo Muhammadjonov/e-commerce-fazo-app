@@ -161,6 +161,12 @@ button[type=submit].ant-btn-link {
   }
 }
 
+// ant modal
+
+.ant-modal-wrap.auth__modal {
+  z-index: 1111;
+}
+
 // notificateion 
 
 .ant-notification-notice-description {
@@ -173,6 +179,21 @@ button[type=submit].ant-btn-link {
 
 .swiper-button-next.swiper-button-disabled {
   display: none;
+}
+
+// live chat 
+#__replain_widget {
+  #__replain_widget_iframe {
+    html {
+      body {
+        #app {
+          top   : unset !important;
+          bottom: 0;
+          height: 50%;
+        }
+      }
+    }
+  }
 }
 
 // mobile styles

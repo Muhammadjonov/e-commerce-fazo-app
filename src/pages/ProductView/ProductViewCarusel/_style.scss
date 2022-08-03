@@ -35,22 +35,22 @@
 
       .swiper-wrapper {
         .swiper-slide {
-          display    : grid;
-          place-items: center;
+          display      : grid;
+          place-items  : center;
+          height       : 70px;
+          border       : 1px solid var(--gray6);
+          border-radius: 5px;
+          cursor       : pointer;
         }
 
         .img_body {
-          padding      : 10px;
-          width        : 72px;
-          height       : 72px;
-          border       : 1px solid var(--gray6);
-          border-radius: 5px;
+          padding: 10px;
+          width  : 70px;
+          height : 70px;
         }
 
         .swiper-slide.swiper-slide-visible.swiper-slide-thumb-active {
-          .img_body {
-            border-color: var(--brand_color_red);
-          }
+          border-color: var(--brand_color_red);
         }
       }
     }

@@ -20,7 +20,6 @@ const Textarea = (props: ITextarea) => {
     register,
     errors,
     disabled,
-    type = "text"
   } = props;
   const { t, lang } = useT();
 

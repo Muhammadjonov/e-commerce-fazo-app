@@ -24,69 +24,23 @@
 
       }
 
-      .content {
-        color      : var(--color_black2);
-        line-height: 22px;
-
-        .social_link {
-          color      : var(--blue1);
-          margin-left: 10px;
-          word-break : break-all;
-        }
-      }
-
-      .more_about_program {
-        margin-top : 5px;
-        line-height: 22px;
-        color      : var(--blue1);
-
-      }
     }
   }
 
-  .have_questions {
-    margin-top: 20px;
 
-    .content {
-      display: flex;
-
-      ul {
-        margin-left: 10px;
-
-        .social_link {
-          margin-left: 0px;
-        }
-      }
-    }
-  }
-
-  .delivery_payment {
-    margin-top: 20px;
-    display   : block;
+  .payment {
+    display    : flex;
+    align-items: flex-start;
 
     img {
       width: 22px;
-
     }
 
-    .delivery {
-      display: flex;
-    }
-
-    .payment {
-      display    : flex;
-      align-items: flex-start;
-
-      img {
-        width: 22px;
-      }
-
-      ul {
-        li {
-          color      : var(--color_black2);
-          line-height: 22px;
-          list-style : disc inside;
-        }
+    ul {
+      li {
+        color      : var(--color_black2);
+        line-height: 22px;
+        list-style : disc inside;
       }
     }
   }
