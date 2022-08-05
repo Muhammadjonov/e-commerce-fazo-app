@@ -71,6 +71,10 @@
     "ru": "Выйти",
     "uz": "Chiqish"
   },
+  "code": {
+    "ru": "Код №",
+    "uz": "Kod №"
+  },
   "signInOrCreateAccount": {
     "ru": " Войти или создать профиль",
     "uz": "Kirish yoki ro'yhatdan o'tish"

@@ -125,14 +125,24 @@
   .installment_modal_collapse {
     border: none;
 
-    // div{
-    //     right: 0;
-    //     position: absolute;
-    // }
-    // margin-top: 25px;
     .ant-collapse-header {
       display    : block !important;
       user-select: none;
+
+      &-text {
+        .good_option_block {
+          .installment__brand__img {
+            width : 120px;
+            height: 35px;
+
+            img {
+              width     : 100%;
+              height    : 100%;
+              object-fit: contain;
+            }
+          }
+        }
+      }
     }
 
     .ant-collapse>.ant-collapse-item>.ant-collapse-header {
@@ -153,25 +163,6 @@
         color: var(--brand_color_black);
       }
 
-      .modal_installment_mest_text {
-        font-style : normal;
-        font-weight: 700;
-        font-size  : 16px;
-        line-height: 180%;
-        color      : var(--brand_color_black);
-      }
-
-      .modal_nest_block {
-        border: none;
-
-        .ant-collapse-content {
-          border-top: none;
-        }
-
-        .modal_card_img {
-          margin-right: 15px;
-        }
-      }
     }
 
     .ant-collapse-arrow {
@@ -181,32 +172,6 @@
       border-radius   : 5px;
     }
 
-    .modal_nest_panel {
-      .card_info_box {
-        .card_info_item {
-          height      : 45px;
-          display     : flex;
-          align-items : center;
-          padding-left: 10px;
-
-          &:hover {
-            background-color: var(--color_white2);
-          }
-
-          // justify-content: space-evenly;
-          .info_card_text {
-            width    : 278px;
-            max-width: 100%;
-            color    : var(--color_black2);
-          }
-
-          .card_info_text_right {
-            width      : 148px;
-            margin-left: 92px;
-          }
-        }
-      }
-    }
   }
 
   .installment_Modal_buttons {

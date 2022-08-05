@@ -3,6 +3,11 @@
 
   .product_name {
     color        : var(--brand_color_black);
+    margin-bottom: 5px;
+  }
+
+  &__code {
+    color        : var(--color_black2);
     margin-bottom: 30px;
   }
 

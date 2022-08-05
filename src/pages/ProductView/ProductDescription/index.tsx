@@ -3,7 +3,7 @@ import ProductInfoComp from "./ProductInfoComp";
 import BuyButton from "./BuyButton";
 import { useContext, useState } from "react";
 import InstallmentModal from "../../../components/InstallmentModal";
-import { CharacterAssignsType } from "../../../types";
+import { CharacterAssignsType, ProductDetailInfoType } from "../../../types";
 import BuyNowModal from "./BuyNowModal";
 import { useAppDispatch, useAppSelector } from "../../../Store/hooks";
 import { AuthContext } from "../../../App";
@@ -14,25 +14,8 @@ import { useT } from "../../../custom/hooks/useT";
 import { addToCompare } from "../../../features/Compares/comparesSlice";
 import "./_style.scss";
 
-
-interface IProductDescription {
-  name: string,
-  price: number,
-  characterAssigns: CharacterAssignsType[],
-  description: string,
-  short_description: string,
-  id: number,
-  slug: string,
-  brandName: string,
-  old_price: number,
-  imageUrl: string,
-  userSaveProduct?: boolean,
-  category_id: number,
-  is_treaty: number
-}
-
-const ProductDescription = (props: IProductDescription) => {
-  const { id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, short_description, description, characterAssigns, category_id, is_treaty } = props;
+const ProductDescription = (props: ProductDetailInfoType) => {
+  const { id, name, brandName, slug, price, old_price, imageUrl, description, characterAssigns, category_id, is_treaty, code } = props;
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
   const [isOpenBuyNowModal, setIsOpenBuyNowModal] = useState<boolean>(false);
   const onOpenBuyNowModal = () => setIsOpenBuyNowModal(true);
@@ -55,7 +38,6 @@ const ProductDescription = (props: IProductDescription) => {
     price,
     old_price,
     imageUrl,
-    userSaveProduct,
     category_id,
     is_treaty,
   }
@@ -83,7 +65,7 @@ const ProductDescription = (props: IProductDescription) => {
   };
 
   const handleAddBasket = () => {
-    dispatch(addToBasket({ id, name, brandName, slug, price, old_price, imageUrl, userSaveProduct, count: 1, category_id, is_treaty }))
+    dispatch(addToBasket({ ...product, count: 1 }))
   }
   const handleAddCompare = () => {
     dispatch(addToCompare({ category_id, id, name }))
@@ -95,6 +77,9 @@ const ProductDescription = (props: IProductDescription) => {
       <h2 className="product_name title34_bold">
         {name}
       </h2>
+      <p className="product_desc__code">
+        {t(`code.${lang}`)} {code}
+      </p>
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={24}>
           <div className="action_area">

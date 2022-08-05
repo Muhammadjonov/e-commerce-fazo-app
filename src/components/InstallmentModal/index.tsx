@@ -1,7 +1,7 @@
-import { Button, Collapse, Modal, Radio, Tooltip } from "antd";
+import { Button, Collapse, Modal, Radio, RadioChangeEvent, Tooltip } from "antd";
 import { useT } from "../../custom/hooks/useT";
 import { useAppDispatch, useAppSelector } from "../../Store/hooks";
-import { ProductType } from "../../types";
+import { AlifInfoType, AlifResType, ProductType } from "../../types";
 import { addToFavoutires, removeFromFavourites } from "../../features/favourites/favouritesSlice";
 import { decrement, deleteFromBasket, increment } from "../../features/basket/basketSlice";
 import GoodOption from "./GoodOption";
@@ -29,8 +29,8 @@ export default function InstallmentModal(props: IInstallmentModal) {
   const { data: favourites } = useAppSelector((state) => state.favourites);
   const { products, totalPrice, totalProductCount } = useAppSelector((store) => store.basket);
   const { onOpenSignInModal } = useContext(AuthContext);
-  const [alifData, setAlifData] = useState<any>();
-
+  const [alifData, setAlifData] = useState<AlifInfoType[]>([]);
+  const [installment, setInstallment] = useState<any>();
   const onFavouriteClick = (product: ProductType, isFavorite: boolean) => {
     if (auth.authorized) {
 
@@ -46,9 +46,15 @@ export default function InstallmentModal(props: IInstallmentModal) {
 
   // getAlif data
   const getAlifData = useCallback(() => {
-    baseAPI.fetchAll<any>(alifShopUrl)
+    baseAPI.fetchAll<AlifResType>(alifShopUrl)
       .then((res) => {
-        setAlifData(res.data.data);
+        setAlifData(res.data?.data);
+      })
+      .catch((e) => {
+        console.log("err", e);
+      })
+      .finally(() => {
+
       })
   }, [])
 
@@ -63,6 +69,12 @@ export default function InstallmentModal(props: IInstallmentModal) {
   const handleCancel = () => {
     onCloseInstallmentModal()
   };
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+  }
+
+
   return (
     <Modal
       footer={null}
@@ -146,89 +158,28 @@ export default function InstallmentModal(props: IInstallmentModal) {
         expandIconPosition={"end"}
         accordion
       >
-        {/* {modalCollapseData.map((data) => (
-          <Panel
+        <Radio.Group onChange={onChange} value={installment}>
+          <Radio value={1}>    <Panel
             header={
               <div
                 onClick={(event) => event.stopPropagation()}
                 className="good_option_block"
               >
-                <Radio.Group onChange={onChange} value={value}>
-                  <Radio value={data.id} className="installment_radio">
-                    <img src={data.img} alt="" />
-                  </Radio>
-                </Radio.Group>
+                <div className="installment__brand__img">
+                  <img src="/assets/img/alif.png" alt="alif" />
+
+                </div>
                 <GoodOption />
               </div>
             }
-            key={data.id}
+            key={1}
             className="installment_modal_collapse_modal"
           >
-            <p className="p16_regular installment_modal_text">
-              При первой покупке товара, каждый клиент получает карту Start
-            </p>
-            <p className="modal_installment_mest_text">По карте</p>
-            <Collapse
-              className="modal_nest_block"
-              expandIconPosition={"end"}
-              accordion
-            >
 
-              {modalInstallmentData.map((data) => (
-                <Panel
-                  header={
-                    <div className="modal_nestCollapse_title">
-                      <img className="modal_card_img" src={data.img} alt="" />
-                      <span>{data.title}</span>
-                    </div>
-                  }
-                  key={data.id}
-                  className="modal_nest_panel"
-                >
-                  <div className="card_info_box">
-                    <div className="card_info_item">
-                      <p className="info_card_text p14_regular">Предоплата</p>
-                      <div className="card_info_text_right">
-                        <p className="info_card_text p14_regular">
-                          {data.prepayment}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="card_info_item">
-                      <p className="info_card_text p14_regular">Кешбэк</p>
-                      <div className="card_info_text_right">
-                        <p className="info_card_text p14_regular">
-                          {data.cashback}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="card_info_item">
-                      <p className="info_card_text p14_regular">
-                        Максимальная сумма задолженности
-                      </p>
-                      <div className="card_info_text_right">
-                        <p className="info_card_text p14_regular">
-                          {data.maximumAmountOwed}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="card_info_item">
-                      <p className="info_card_text p14_regular">
-                        Срок перехода на карту
-                      </p>
-                      <div className="card_info_text_right">
-                        <p className="info_card_text p14_regular">
-                          {data.transitionPeriodToTheCard}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Panel>
-              ))}
-            </Collapse>
           </Panel>
-        ))} */}
-      </Collapse>
+          </Radio>
+        </Radio.Group>
+      </Collapse >
       <div className="installment_Modal_buttons">
         <Button
           type="link"

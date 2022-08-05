@@ -354,7 +354,8 @@ export type ProductDetailInfoType = {
 	delivery_price: number,
 	brandName: string,
 	category_id: number,
-	is_treaty: number
+	is_treaty: number,
+	code: string
 }
 
 export type ProductDetailResType = {
@@ -430,4 +431,18 @@ export type ComparesResType = {
 	status: number,
 	message: string,
 	data: ComparesInfoType
+}
+
+export type AlifInfoType = {
+	id: number,
+	amount: number,
+	month: number,
+	name: string,
+	status: number
+}
+
+export type AlifResType = {
+	status: number,
+	message: string,
+	data: AlifInfoType[]
 }
