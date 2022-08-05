@@ -3,6 +3,10 @@
   border-radius: 5px;
   border       : 1px solid var(--gray6);
 
+  &:hover .ant-card-body .card_body .product_view_link figure .product_card_img {
+    transform: scale(1.1);
+  }
+
   .ant-card-body {
     padding: 0;
 
@@ -17,11 +21,13 @@
 
         figure {
           text-align: center;
+          padding   : 20px 15px 0px;
 
           .product_card_img {
             width     : 95%;
-            height    : 140px;
+            height    : 200px;
             object-fit: contain;
+            transition: all .3s;
           }
         }
       }
@@ -33,7 +39,6 @@
       .old_price {
         color  : var(--color_black2);
         display: block;
-
       }
 
       .product_view_link {

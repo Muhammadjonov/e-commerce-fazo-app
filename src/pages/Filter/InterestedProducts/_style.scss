@@ -21,4 +21,42 @@
 
   }
 
+  // swiper styles
+  .category__interested__swiper {
+    position: relative;
+
+    .interested_carusel {
+      position: static;
+
+      .swiper-button-prev {
+        left            : -30px;
+        width           : 50px;
+        height          : 50px;
+        border-radius   : 50%;
+        background-color: #F7F7F7;
+        border          : 1px solid #E0E0E0;
+
+        &:after {
+          font-size: 14px;
+          color    : #808080;
+        }
+      }
+
+      .swiper-button-next {
+        right           : -30px;
+        width           : 50px;
+        height          : 50px;
+        border-radius   : 50%;
+        background-color: var(--color_white2);
+        border          : 1px solid #E0E0E0;
+
+        &:after {
+          font-size: 14px;
+          color    : #808080;
+        }
+      }
+
+
+    }
+  }
 }

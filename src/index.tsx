@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -10,18 +10,20 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import "swiper/css/thumbs";
 import "swiper/css/free-mode";
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/high-res.css';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 import "./static/css/_style.scss";
 import "./i18next/config";
 import { store } from './Store'
 import { Provider } from 'react-redux'
+import ScaleLoading from './components/Loaders/ScaleLoading';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
 root.render(
 	<Provider store={store}>
-		<Suspense fallback={<h1>Loading...</h1>}>
+		<Suspense fallback={<ScaleLoading />}>
 			<Router>
 				<App />
 			</Router>

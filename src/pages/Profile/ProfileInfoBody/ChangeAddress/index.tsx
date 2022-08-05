@@ -1,16 +1,15 @@
-import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Checkbox } from 'antd';
 import "./_style.scss";
 import InputComp from '../../../../components/Form/InputComp';
+import { useT } from '../../../../custom/hooks/useT';
 
 
 const ChangeAddress = () => {
 
   const { register, control, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = (data: any) => console.log("data", data);
-
-  // console.log(watch("home")); // watch input value by passing the name of it
+  const { t, lang } = useT();
 
   return (
     <div className="address_change">
@@ -19,7 +18,7 @@ const ChangeAddress = () => {
         <div className="change_item">
           <input placeholder='Улица' id="address"  {...register("address", { required: true })} />
           <label htmlFor="address">Улица</label>
-          {errors.address && <span className='error_message'>This field is required</span>}
+          {errors.address && <span className='error_message'>{t(`requiredErrMessage.${lang}`)}</span>}
         </div>
 
         <div className="change_wrap">

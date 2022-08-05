@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import required modules
 import { Controller, FreeMode, Navigation, Thumbs } from "swiper";
 import "./_style.scss";
+import LightboxComp from "../../../components/LightboxComp";
 
 interface IProductViewCarusel {
   image: string[];
@@ -12,6 +13,16 @@ interface IProductViewCarusel {
 function ProductViewCarusel(props: IProductViewCarusel) {
   const { image } = props;
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+
+  // lightbox 
+
+  const [state, setState] = useState<{
+    isOpen: boolean,
+    photoIndex: number
+  }>({
+    isOpen: false,
+    photoIndex: 0
+  })
 
   return (
     <div className="product_view_carusel">
@@ -26,7 +37,9 @@ function ProductViewCarusel(props: IProductViewCarusel) {
           image?.map((img, ind) => (
             <SwiperSlide key={ind}>
               <div className="img_body">
-                <img src={img} alt={`img${ind}`} />
+                <img
+                  onClick={() => setState({ isOpen: true, photoIndex: ind })}
+                  src={img} alt={`img${ind}`} />
               </div>
             </SwiperSlide>
           ))
@@ -68,6 +81,7 @@ function ProductViewCarusel(props: IProductViewCarusel) {
           }
         </Swiper>
       </div>
+      <LightboxComp state={state} setState={setState} images={image} />
     </div>
   )
 }

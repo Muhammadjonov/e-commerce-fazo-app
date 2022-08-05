@@ -1,82 +1,116 @@
-import { Card } from 'antd';
+import { Card, Tooltip } from 'antd';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../../App';
 import { useT } from '../../../../custom/hooks/useT';
+import { addToBasket } from '../../../../features/basket/basketSlice';
+import { addToCompare } from '../../../../features/Compares/comparesSlice';
+import { addToFavoutires, removeFromFavourites } from '../../../../features/favourites/favouritesSlice';
+import { formatPrice, isFavourite, isInBasket, isInCompare } from '../../../../helpers';
+import { useAppDispatch, useAppSelector } from '../../../../Store/hooks';
+import { ProductType } from '../../../../types';
 // import Countdown from 'react-countdown';
 import "./_style.scss";
 
 interface IHotDealsCard {
-  id: number,
-  name: string,
-  brandName: string,
-  slug: string,
-  price: number | null,
-  old_price: number | null,
-  imageUrl: string | null,
+  product: ProductType
 }
 
+// Random component
+const Completionist = () => <div>You are good to go!</div>;
+interface Irenderer {
+  days: number,
+  hours: number,
+  minutes: number,
+  seconds: number,
+  completed: boolean,
+}
+// Renderer callback with condition
+const renderer = ({ days, hours, minutes, seconds, completed }: Irenderer) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <p className="offer_end_in">
+        <span className="offer_end_date p18_regular">
+          {days}
+          <span className="offer_end_date_text">
+            ДНЕЙ
+          </span>
+        </span>
+        <span className="offer_end_date p18_regular">
+          {hours}
+          <span className="offer_end_date_text">
+            ЧАСОВ
+          </span>
+        </span>
+        <span className="offer_end_date p18_regular">
+          {minutes}
+          <span className="offer_end_date_text">
+            МИНУТ
+          </span>
+        </span>
+        <span className="offer_end_date p18_regular">
+          {seconds}
+          <span className="offer_end_date_text">
+            СЕКУНД
+          </span>
+        </span>
+      </p>
+    )
+  }
+};
 function HotDealsCard(props: IHotDealsCard) {
   const {
     id,
     name,
     slug,
-    brandName,
+    is_treaty,
     price,
-    old_price,
     imageUrl,
-  } = props;
+    category_id
+  } = props.product;
+
   const { t, lang } = useT();
 
-  // Random component
-  const Completionist = () => <div>You are good to go!</div>;
-  interface Irenderer {
-    days: number,
-    hours: number,
-    minutes: number,
-    seconds: number,
-    completed: boolean,
-  }
-  // Renderer callback with condition
-  const renderer = ({ days, hours, minutes, seconds, completed }: Irenderer) => {
-    if (completed) {
-      // Render a completed state
-      return <Completionist />;
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((store) => store.auth);
+  const { data: favourites } = useAppSelector((state) => state.favourites);
+  const { products } = useAppSelector((state) => state.basket);
+  const { compares } = useAppSelector((state) => state.compares);
+  let isFavorite = isFavourite(favourites, id);
+  let isThereInBasket = isInBasket(products, id);
+  let isThereCompare = isInCompare(compares, category_id, id);
+
+  const { onOpenSignInModal } = useContext(AuthContext);
+
+  const onFavouriteClick = () => {
+    if (auth.authorized) {
+
+      if (isFavorite) {
+        dispatch(removeFromFavourites(props.product));
+      } else {
+        dispatch(addToFavoutires(props.product));
+      }
     } else {
-      // Render a countdown
-      return (
-        <p className="offer_end_in">
-          <span className="offer_end_date p18_regular">
-            {days}
-            <span className="offer_end_date_text">
-              ДНЕЙ
-            </span>
-          </span>
-          <span className="offer_end_date p18_regular">
-            {hours}
-            <span className="offer_end_date_text">
-              ЧАСОВ
-            </span>
-          </span>
-          <span className="offer_end_date p18_regular">
-            {minutes}
-            <span className="offer_end_date_text">
-              МИНУТ
-            </span>
-          </span>
-          <span className="offer_end_date p18_regular">
-            {seconds}
-            <span className="offer_end_date_text">
-              СЕКУНД
-            </span>
-          </span>
-        </p>
-      )
+      onOpenSignInModal();
     }
   };
+
+  const handleAddBasket = () => {
+    dispatch(addToBasket({ ...props.product, count: 1 }))
+  }
+
+  const handleAddCompare = () => {
+    dispatch(addToCompare({ category_id, id, name }))
+  }
 
   return (
     <Card className="hot_deals_card" bordered={false} hoverable>
 
-      <div className="card_body">
+      <div className="card_body" title={name}>
         {/* {
           discount !== 0 && (
             <div className="discount">
@@ -90,7 +124,14 @@ function HotDealsCard(props: IHotDealsCard) {
           </figure>
         </Link>
         <p className="price title18_bold">
-          <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del>{price} {t(`sum.${lang}`)}
+          {/* <del className='old_price p14_regular'>{old_price} {t(`sum.${lang}`)}</del> */}
+          {
+            is_treaty !== 1 ? (
+              <>
+                {formatPrice(price)} {t(`sum.${lang}`)}
+              </>
+            ) : t(`treaty.${lang}`)
+          }
         </p>
         <Link className='product_view_link' to={`/product/detail/${slug}`}>
           <h5 className="product_name">
@@ -109,20 +150,40 @@ function HotDealsCard(props: IHotDealsCard) {
       </div>
       <div className="card_footer">
         <ul>
+          {
+            is_treaty !== 1 && (
+              <li>
+                <Tooltip placement='top' title={t(`addToCart.${lang}`)} >
+                  <button
+                    type='button'
+                    onClick={handleAddBasket}
+                  >
+                    <img src={`/assets/icons/shopping-cart-${isThereInBasket ? 'red' : 'gray'}.svg`} alt="cart" />
+                  </button>
+                </Tooltip>
+              </li>
+            )
+          }
+
           <li>
-            <button type='button'>
-              <img src={"/assets/icons/filled_cart.svg"} alt="cart" />
-            </button>
+            <Tooltip placement='top' title={t(`addToFavourites.${lang}`)} >
+              <button
+                type='button'
+                onClick={onFavouriteClick}
+              >
+                <img src={`/assets/icons/heart-${isFavorite ? 'red' : 'gray'}.svg`} alt="heart" />
+              </button>
+            </Tooltip>
           </li>
           <li>
-            <button type='button'>
-              <img src={"/assets/icons/filled_heart.svg"} alt="heart" />
-            </button>
-          </li>
-          <li>
-            <button type='button'>
-              <i className="fa-solid fa-scale-balanced"></i>
-            </button>
+            <Tooltip placement='top' title={t(`compare.${lang}`)} >
+              <button
+                type='button'
+                onClick={handleAddCompare}
+              >
+                <img src={`/assets/icons/compare-${isThereCompare ? 'red' : 'gray'}.svg`} alt="compare" />
+              </button>
+            </ Tooltip>
           </li>
         </ul>
       </div>

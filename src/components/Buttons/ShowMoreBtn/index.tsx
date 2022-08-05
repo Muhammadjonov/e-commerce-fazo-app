@@ -1,4 +1,5 @@
 import { Button } from 'antd'
+import { useT } from '../../../custom/hooks/useT';
 import "./_style.scss";
 
 interface IShowMoreBtn {
@@ -7,9 +8,15 @@ interface IShowMoreBtn {
 
 function ShowMoreBtn(props: IShowMoreBtn) {
   const { onChange } = props;
+  const { t, lang } = useT();
   return (
-    <Button onClick={onChange} ghost className='show_more_btn'>
-      Показать еще
+    <Button
+      size="large"
+      onClick={onChange}
+      type="link"
+      className='show_more_btn'
+    >
+      {t(`viewMore.${lang}`)}
     </Button>
   )
 }

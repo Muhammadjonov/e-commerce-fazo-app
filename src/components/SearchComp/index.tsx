@@ -35,12 +35,8 @@ function SearchComp(props: ISearchComp) {
     setSearchValues(prev => ({ ...prev, key: e.target.value.trim() }));
   }
 
-
-  // let body = document.querySelector("body")!;
   const onSelect = (value: any) => {
     setSearchValues(prev => ({ ...prev, category: value }));
-    // body.style.overflowY = "auto";
-
   };
 
   const onSearch = () => {
@@ -61,13 +57,14 @@ function SearchComp(props: ISearchComp) {
 
   return (
 
-    <Input.Group compact className='search_wrapper' >
+    <Input.Group compact className='search_wrapper'>
       <Select
         bordered={false}
         value={searchValues.category}
         style={{ width: '30%' }}
         size='large'
         onSelect={onSelect}
+        getPopupContainer={() => document.getElementById("search__comp")!}
       >
         <Option value="all">{t(`allCategory.${lang}`)}</Option>
         {
@@ -86,9 +83,9 @@ function SearchComp(props: ISearchComp) {
         style={{ width: "70%" }}
         onChange={handleSearchValue}
       />
-      <button type="button" className="mic_btn">
+      {/* <button type="button" className="mic_btn">
         <AudioOutlined />
-      </button>
+      </button> */}
     </Input.Group>
   )
 }

@@ -1,23 +1,22 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "./_style.scss";
-
-import { FreeMode, Autoplay, Navigation } from "swiper";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "antd";
-import { useCallback, useContext, useEffect, useState } from "react";
 import { BrandInfoType, BrandsResType } from "../../../types";
 import baseAPI from "../../../api/baseAPI";
 import { brandsUrl } from "../../../api/apiUrls";
-import { LoadingContext } from "react-router-loading";
+import { useT } from "../../../custom/hooks/useT";
+import { FreeMode, Autoplay, Navigation } from "swiper";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import "./_style.scss";
+
 
 
 function BrandsCarusel() {
-
+  const { t, lang } = useT()
   const [brands, setBrands] = useState<BrandInfoType>([] as BrandInfoType)
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const loadingContext = useContext(LoadingContext);
 
   const getBrands = useCallback(() => {
     setIsLoading(true);
@@ -26,8 +25,12 @@ function BrandsCarusel() {
         if (res.data.status === 200) {
           setBrands(res.data.data);
           setIsLoading(false);
-          loadingContext.done();
+
         }
+      })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+
       })
   }, [])
 
@@ -39,7 +42,7 @@ function BrandsCarusel() {
     <div className="BrandsCarusel_wrapper">
       <div className="container brands_container">
         <div className="BrandsCarousel_title_navigation">
-          <h2 className="title24_bold BrandsCarusel_title">Бренды</h2>
+          <h2 className="title24_bold BrandsCarusel_title">{t(`brands.${lang}`)}</h2>
         </div>
         <div className="brand_slider_wrapper">
           <Swiper
@@ -65,14 +68,12 @@ function BrandsCarusel() {
                 spaceBetween: 30,
               },
             }}
-            slidesPerView={5}
             spaceBetween={30}
             freeMode={true}
             navigation={true}
-            grabCursor={true}
             loop={true}
             autoplay={{
-              delay: 2500,
+              delay: 3000,
               disableOnInteraction: false,
             }}
             modules={[FreeMode, Autoplay, Navigation]}

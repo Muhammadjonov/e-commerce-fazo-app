@@ -29,7 +29,7 @@
         justify-content: center;
         height         : 100%;
 
-        .product_name {}
+        // .product_name {}
 
         .desc_body {
           margin-top: 20px;
@@ -45,14 +45,30 @@
         text-align: center;
 
         .per_month {
-          color: var(--brand_color_red);
-        }
-
-        .price {
-          color        : var(--color_black2);
+          color        : var(--brand_color_red);
           margin-bottom: 9px;
         }
 
+        .price {
+          color: var(--color_black2);
+        }
+
+        .add_cart_btn {
+          border          : none;
+          outline         : none;
+          background-color: var(--brand_color_red);
+          padding         : 12px 50px;
+          border-radius   : 5px;
+          cursor          : pointer;
+
+          span {
+            color      : #fff;
+            font-size  : 16px;
+            line-height: 15px;
+            font-family: "GothamPro-Medium";
+            margin-left: 10px;
+          }
+        }
 
         .card_footer {
           margin-top: 25px;

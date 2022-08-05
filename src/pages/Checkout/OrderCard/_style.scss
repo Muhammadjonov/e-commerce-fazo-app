@@ -1,25 +1,59 @@
 .order__card {
-  display        : flex;
-  justify-content: space-between;
-  align-items    : center;
-  margin-top     : 25px;
-  flex-wrap      : wrap;
+  display    : flex;
+  align-items: center;
+  margin-top : 25px;
 
   &__left {
     display    : flex;
     align-items: center;
 
-    p {
-      margin-left: 30px;
-      color      : var(--brand_color_black);
+    &__img {
+      width     : 90px;
+      height    : 70px;
+      object-fit: contain;
     }
+
   }
 
-  &__order__count {
-    color: var(--brand_color_black);
-  }
+  &__right {
+    width          : 100%;
+    display        : flex;
+    justify-content: space-between;
 
-  &__order__price {
-    color: var(--brand_color_black);
+    &__name {
+      width    : 100%;
+      max-width: 300px;
+
+      &__text {
+        margin-left       : 30px;
+        color             : var(--brand_color_black);
+        max-width         : 300px;
+        display           : -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow          : hidden;
+      }
+
+      .order__price {
+        color : var(--brand_color_black);
+        margin: 15px 0px 0px 30px;
+      }
+    }
+
+    &__info {
+      width          : 100%;
+      max-width      : 255px;
+      display        : flex;
+      justify-content: flex-end;
+
+      &__order__count {
+        color: var(--brand_color_black);
+      }
+
+      &__order__price {
+        margin-left: 20px;
+        color      : var(--brand_color_black);
+      }
+    }
   }
 }

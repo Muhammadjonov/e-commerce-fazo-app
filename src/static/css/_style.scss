@@ -55,6 +55,41 @@ button {
   cursor          : pointer;
 }
 
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-track {
+  &:hover {
+    background-color: var(--gray5);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color_black2);
+  border          : 5px solid #fff;
+  border-radius   : 16px;
+
+  &:hover {
+    border-width: 4px;
+  }
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
 .ant-affix {
   z-index: 11;
 }
@@ -105,14 +140,60 @@ input[type=number] {
   }
 }
 
-.ant-switch-checked {
-  // background-color: var(--brand_color_red);
+button[type=submit].ant-btn-link {
+  font-family: "GothamPro-Medium", sans-serif;
 }
 
 .fazo__back__top.ant-back-top {
   bottom: 30px;
   right : unset;
   left  : 30px
+}
+
+// confirm modal
+
+.ant-modal-confirm-btns {
+  .ant-btn.ant-btn-primary {
+    background-color: var(--brand_color_red);
+    color           : #fff;
+    border-radius   : 5px;
+    border-color    : var(--brand_color_red);
+  }
+}
+
+// ant modal
+
+.ant-modal-wrap.auth__modal {
+  z-index: 1111;
+}
+
+// notificateion 
+
+.ant-notification-notice-description {
+  padding-left: 35px;
+}
+
+.swiper-button-prev.swiper-button-disabled {
+  display: none;
+}
+
+.swiper-button-next.swiper-button-disabled {
+  display: none;
+}
+
+// live chat 
+#__replain_widget {
+  #__replain_widget_iframe {
+    html {
+      body {
+        #app {
+          top   : unset !important;
+          bottom: 0;
+          height: 50%;
+        }
+      }
+    }
+  }
 }
 
 // mobile styles

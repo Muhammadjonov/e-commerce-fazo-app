@@ -5,18 +5,19 @@ import { Routes, Route } from "react-router-loading"
 import { fallbackLang, languages } from './constants';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
-import routes from './routes';
 import { BackTop } from 'antd';
-import { useAppSelector } from "./Store/hooks";
-import { getAccessToken, setUserToLocalStorage } from "./helpers";
-import { fetchUserById } from "./Store/authSlice";
+import { useAppDispatch, useAppSelector } from "./Store/hooks";
+import { getAccessToken, getBasketFromLocalStorage, getCompareLocalStorage, setUserToLocalStorage } from "./helpers";
 import { MenuCategoriesInfoType, MenuCategoriesResType } from './types';
 import { menuCategoriesUrl, profileUrl } from './api/apiUrls';
 import baseAPI from './api/baseAPI';
 import AuthModal from './components/AuthModal';
-import { useDispatch } from 'react-redux';
+import CartModal from './components/CartModal';
 import { request } from './api/config';
 import { setUser, UserResType } from './features/authSlice';
+import { getFavourites } from './features/favourites/favouritesSlice';
+import { setCompare } from './features/Compares/comparesSlice';
+import { setBasket } from './features/basket/basketSlice';
 // pages
 import Filter from './pages/Filter';
 import Home from './pages/Home';
@@ -24,12 +25,22 @@ import SearchResult from './pages/SearchResult';
 import ProductView from './pages/ProductView';
 import HeaderTopMenus from './pages/HeaderTopMenus';
 import HeaderMenusContent from './pages/HeaderTopMenus/HeaderMenusContent';
-import Favorites from './pages/Favorites';
+import Favourites from './pages/Favourites';
 import ProductComparison from './pages/ProductComparison';
 import ProfileInfoBody from './pages/Profile/ProfileInfoBody';
 import PersonalData from './pages/Profile/PersonalData';
 import Checkout from './pages/Checkout';
 import PageNotFound from './pages/PageNotFound';
+import BestsellerFilter from './pages/BestsellerFilter';
+import AllNewCommersProduct from './pages/AllNewCommersProduct';
+import Profile from './pages/Profile';
+import Feedback from './pages/HeaderTopMenus/Feedback';
+import ProtectedCheckout from './pages/Checkout/ProtectedCheckout';
+import ProtectedProfile from './pages/Profile/ProtectedProfile';
+import OrderHistory from './pages/Profile/OrderHistory';
+import ProtectedFavourites from './pages/Favourites/ProtectedFavourites';
+import ProtectedSearch from './pages/SearchResult/ProtectedSearch';
+import MoonLoading from './components/Loaders/MoonLoading';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -40,21 +51,33 @@ type AuthContextType = {
   onCloseSignInModal: () => void;
 };
 
+type CartContextType = {
+  isOpenCartModal: boolean;
+  onOpenCartModal: () => void;
+  onCloseCartModal: () => void;
+}
+type MobileCategoriesContextType = {
+  isOpenMobileCategories: boolean;
+  onOpenMobileCategories: () => void;
+  onCloseMobileCategories: () => void;
+}
+
 export const AuthContext = createContext({} as AuthContextType);
+export const CartContext = createContext({} as CartContextType);
+export const MobileCategoriesContext = createContext({} as MobileCategoriesContextType);
 
 function App() {
   const [isOnline, setIsOnline] = useState<boolean>(false);
-  // let element = useRoutes(routes)
-
+  const [isProfileLoading, setIsProfileLoading] = useState<boolean>();
   let { pathname } = useLocation();
 
-  const auth = useAppSelector(state => state.auth)
-
-  const dispatch = useDispatch();
-
+  const auth = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  let accessToken = getAccessToken();
   useEffect(() => {
     const access_token = getAccessToken();
     if (access_token) {
+      setIsProfileLoading(true);
       request
         .get<UserResType>(profileUrl, {
           headers: {
@@ -64,27 +87,37 @@ function App() {
         .then((res) => {
           dispatch(setUser(res.data));
           setUserToLocalStorage(res.data.data);
-        }).catch(e => console.info(e));
+        }).catch(e => {
+          console.info(e);
+          setIsProfileLoading(false);
+        })
+        .finally(() => {
+          setIsProfileLoading(false);
+        })
+        ;
+    } else {
+      setIsProfileLoading(false);
     }
-
+    let basket = getBasketFromLocalStorage();
+    let compare = getCompareLocalStorage();
+    if (compare) {
+      dispatch(setCompare({ data: { ...compare } }))
+    }
     // window.addEventListener("load", function (e) {
-    //   let basket = getBasketFromLocalStorage();
-    //   if (basket) {
-    //     dispatch(setBasket({ data: { ...basket } }));
-    //   }
+    if (basket) {
+      dispatch(setBasket({ data: { ...basket } }));
+    }
     // });
   }, [dispatch]);
+  useEffect(() => {
+    if (auth.authorized) {
+      dispatch(getFavourites());
+    }
+  }, [auth]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname]);
-
-  useEffect(() => {
-    let token = getAccessToken();
-    if (token) {
-      fetchUserById(localStorage.getItem('userId') || '0')
-    }
-  }, [])
 
   useEffect(() => {
     let currentLang = localStorage.getItem("language");
@@ -139,38 +172,109 @@ function App() {
     onCloseSignInModal,
   };
 
+  // cart
+
+  const [isOpenCartModal, setIsOpenCartModal] = useState<boolean>(false);
+  const [isOpenMobileCategories, setIsOpenMobileCategories] = useState<boolean>(false);
+
+  const onOpenCartModal = () => {
+    setIsOpenCartModal(true);
+  }
+  const onCloseCartModal = () => {
+    setIsOpenCartModal(false);
+  }
+
+  const cartContextValue = {
+    isOpenCartModal,
+    onOpenCartModal,
+    onCloseCartModal
+  }
+
+  const onOpenMobileCategories = () => {
+    setIsOpenMobileCategories(true);
+  }
+  const onCloseMobileCategories = () => {
+    setIsOpenMobileCategories(false);
+  }
+
+  const mobileCategoriesContextValue = {
+    isOpenMobileCategories,
+    onOpenMobileCategories,
+    onCloseMobileCategories
+  }
 
   return (
     <AuthContext.Provider value={contextValue}>
-      <div className="mixel_wrapper">
-        <Header menuCategories={menuCategories} />
-        <Routes>
-          <Route path="/" element={<Home />} loading />
-          <Route path="category/:category_slug" element={<Filter />} loading />
-          <Route path="search" element={<SearchResult />} loading />
-          <Route path="product/detail/:product_slug" element={<ProductView />} loading />
-          <Route path="page" element={<HeaderTopMenus />} >
-            <Route path=":page_slug" element={<HeaderMenusContent />} loading />
-          </Route>
-          <Route path="favorites" element={<Favorites />} />
-          <Route path="balance" element={<ProductComparison />} />
-          <Route path="profile" element={<ProductComparison />} >
-            <Route index element={<ProfileInfoBody />} />
-            <Route path="personal-data" element={<PersonalData />} />
-          </Route>
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <Footer menuCategories={menuCategories} />
-        <BackTop className="fazo__back__top" />
-        <AuthModal
-          isOpenSignUp={isOpenSignUpModal}
-          isOpenSignIn={isOpenSignInModal}
-          onCloseSignUpModal={onCloseSignUpModal}
-          onCloseSignInModal={onCloseSignInModal}
+      <CartContext.Provider value={cartContextValue}>
+        <MobileCategoriesContext.Provider value={mobileCategoriesContextValue}>
+          <div className="mixel_wrapper">
+            <Header menuCategories={menuCategories} />
+            {
+              !isProfileLoading ? (
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="category/:category_slug" element={<Filter />} loading />
+                  <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
+                  <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
+                  <Route path="search" element={
+                    <ProtectedSearch>
+                      <SearchResult />
+                    </ProtectedSearch>
+                  } loading />
+                  <Route path="product/detail/:product_slug" element={<ProductView />} loading />
+                  <Route path="page" element={<HeaderTopMenus />} loading>
+                    <Route path=":page_slug" element={<HeaderMenusContent />} loading />
+                    <Route path="feedback/contact" element={<Feedback />} />
+                  </Route>
+                  <Route
+                    path="favourites"
+                    element={
+                      <ProtectedFavourites>
+                        <Favourites />
+                      </ProtectedFavourites>
+                    }
+                    loading
+                  />
+                  <Route path="balance" element={<ProductComparison />} loading />
+                  <Route path="profile" element={
+                    <ProtectedProfile>
+                      <Profile />
+                    </ProtectedProfile>
 
-        />
-      </div>
+                  } >
+                    <Route index element={<ProfileInfoBody />} />
+                    <Route path="personal-data" element={<PersonalData />} />
+                    <Route path="order-history" element={<OrderHistory />} loading />
+                  </Route>
+                  <Route path="checkout" element={
+                    <ProtectedCheckout>
+                      <Checkout />
+                    </ProtectedCheckout>
+
+                  } />
+                  <Route path="*" element={<PageNotFound />} />
+                </Routes>
+              ) : (
+                <MoonLoading />
+              )
+            }
+
+            <Footer menuCategories={menuCategories} />
+            <BackTop className="fazo__back__top" />
+            <AuthModal
+              isOpenSignUp={isOpenSignUpModal}
+              isOpenSignIn={isOpenSignInModal}
+              onCloseSignUpModal={onCloseSignUpModal}
+              onCloseSignInModal={onCloseSignInModal}
+            />
+            <CartModal
+              isOpenCart={isOpenCartModal}
+              onCloseCartModal={onCloseCartModal}
+              onOpenCartModal={onOpenCartModal}
+            />
+          </div>
+        </MobileCategoriesContext.Provider>
+      </CartContext.Provider>
     </AuthContext.Provider>
   );
 }

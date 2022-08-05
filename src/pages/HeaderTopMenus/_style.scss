@@ -55,34 +55,112 @@
       font-family: 'GothamPro', sans-serif !important;
     }
 
-    .ant-btn {
+    .ant-btn.open_drower_btn.ant-btn-link {
       display         : none;
       background-color: var(--brand_color_black);
       border          : none;
+      color           : #fff;
     }
   }
 
 }
 
-.ant-drawer-content-wrapper {
+// b2b 
 
-  .ant-drawer-header,
-  .ant-drawer-body {
-    padding: 16px 20px;
+.b2b {
+  margin-top: 30px;
+
+  &__title {
+    color: var(--brand_color_black);
   }
 
-  .ant-drawer-header-title {
-    flex-direction: row-reverse;
+  &__body {
+    &__title {
+      color: var(--brand_color_black);
+    }
 
-    .ant-drawer-close {
-      margin-right: 0;
+    &__desc {
+      color: var(--brand_color_black);
+    }
+  }
+
+  &__form {
+    margin-top: 30px;
+
+    .input_wrapper,
+    .textarea__wrapper {
+      margin: 0;
+    }
+
+    .ant-upload.ant-upload-select {
+      display         : block;
+      width           : 100%;
+      background-color: #fff;
+      border          : 1px solid #d5d8df;
+      box-sizing      : border-box;
+      border-radius   : 6px;
+      font-size       : 14px;
+      line-height     : 24px;
+      height          : 44px;
+
+      .upload__btn.ant-btn.ant-btn-link {
+        padding: 0;
+        height : 100%;
+        color  : var(--brand_color_black);
+      }
+    }
+
+    &__btn {
+      &__submit.ant-btn.ant-btn-link {
+        border          : 1px solid var(--brand_color_red);
+        border-radius   : 5px;
+        color           : #fff;
+        background-color: var(--brand_color_red);
+      }
+    }
+  }
+
+  .react-tel-input {
+    .form-control {
+      height      : 44px;
+      width       : 100%;
+      border-color: #d5d8df;
+      color       : #393b3f;
+      padding-left: 17px;
+    }
+
+    .flag-dropdown {
+      display: none;
+    }
+  }
+
+  .error__message {
+    margin-top: 15px;
+  }
+}
+
+.header__top__menus__drawer.ant-drawer {
+
+  .ant-drawer-content-wrapper {
+
+    .ant-drawer-header,
+    .ant-drawer-body {
+      padding: 16px 20px;
+    }
+
+    .ant-drawer-header-title {
+      flex-direction: row-reverse;
+
+      .ant-drawer-close {
+        margin-right: 0;
+      }
     }
   }
 }
 
 @media (max-width: 991px) {
   .header_top_menus__body {
-    .ant-btn {
+    .ant-btn.open_drower_btn.ant-btn-link {
       display: block;
     }
 

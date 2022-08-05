@@ -39,6 +39,22 @@
     "ru": "Назад",
     "uz": "Orqaga"
   },
+  "cancel": {
+    "ru": "Отмена",
+    "uz": "Bekor qilish"
+  },
+  "home": {
+    "ru": "Главная",
+    "uz": "Bosh sahifa"
+  },
+  "personalCabinet": {
+    "ru": "Личный кобинет",
+    "uz": "Shaxsiy kabinet"
+  },
+  "myInstallments": {
+    "ru": "Мои рассрочки",
+    "uz": "Mening to'lovlarim"
+  },
   "information": {
     "ru": "Информация",
     "uz": "Ma'lumot"
@@ -51,16 +67,408 @@
     "ru": "Все категории",
     "uz": "Barcha kategoriyalar"
   },
-  "profile": {
-    "ru": "Личный кабинет",
-    "uz": "Shaxsiy kabinet"
-  },
   "logout": {
     "ru": "Выйти",
     "uz": "Chiqish"
   },
+  "code": {
+    "ru": "Код №",
+    "uz": "Kod №"
+  },
   "signInOrCreateAccount": {
     "ru": " Войти или создать профиль",
-    "uz": "Tizimga kiring yoki profil yarating"
+    "uz": "Kirish yoki ro'yhatdan o'tish"
+  },
+  "newPassword": {
+    "ru": " Новый пароль",
+    "uz": "Yangi parol"
+  },
+  "personaData": {
+    "ru": "Личные данные",
+    "uz": "Shaxsiy ma'lumotlar"
+  },
+  "personalData": {
+    "ru": "Персональные данные",
+    "uz": "Shaxsiy ma'lumotlar"
+  },
+  "yourFirstName": {
+    "ru": "Ваше имя",
+    "uz": "Ismingiz"
+  },
+  "yourLastName": {
+    "ru": "Ваша фамилия",
+    "uz": "Familiyangiz"
+  },
+  "yourMiddleName": {
+    "ru": "Отчество",
+    "uz": "Otasini ismi"
+  },
+  "phoneNumber": {
+    "ru": "Номер телефона",
+    "uz": "Telefon raqami"
+  },
+  "password": {
+    "ru": "Пароль",
+    "uz": "Parol"
+  },
+  "repeatPassword": {
+    "ru": "Подтвердить пароль",
+    "uz": "Parolni  tasdiqlang"
+  },
+  "save": {
+    "ru": "Сохранить",
+    "uz": "Saqlash"
+  },
+  "edit": {
+    "ru": "Изменить",
+    "uz": "O'zgartirish"
+  },
+  "phone": {
+    "ru": "Телефон:",
+    "uz": "Telefon:"
+  },
+  "telegram": {
+    "ru": "Телеграм:",
+    "uz": "Telegram:"
+  },
+  "email": {
+    "ru": "Эл.адрес:",
+    "uz": "Email:"
+  },
+  "yourEmail": {
+    "ru": "Email",
+    "uz": "Emailingiz"
+  },
+  "topic": {
+    "ru": "Тема обращения",
+    "uz": "Murojaatlar mavzusi"
+  },
+  "yourMessage": {
+    "ru": "Ваше собшение",
+    "uz": "Xabaringiz"
+  },
+  "send": {
+    "ru": "Отправить",
+    "uz": "Jo'natish"
+  },
+  "deleteAll": {
+    "ru": "Удалит все",
+    "uz": "Barchasini o'chirish"
+  },
+  "filter": {
+    "ru": "Фильтр",
+    "uz": "Filtrlash"
+  },
+  "checkout": {
+    "ru": "Оформить покупку",
+    "uz": "Sotib olish"
+  },
+  "yourData": {
+    "ru": "Ваши данные",
+    "uz": "Sizning ma'lumotlaringiz"
+  },
+  "yourOrder": {
+    "ru": "Ваш заказ",
+    "uz": "Sizning buyurtmangiz"
+  },
+  "selectPayMeth": {
+    "ru": "Выберите способ оплаты",
+    "uz": "To'lov usullarini tanlang"
+  },
+  "howToObtain": {
+    "ru": "Способ получения",
+    "uz": "Qabul qilish usuli"
+  },
+  "enterDeliveryAddress": {
+    "ru": "Укажите адрес доставки",
+    "uz": "Yetkazib berish manzilini kiriting"
+  },
+  "address": {
+    "ru": "Адрес",
+    "uz": "Manzil"
+  },
+  "floor": {
+    "ru": "Этаж",
+    "uz": "Qavat"
+  },
+  "dateDelivery": {
+    "ru": "Дата доставки",
+    "uz": "Yetkazib berish sanasi"
+  },
+  "regionOblast": {
+    "ru": "Регион / Область",
+    "uz": "Viloyat"
+  },
+  "cityDistr": {
+    "ru": "Город  / Район",
+    "uz": "Shahar / Tuman"
+  },
+  "totalPayment": {
+    "ru": "Всего к оплате",
+    "uz": "Jami to'lov"
+  },
+  "goodForAmount": {
+    "ru": "товара на сумму",
+    "uz": "tovar narxga"
+  },
+  "ty": {
+    "ru": "шт",
+    "uz": "ta"
+  },
+  "delivery": {
+    "ru": " Доставка",
+    "uz": "Yetkazib berish"
+  },
+  "free": {
+    "ru": "бесплатно",
+    "uz": "bepul"
+  },
+  "onlineOrders": {
+    "ru": "Онлайн заказы",
+    "uz": "Onlayn buyurtmalar"
+  },
+  "emptyOrderText": {
+    "ru": "У вас нет покупок",
+    "uz": "Sizda xaridlar yo'q"
+  },
+  "compare": {
+    "ru": "К сравнению",
+    "uz": "Taqqoslash"
+  },
+  "balance": {
+    "ru": "Сравнить",
+    "uz": "Taqqoslash"
+  },
+  "addToCart": {
+    "ru": "В корзину",
+    "uz": "Savatchaga qo'shish"
+  },
+  "addToFavourites": {
+    "ru": "В избранные",
+    "uz": "Sevimlilarga qo'shish"
+  },
+  "searchResults": {
+    "ru": "Результаты поиска",
+    "uz": "Qidiruv natijalari"
+  },
+  "myOrders": {
+    "ru": "Мои заказы",
+    "uz": "Mening buyurtmalarim"
+  },
+  "callCenter": {
+    "ru": "Колл-центр:",
+    "uz": "Call-markaz:"
+  },
+  "callCenterWorkingDays": {
+    "ru": "График работы колл-центра",
+    "uz": "Call-markaz ish vaqti"
+  },
+  "buyers": {
+    "ru": "Покупателям",
+    "uz": "Xaridorlar"
+  },
+  "feedback": {
+    "ru": "Обратная связь",
+    "uz": "Qayta aloqa"
+  },
+  "general": {
+    "ru": "Общее",
+    "uz": "Umumiy"
+  },
+  "desc": {
+    "ru": "Описание:",
+    "uz": "Tavsif:"
+  },
+  "brand": {
+    "ru": "Торговая марка",
+    "uz": "Brend"
+  },
+  "noFavourites": {
+    "ru": "Нет избранных товаров",
+    "uz": "Tanlangan mahsulotlar yo'q"
+  },
+  "noCompares": {
+    "ru": "Нет сравнение товаров",
+    "uz": "Tanlangan mahsulotlar yo'q"
+  },
+  "noSearchingResult": {
+    "ru": "Результаты поиска не найдены",
+    "uz": "Qidiruv bo'yicha hech narsa topilmadi"
+  },
+  "newCommers": {
+    "ru": "Новые поступления",
+    "uz": "Yangi kelganlar"
+  },
+  "viewAll": {
+    "ru": "Посмотреть всё",
+    "uz": "Barchasini ko'rish"
+  },
+  "popularCategories": {
+    "ru": "Популярные категории",
+    "uz": "Ommabop toifalar"
+  },
+  "xitProducts": {
+    "ru": "Хит продаж",
+    "uz": "Ommabop mahsulotlar"
+  },
+  "viewMore": {
+    "ru": "Показать еще",
+    "uz": "Ko'proq ko'rsatish"
+  },
+  "brands": {
+    "ru": "Бренды",
+    "uz": "Brendlar"
+  },
+  "recommended": {
+    "ru": "Рекомендуем",
+    "uz": "Tavsiya qilinadi"
+  },
+  "price": {
+    "ru": "Цена",
+    "uz": "Narx"
+  },
+  "products": {
+    "ru": "Товаров",
+    "uz": "Tovarlar"
+  },
+  "byPrice": {
+    "ru": "По цене",
+    "uz": "Narxiga ko'ra"
+  },
+  "alphabetically": {
+    "ru": "По алфавиту",
+    "uz": "Alifbo tartibida"
+  },
+  "view": {
+    "ru": "Показать",
+    "uz": "Ko'rsatish"
+  },
+  "productMayInter": {
+    "ru": "Товары которые так же могут быть интересны",
+    "uz": "Shuningdek, qiziqarli bo'lishi mumkin bo'lgan mahsulotlar"
+  },
+  "popularModelAndCategory": {
+    "ru": "Популярные категории и модели",
+    "uz": "Ommabop toifalar va modellar"
+  },
+  "buyNow": {
+    "ru": "Купить сейчас",
+    "uz": "Hoziroq sotib olish"
+  },
+  "orderPrice": {
+    "ru": "Сумма заказа",
+    "uz": "Buyurtma narxi"
+  },
+  "orderContent": {
+    "ru": "Содержимое заказа",
+    "uz": "Buyurtma tarkibi"
+  },
+  "contactInfo": {
+    "ru": "Контанктная информация",
+    "uz": "Bog'lanish uchun ma'lumot"
+  },
+  "payment": {
+    "ru": "Оплата",
+    "uz": "To'lov"
+  },
+  "paymentMethod": {
+    "ru": "Условия оплаты:",
+    "uz": "To'lov uslubi:"
+  },
+  "buyInstallment": {
+    "ru": "Купить в рассрочку",
+    "uz": "Muddatli to'lovga xarid"
+  },
+  "continueShopping": {
+    "ru": "Продолжить покупки",
+    "uz": "Xaridlarni davom ettirish"
+  },
+  "total": {
+    "ru": "Итого",
+    "uz": "Jami"
+  },
+  "product": {
+    "ru": "товара",
+    "uz": "mahsulot"
+  },
+  "next": {
+    "ru": "Далее",
+    "uz": "Keyingisi"
+  },
+  "resetPassword": {
+    "ru": "Восстановление пароля",
+    "uz": "Parolni qayta tiklash"
+  },
+  "createProfile": {
+    "ru": "Создание аккаунта",
+    "uz": "Akkauntni yaratish"
+  },
+  "enterRecSmsCode": {
+    "ru": "Введите полученный код",
+    "uz": "SMS da borgan kodni kriting"
+  },
+  "buyNowNotif1": {
+    "ru": "Ваша заявка принята!",
+    "uz": "Sizning arizangiz qabul qilindi!"
+  },
+  "buyNowNotif2": {
+    "ru": "Мы свяжемся с Вами в ближайшее время!",
+    "uz": "Imkon qadar tezroq siz bilan bog'lanamiz"
+  },
+  "productComparison": {
+    "ru": "Сравнение товаров",
+    "uz": "Mahsulotni taqqoslash"
+  },
+  "addProducts": {
+    "ru": "Добавить товары",
+    "uz": "Mahsulotlar qo'shish"
+  },
+  "productCharacteristics": {
+    "ru": "Характеристики товара",
+    "uz": "Mahsulot xususiyatlari"
+  },
+  "treaty": {
+    "ru": "Договорная",
+    "uz": "Kelishish mumkin"
+  },
+  "sendCodeAgain": {
+    "ru": "Отправить код еще раз",
+    "uz": "Kodni qayta yuboring"
+  },
+  "yourMessageHasBeenSent": {
+    "ru": "Ваше сообщение отправлено",
+    "uz": "Xabaringiz jo'natildi"
+  },
+  "requiredErrMessage": {
+    "ru": "Это поле является обязательным",
+    "uz": "Ushbu maydonni to'ldirish majburiy"
+  },
+  "shareYourOpinion": {
+    "ru": "Поделитесь мнением о нашей работе",
+    "uz": "Bizning ishimiz haqida fikringizni o`rtoqlashing"
+  },
+  "b2bDesc": {
+    "ru": "Полная информации об оплате перечислением с учётом НДС",
+    "uz": "QQS bilan pul o'tkazish haqida to'liq ma'lumot"
+  },
+  "companyName": {
+    "ru": "Название компании",
+    "uz": "Kompaniya nomi"
+  },
+  "b2bFormTitle": {
+    "ru": "Заявка на консультацию или заказ",
+    "uz": "Maslahat yoki buyurtma uchun ariza"
+  },
+  "b2bFormDesc": {
+    "ru": "Отправьте ключевую информацию, и мы перезвоним вам ближайшее время",
+    "uz": "Asosiy ma'lumotlarni yuboring va biz sizga imkon qadar tezroq qo'ng'iroq qilamiz"
+  },
+  "acceptYourApp": {
+    "ru": "Ваша заявка принята",
+    "uz": "Arizangiz qabul qilindi"
+  },
+  "buyInInstallments": {
+    "ru": "Купить в рассрочку",
+    "uz": "Muddatli to'lovga harid"
   }
 }

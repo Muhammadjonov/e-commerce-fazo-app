@@ -4,8 +4,8 @@ import "./_style.scss";
 interface IPaginationComp {
   totalCount: number,
   pageCount: number,
-  currentPage: number,
-  perPage: number,
+  currentPage?: number,
+  perPage?: number,
   page: number,
   setPage: (page: number) => void
 

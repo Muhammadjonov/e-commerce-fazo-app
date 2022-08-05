@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Input } from "antd"
-import "./_style.scss";
 import { useNavigate } from 'react-router-dom';
+import "./_style.scss";
 
 const { Search } = Input;
 
@@ -32,7 +32,7 @@ function MobileSearchComp() {
       onChange={handleSearchValue}
       bordered={false}
       size="middle"
-      placeholder="input search text"
+      // placeholder="input search text"
       enterButton={enterButton}
       onSearch={onSearch}
       style={{ maxWidth: "100%" }}

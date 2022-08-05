@@ -21,12 +21,16 @@ function HeaderBottom(props: IHeaderBottom) {
     return category_slug === slug ? 'active' : '';
   }
 
+  const handleClickBurger = () => {
+    setIsShowBurgerMenu((prev) => !prev);
+  }
+
   return (
     <div className="header_bottom">
       <div className="container">
         <ul className="categories desktop_categories">
           <li className="category">
-            <span onClick={() => setIsShowBurgerMenu(prev => !prev)}>
+            <span onClick={handleClickBurger}>
               <CategoryMenus />
             </span>
           </li>

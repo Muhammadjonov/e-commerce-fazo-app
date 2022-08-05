@@ -1,6 +1,13 @@
+import { UserType } from "../features/authSlice"
 
 export type userType = {
 	name: string
+}
+
+export type ProfileUpdateResType = {
+	status: number,
+	message: string,
+	data: UserType
 }
 
 export type BannerInfoType = {
@@ -85,10 +92,12 @@ export type ProductType = {
 	name: string,
 	brandName: string,
 	slug: string,
-	price: number | null,
-	old_price: number | null,
-	imageUrl: string | null,
-	userSaveProduct?: boolean
+	price: number,
+	old_price: number,
+	imageUrl: string,
+	userSaveProduct?: boolean,
+	category_id: number,
+	is_treaty: number
 }
 
 export type BestsellerResType = {
@@ -185,13 +194,44 @@ export type ByCategoryProductsInfoType = {
 		_meta: _meta
 	}
 	maxPrice: string,
-	minPrice: string
+	minPrice: string,
+	categoryLikeProducts: ProductType[]
 }
 
 export type ByCategoryProductsResType = {
 	status: number,
 	message: string,
 	data: ByCategoryProductsInfoType
+}
+
+export type MoreProductsInfoType = {
+	brands: {
+		id: number,
+		name: string,
+		productCount: string
+	}[],
+	characters: {
+		id: number,
+		name: string,
+		assigns: {
+			id: number,
+			value: string
+		}[]
+	}[][],
+	products: {
+		items: ProductType[],
+		_links: _links,
+		_meta: _meta
+	}
+	maxPrice: string,
+	minPrice: string,
+	categoryLikeProducts: ProductType[]
+}
+
+export type MoreProductsResType = {
+	status: number,
+	message: string,
+	data: MoreProductsInfoType
 }
 
 export type SearchInfoType = {
@@ -302,8 +342,8 @@ export type ProductDetailInfoType = {
 	meta_title: string,
 	meta_description: string,
 	meta_keyword: string,
-	price: number | null,
-	old_price: number | null,
+	price: number,
+	old_price: number,
 	category: string,
 	categorySlug: string,
 	subCategory: string,
@@ -311,26 +351,17 @@ export type ProductDetailInfoType = {
 	characterAssigns: CharacterAssignsType[],
 	images: string[],
 	is_delivery: number,
-	delivery_price: number
+	delivery_price: number,
+	brandName: string,
+	category_id: number,
+	is_treaty: number,
+	code: string
 }
 
 export type ProductDetailResType = {
 	status: number,
 	message: string,
 	data: ProductDetailInfoType
-}
-
-export type ReturnExchangeInfoType = {
-	id: number,
-	url: string,
-	title: string,
-	description: string
-}
-
-export type ReturnExchangeResType = {
-	status: number,
-	message: string,
-	data: ReturnExchangeInfoType
 }
 
 export type PaymentListInfoType = {
@@ -342,4 +373,76 @@ export type PaymentListResTyoe = {
 	status: number,
 	message: string,
 	data: PaymentListInfoType
+}
+
+export type AllNewProductsInfoType = {
+	items: ProductType[],
+	_links: _links,
+	_meta: _meta
+}
+
+export type AllNewProductsResType = {
+	status: number,
+	message: string,
+	data: {
+		products: AllNewProductsInfoType
+	}
+}
+
+export type MyOrderInfoType = {
+	id: number,
+	user: UserType,
+	paymentMethod: string,
+	statusLabel: string,
+	totalPrice: number,
+	orderItems: {
+		id: number,
+		product: ProductType,
+		amount: number,
+		price: number
+	}[]
+}[]
+
+export type MyOrderResType = {
+	status: number,
+	message: string,
+	data: MyOrderInfoType
+}
+
+export type ComparesInfoType = {
+	categories: {
+		categoryId: number,
+		categoryName: string,
+		productCount: number
+	}[],
+	products: ProductType[],
+	characters: {
+		id: number,
+		name: string,
+		productAssigns: {
+			id: number,
+			product_id: number,
+			value: string
+		}[]
+	}[]
+}
+
+export type ComparesResType = {
+	status: number,
+	message: string,
+	data: ComparesInfoType
+}
+
+export type AlifInfoType = {
+	id: number,
+	amount: number,
+	month: number,
+	name: string,
+	status: number
+}
+
+export type AlifResType = {
+	status: number,
+	message: string,
+	data: AlifInfoType[]
 }

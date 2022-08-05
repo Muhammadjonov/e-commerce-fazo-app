@@ -1,7 +1,8 @@
-import { AlignLeftOutlined, BarsOutlined, MoreOutlined } from '@ant-design/icons';
-import { Affix, Breadcrumb, Button, Col, Divider, Drawer, Row } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useParams } from 'react-router-dom';
+import { AlignLeftOutlined, } from '@ant-design/icons';
+import { Breadcrumb, Col, Divider, Drawer, Row } from 'antd';
+import { useCallback, useEffect, useState, useContext } from 'react';
+import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
+import { LoadingContext } from 'react-router-loading';
 import { leftMenuUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import DrawerOpenBtn from '../../components/Buttons/DrawerOpenBtn';
@@ -10,26 +11,14 @@ import { LeftMenuInfoType, LeftMenuResType } from '../../types';
 
 import "./_style.scss";
 
-
-const breadcrumbs: any = [
-  {
-    id: "2",
-    toUrl: "#",
-    text: {
-      install: "Покупка в рассрочку",
-      b2bsales: "B2B продажи"
-    }
-  }
-]
-
-
 function HeaderTopMenus() {
   const { t, lang } = useT();
-  const [activeKey, setActiveKey] = useState<string>("install");
   const [leftMenus, setLeftMenus] = useState<LeftMenuInfoType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   let { page_slug } = useParams();
-  let headerMenu = page_slug!.slice(1)!;
+  let { pathname } = useLocation();
+  let headerMenu = page_slug!;
+  const loadingContext = useContext(LoadingContext);
 
   const getLeftMenus = useCallback(() => {
     setIsLoading(true);
@@ -37,7 +26,16 @@ function HeaderTopMenus() {
       .then((res) => {
         if (res.data.status === 200) {
           setLeftMenus(res.data.data);
+          setIsLoading(false);
+          loadingContext.done()
         }
+      })
+      .catch((err) => {
+        console.log("err", err)
+      })
+      .finally(() => {
+        setIsLoading(false);
+        loadingContext.done();
       })
   }, [])
 
@@ -50,6 +48,12 @@ function HeaderTopMenus() {
   const onClose = () => {
     setVisible(false);
   };
+  let breadcr: string | undefined;
+  if (pathname === "/page/feedback/contact") {
+    breadcr = t(`feedback.${lang}`);
+  } else {
+    breadcr = leftMenus.find((leftMenu) => leftMenu.slug === headerMenu)?.title
+  }
 
   return (
     <section className="header_top_menus">
@@ -60,23 +64,22 @@ function HeaderTopMenus() {
             separator={<i className="fa-solid fa-angle-right"></i>}
           >
             <Breadcrumb.Item key={"1"}>
-              <Link className="breadcrm_link" to={"/"}>Главная</Link></Breadcrumb.Item>
-            {
-              breadcrumbs.map((breadcrumb: any) => (
-                <Breadcrumb.Item key={breadcrumb.id}>
-                  <Link className="breadcrm_link" to={breadcrumb.toUrl}>{breadcrumb.text[headerMenu === activeKey ? headerMenu : activeKey]} </Link> </Breadcrumb.Item>
-              ))
-            }
+              <Link className="breadcrm_link" to={"/"}>{t(`home.${lang}`)}</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="breadcrm_link" to={`#`}>{breadcr}</Link> </Breadcrumb.Item>
           </Breadcrumb>
         </div>
         <div className="header_top_menus__body">
-          <Row gutter={[30, 30]}>
+          <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
             <Col xs={24} lg={5}>
-              <DrawerOpenBtn text="Ma'lumot" setState={setVisible} icon={<AlignLeftOutlined />} />
+              <DrawerOpenBtn text={t(`information.${lang}`)} setState={setVisible} icon={<AlignLeftOutlined />} />
               <ul className="header_top_menus__body__left">
                 {leftMenus.length !== 0 && leftMenus.map((leftMenu) => (
                   <li className="header_top_menus__body__left__item" key={leftMenu.id}>
-                    <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/${leftMenu.slug}`}>
+                    <NavLink
+                      className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"}
+                      to={`/page/${leftMenu.slug}`}
+                    >
                       <img className='header_top_menus__body__left__item__link__img' src={leftMenu.imageUrl} alt={leftMenu.title} />
                       <div className="header_top_menus__body__left__item__link__content">
                         <h4 className="title16_bold header_top_menus__body__left__item__link__content__title">
@@ -89,6 +92,19 @@ function HeaderTopMenus() {
                     </NavLink>
                   </li>
                 ))}
+                <li className="header_top_menus__body__left__item" >
+                  <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__body__left__item__link"} to={`/page/feedback/contact`}>
+                    <img className='header_top_menus__body__left__item__link__img' src={"/assets/icons/phone-red.svg"} alt={"feedback"} />
+                    <div className="header_top_menus__body__left__item__link__content">
+                      <h4 className="title16_bold header_top_menus__body__left__item__link__content__title">
+                        {t(`feedback.${lang}`)}
+                      </h4>
+                      <p className="header_top_menus__body__left__item__link__content__text">
+                        {t(`shareYourOpinion.${lang}`)}
+                      </p>
+                    </div>
+                  </NavLink>
+                </li>
               </ul>
             </Col>
             <Col xs={24} lg={19}>
@@ -113,6 +129,12 @@ function HeaderTopMenus() {
               <Divider className="header_top_menus__drawer__list__item__divider" />
             </li>
           ))}
+          <li className="header_top_menus__drawer__list__item">
+            <NavLink className={({ isActive }) => (isActive ? "active" : "") + " header_top_menus__drawer__list__item__link"} to={`/page/feedback/contact`}>
+              {t(`feedback.${lang}`)}
+            </NavLink>
+            <Divider className="header_top_menus__drawer__list__item__divider" />
+          </li>
         </ul>
       </Drawer>
     </section>

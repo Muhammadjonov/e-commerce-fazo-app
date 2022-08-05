@@ -8,13 +8,12 @@ export type UserResType = {
 
 export type UserType = {
   id: string
-  image: string | null
   username: string | null
-  firstname: string | null
-  lastname: string | null
+  first_name: string | null
+  last_name: string | null
+  middle_name: string | null
   status: number,
   auth_key: string,
-  email: string | null
 };
 
 const initialState = {

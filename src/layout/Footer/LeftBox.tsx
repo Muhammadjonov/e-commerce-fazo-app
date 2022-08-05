@@ -2,9 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { footerSettingsUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
+import { useT } from '../../custom/hooks/useT';
 import { FooterSettingsResType, FooterSettingsInfoType } from '../../types';
 import './_style.scss';
+
 function LeftBox() {
+  const { t, lang } = useT();
   const [footerSettings, setFooterSettings] = useState<FooterSettingsInfoType>({} as FooterSettingsInfoType);
 
   const getFooterSettings = useCallback(() => {
@@ -28,10 +31,10 @@ function LeftBox() {
         <img className='footer_logo' src={logo} alt="logo" />
       </Link>
       <div className="footer_lft_bottom">
-        <p>График работы колл-центра</p>
+        <p>{t(`callCenterWorkingDays.${lang}`)}</p>
         <span>{workingDays}</span>
         <div className="contact_number_footer">
-          <p>Колл-центр:</p>
+          <p>{t(`callCenter.${lang}`)}</p>
           <a href={`tel:${phone}`}>{phone}</a>
         </div>
       </div>

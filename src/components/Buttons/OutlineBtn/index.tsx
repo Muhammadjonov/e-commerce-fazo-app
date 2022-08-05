@@ -1,5 +1,4 @@
 import { Button } from 'antd';
-import React from 'react'
 import "./_style.scss";
 
 interface IOutlineBtn {
@@ -9,7 +8,7 @@ interface IOutlineBtn {
 const OutlineBtn = (props: IOutlineBtn) => {
   const { text, onClick } = props;
   return (
-    <Button onClick={onClick} className="outline__custom__btn" ghost>
+    <Button onClick={onClick} className="outline__custom__btn" type="link">
       {text}
     </Button>
   )

@@ -52,11 +52,11 @@ function Footer(props: IFooter) {
   return (
     <div className='footer'>
       <div className='container'>
-        <Row gutter={[30, 30]}>
-          <Col lg={9} sm={24} xs={24}>
+        <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
+          <Col lg={9} md={12} sm={24} xs={24}>
             <LeftBox />
           </Col>
-          <Col lg={5} sm={24} xs={24}>
+          <Col lg={5} md={12} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
               <h2 className="title20_bold">{t(`category.${lang}`)}</h2>
               <ul>
@@ -71,9 +71,9 @@ function Footer(props: IFooter) {
             </div>
           </Col>
 
-          <Col lg={5} sm={24} xs={24}>
+          <Col lg={5} md={12} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
-              <h2 className="title20_bold">Общее</h2>
+              <h2 className="title20_bold">{t(`general.${lang}`)}</h2>
               <ul>
                 {
                   menu1?.map((menu) => (
@@ -82,12 +82,15 @@ function Footer(props: IFooter) {
                     </li>
                   ))
                 }
+                <li>
+                  <Link to={`/page/feedback/contact`}>{t(`feedback.${lang}`)}</Link>
+                </li>
               </ul>
             </div>
           </Col>
-          <Col lg={5} sm={24} xs={24}>
+          <Col lg={5} md={12} sm={24} xs={24}>
             <div className="footer_right_wrapper_item">
-              <h2 className="title20_bold">Покупателям</h2>
+              <h2 className="title20_bold">{t(`buyers.${lang}`)}</h2>
               <ul>
                 {
                   menu2?.map((menu) => (
@@ -100,7 +103,7 @@ function Footer(props: IFooter) {
             </div>
           </Col>
         </Row>
-        <Row gutter={[30, 30]}>
+        <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
           <Col sm={24} xs={24}>
             <div className='social_links_box'>
 

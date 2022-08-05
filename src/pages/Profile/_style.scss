@@ -4,4 +4,67 @@
   .profile_breadcrumb_area {
     margin-bottom: 30px;
   }
+
+  &__drawer.ant-drawer.ant-drawer-left {
+
+    .ant-drawer-content-wrapper {
+      .ant-drawer-content {
+        .ant-drawer-wrapper-body {
+          .ant-drawer-header {
+            background-color: var(--brand_color_black);
+
+            .ant-drawer-header-title {
+              flex-direction: row-reverse;
+
+              .ant-drawer-title {
+                color      : #fff;
+                font-family: "GothamPro-Medium", sans-serif;
+              }
+
+              .ant-drawer-close {
+                color       : #fff;
+                margin-right: 0;
+                font-family : "GothamPro-Medium", sans-serif;
+              }
+            }
+          }
+
+          .ant-drawer-body {
+            padding: 16px 20px;
+
+            .profile__drawer__list {
+              margin-top: 10px;
+
+              &__item {
+                &__divider {
+                  margin: 10px 0px;
+                }
+
+                &__link {
+                  color: var(--brand_color_black);
+
+                  &:hover,
+                  &:active,
+                  &:focus {
+                    color: var(--color_black2);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+
+
+    }
+
+  }
+
+  .open_drower_btn.ant-btn-link {
+    display         : none;
+    background-color: var(--brand_color_black);
+    color           : #fff;
+  }
 }

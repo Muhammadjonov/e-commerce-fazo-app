@@ -1,3 +1,6 @@
+import { InitialCompareStateType, ComparesType } from './../features/Compares/comparesSlice';
+import { ProductType } from './../types/index';
+import { FavouritesType } from './../features/favourites/favouritesSlice';
 import i18next from 'i18next';
 import { UserType } from '../features/authSlice';
 import { InitialBasketStateType } from '../features/basket/basketSlice';
@@ -31,8 +34,7 @@ export const removeUserFromLocalStorage = () => {
   localStorage.removeItem("user");
 };
 
-export const getAccessToken = (): string =>
-  getItemFromLocalStorage("access_token");
+export const getAccessToken = (): string => getItemFromLocalStorage("access_token");
 
 // export const getRememberToken = (): string =>
 //   getItemFromLocalStorage("remember_token");
@@ -62,6 +64,20 @@ export const removeBasketFromLocalStorage = () => {
   localStorage.removeItem("basket")
 }
 
+export const setCompareLocalStorage = (compares: InitialCompareStateType) => {
+  localStorage.setItem("compares", JSON.stringify(compares))
+}
+
+export const getCompareLocalStorage = () => {
+  let compares = JSON.parse(localStorage.getItem("compares") || JSON.stringify(""))
+  if (compares)
+    return compares
+  return
+}
+export const removeComparesFromLocalStorage = () => {
+  localStorage.removeItem("compares")
+}
+
 export const formatPrice = (num: number) => {
   return num?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 }
@@ -74,3 +90,24 @@ export const onlyNumber = (value: any) => {
   return value.replace(/[^0-9 ]/gi, "");
 };
 
+export const isFavourite = (
+  favourites: FavouritesType,
+  id: number
+): boolean => {
+  return favourites?.find((f) => f.id === id) ? true : false;
+};
+
+export const isInBasket = (
+  products: ProductType[],
+  id: number
+): boolean => {
+  return products?.find((f: any) => f.id === id) ? true : false;
+};
+
+export const isInCompare = (
+  compares: ComparesType,
+  category_id: number,
+  id: number
+): boolean => {
+  return compares.find(item => item.category_id === category_id)?.product_ids.find(product_id => product_id === id) ? true : false;
+};

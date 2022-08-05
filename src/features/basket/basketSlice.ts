@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AddedCartNotif, RemovedCartNotif } from "../../components/Notifications";
 import { removeBasketFromLocalStorage, setBasketLocalStorage } from "../../helpers";
 import { ProductType } from "../../types";
 
@@ -6,16 +7,11 @@ export type ProductTypeBasket = ProductType & { count: number, options?: string 
 
 export type ProductsTypeBasket = Array<ProductTypeBasket>;
 
-type ShopType = {
-  shop_id: string,
-  shop_name: string | undefined
-}
 export type InitialBasketStateType = {
   products: ProductsTypeBasket;
   totalPrice: number;
   totalElements: number;
   totalProductCount: number;
-  // shopsInBasket: Array<ShopType>
   isLoading: boolean;
 };
 
@@ -24,7 +20,6 @@ const initialState: InitialBasketStateType = {
   totalPrice: 0,
   totalElements: 0,
   totalProductCount: 0,
-  // shopsInBasket: [],
   isLoading: false,
 };
 
@@ -33,12 +28,11 @@ export const basketSlice = createSlice({
   initialState,
   reducers: {
     setBasket(state, action: PayloadAction<{ data: any }>) {
-      const { products, totalPrice, totalElements, totalProductCount, shopsInBasket, isLoading } = action.payload.data
+      const { products, totalPrice, totalElements, totalProductCount, isLoading } = action.payload.data
       state.products = products
       state.totalPrice = totalPrice
       state.totalElements = totalElements
       state.totalProductCount = totalProductCount
-      // state.shopsInBasket = shopsInBasket
       state.isLoading = isLoading
     },
     addToBasket(state, action: PayloadAction<ProductTypeBasket>) {
@@ -46,10 +40,15 @@ export const basketSlice = createSlice({
         (prod) => prod.id === action.payload.id
       );
       if (productInBasket) {
-        productInBasket.count += action.payload.count;
+        state.products = state.products.filter(
+          (prod) => prod.id !== action.payload.id
+        );
+        RemovedCartNotif(action.payload.name);
       } else {
         state.products.push(action.payload);
+        AddedCartNotif(action.payload.name);
       }
+
       setTotals(state);
     },
     increment(state, action: PayloadAction<{ id: number }>) {
@@ -70,10 +69,11 @@ export const basketSlice = createSlice({
         setTotals(state);
       }
     },
-    deleteFromBasket(state, action: PayloadAction<{ id: number }>) {
+    deleteFromBasket(state, action: PayloadAction<ProductTypeBasket>) {
       state.products = state.products.filter(
         (prod) => prod.id !== action.payload.id
       );
+      RemovedCartNotif(action.payload.name);
       setTotals(state);
     },
     dropBasket(state) {
@@ -81,7 +81,6 @@ export const basketSlice = createSlice({
       state.totalPrice = 0
       state.totalElements = 0
       state.totalProductCount = 0
-      // state.shopsInBasket = []
       state.isLoading = false
       removeBasketFromLocalStorage()
     }
@@ -93,10 +92,10 @@ function setTotals(basket: InitialBasketStateType) {
   basket.totalProductCount = basket.products.reduce((acc, product) => {
     return acc + product.count;
   }, 0);
-  // basket.totalPrice = basket.products.reduce((acc, cv) => {
-  //   if (cv.discount) return acc + cv.price * (1 - cv.discount / 100) * cv.count;
-  //   return acc + cv.price * cv.count;
-  // }, 0);
+  basket.totalPrice = basket.products.reduce((acc, cv) => {
+    // if (cv.discount) return acc + cv.price * (1 - cv.discount / 100) * cv.count;
+    return acc + cv.price * cv.count;
+  }, 0);
 
   // let shops: ShopType[] = [];
   // basket.products.forEach(p => {
@@ -105,7 +104,7 @@ function setTotals(basket: InitialBasketStateType) {
   //   }
   // })
   // basket.shopsInBasket = [...shops];
-  setBasketLocalStorage(basket)
+  setBasketLocalStorage(basket);
 }
 
 export const { addToBasket, increment, decrement, deleteFromBasket, dropBasket, setBasket } =

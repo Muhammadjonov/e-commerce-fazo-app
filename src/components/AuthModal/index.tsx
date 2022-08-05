@@ -9,6 +9,7 @@ import PhoneInput from 'react-phone-input-2';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
 import { setUser, UserResType } from '../../features/authSlice';
 import "./__style.scss";
+import CountDownComp from '../CountDownComp';
 
 const { Step } = Steps;
 
@@ -80,12 +81,9 @@ const AuthModal = (props: IAuthModal) => {
           setIsLoadings(prev => ({ ...prev, signIn: false }));
         }
       })
-  };
-
-
-
-  const onFinishFailedSignIn = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, signIn: false }));
+      })
   };
 
   const onFinishSignUp1 = (values: any) => {
@@ -106,10 +104,15 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, signUpPhone: false }));
+      })
   }
 
   const resendCode = (url: string) => {
-    formData.append('phone', phone);
+    if (url === enterPhoneUrl) {
+      formData.append('phone', phone);
+    } else formData.append("phone", resetPhone)
     baseAPI.create<any>(url, formData)
       .then((res) => {
         if (res.data.status === 200) {
@@ -120,6 +123,11 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+
+      })
+
+
     setResetErrors({
       phoneErr: "",
       codeErr: "",
@@ -153,6 +161,9 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, signUpCode: false }));
+      })
   }
   const onFinishSignUp3 = (values: any) => {
     let { firstname, lastname, password, password_repeat } = values;
@@ -178,6 +189,8 @@ const AuthModal = (props: IAuthModal) => {
       })
       .catch((err) => {
         console.log('err', err);
+      }).finally(() => {
+        setIsLoadings(prev => ({ ...prev, signUpPsw: false }));
       })
   }
 
@@ -201,6 +214,9 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, resetPhone: false }));
+      })
   }
   const onFinishReset2 = (values: any) => {
     let { code } = values;
@@ -221,6 +237,9 @@ const AuthModal = (props: IAuthModal) => {
       .catch((err) => {
         console.log('err', err);
       })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, resetCode: false }));
+      })
   }
 
   const onFinishReset3 = (values: any) => {
@@ -237,6 +256,7 @@ const AuthModal = (props: IAuthModal) => {
           setUserToLocalStorage(res.data?.data);
           setToken(res.data?.data?.auth_key)
           onCancelSignIn();
+          setResetPswCurrent(0);
           setIsLoadings(prev => ({ ...prev, resetPsw: false }));
         } else if (res.data.status === 403) {
           setResetErrors(prev => ({ ...prev, pswErr: res.data.message }));
@@ -245,6 +265,9 @@ const AuthModal = (props: IAuthModal) => {
       })
       .catch((err) => {
         console.log('err', err);
+      })
+      .finally(() => {
+        setIsLoadings(prev => ({ ...prev, resetPsw: false }));
       })
   }
 
@@ -268,6 +291,7 @@ const AuthModal = (props: IAuthModal) => {
       codeErr: "",
       pswErr: ""
     });
+    setSigninError("");
     resetPswForm1.resetFields();
     resetPswForm2.resetFields();
     resetPswForm3.resetFields();
@@ -285,7 +309,6 @@ const AuthModal = (props: IAuthModal) => {
       codeErr: "",
       pswErr: ""
     });
-
   }
   // signUp modal onCancel 
 
@@ -309,7 +332,14 @@ const AuthModal = (props: IAuthModal) => {
 
   return (
     <>
-      <Modal width={550} className={"signin__modal"} visible={isOpenSignIn} onCancel={onCancelSignIn} footer={null} >
+      <Modal
+        width={550}
+        className={"signin__modal"}
+        visible={isOpenSignIn}
+        onCancel={onCancelSignIn}
+        footer={null}
+        wrapClassName="auth__modal"
+      >
         {
           isSignIn ? (
             <>
@@ -322,7 +352,7 @@ const AuthModal = (props: IAuthModal) => {
                 className="signin__modal__form"
                 onFinish={onFinishSignIn}
               >
-                <Form.Item label="Номер телефона"
+                <Form.Item label={t(`phoneNumber.${lang}`)}
                   name="phone"
                   rules={[{ required: true }]}
                   className="signin__modal__form__phone__input"
@@ -337,7 +367,7 @@ const AuthModal = (props: IAuthModal) => {
                     }}
                   />
                 </Form.Item>
-                <Form.Item label="Пароль"
+                <Form.Item label={t(`password.${lang}`)}
                   name="password"
                   rules={[{ required: true }]}
                 >
@@ -373,7 +403,7 @@ const AuthModal = (props: IAuthModal) => {
           ) : (
             <>
               <h3 className="signin__modal__title">
-                Восстановление пароля
+                {t(`resetPassword.${lang}`)}
               </h3>
               <Steps
                 current={resetPswCurrent}
@@ -392,7 +422,7 @@ const AuthModal = (props: IAuthModal) => {
                     className="signin__modal__form"
                     onFinish={onFinishReset1}
                   >
-                    <Form.Item label="Номер телефона"
+                    <Form.Item label={t(`phoneNumber.${lang}`)}
                       name="phone"
                       rules={[{ required: true }]}
                       className="signin__modal__form__phone__input"
@@ -416,7 +446,7 @@ const AuthModal = (props: IAuthModal) => {
                         loading={isLoadings.resetPhone}
                         ghost
                         htmlType='submit'
-                      >Далее
+                      >{t(`next.${lang}`)}
                       </Button>
                     </div>
                   </Form>
@@ -433,25 +463,17 @@ const AuthModal = (props: IAuthModal) => {
                   СМС сообщение с кодом` : lang === "uz" ? `+${resetPhone.slice(0, 3) + ` (` + resetPhone.slice(3, 5) + `) ... - ` + resetPhone.slice(8, 10) + ` - ` + resetPhone.slice(10)} telefon raqamiga aktivatsiya kodi jo'natildi.` : ""
                       }
                     </p>
-                    <Form.Item label="Пароль"
+                    <Form.Item label={(`password.${lang}`)}
                       name="code"
                       rules={[{ required: true }]}
                     >
                       <Input.Password
-                        placeholder={"Введите полученный код"}
+                        placeholder={t(`enterRecSmsCode.${lang}`)}
                         maxLength={4}
                       />
                     </Form.Item>
                     <span className="auth__error__text">{resetErrors.codeErr}</span>
-                    <div className="signup__modal__form__resend_btn_wrapper">
-                      <button
-                        onClick={() => resendCode(resetEnterPhoneUrl)}
-                        type="button"
-                        className="signup__modal__form__resend_btn_wrapper__code"
-                      >
-                        Отправить код еще раз
-                      </button>
-                    </div>
+                    <CountDownComp url={resetEnterPhoneUrl} repiteCode={resendCode} />
                     <div
                       className="signup__modal__form__btn__wrapper"
                     >
@@ -469,7 +491,7 @@ const AuthModal = (props: IAuthModal) => {
                         ghost
                         htmlType='submit'
                       >
-                        Далее
+                        {t(`next.${lang}`)}
                       </Button>
                     </div>
                   </Form>
@@ -485,7 +507,7 @@ const AuthModal = (props: IAuthModal) => {
                       rules={[{ required: true }]}
                     >
                       <Input.Password
-                        placeholder='Пароль'
+                        placeholder={t(`password.${lang}`)}
                       />
                     </Form.Item>
                     <Form.Item
@@ -493,7 +515,7 @@ const AuthModal = (props: IAuthModal) => {
                       rules={[{ required: true }]}
                     >
                       <Input.Password
-                        placeholder='Павторите пароль'
+                        placeholder={t(`repeatPassword.${lang}`)}
                       />
                     </Form.Item>
                     <span className='auth__error__text'>{resetErrors.pswErr}</span>
@@ -508,7 +530,7 @@ const AuthModal = (props: IAuthModal) => {
                       </Button>
                       <Button
                         loading={isLoadings.resetPsw}
-                        className="signup__modal__form__btn__wrapper__submit__btn" ghost htmlType='submit'>Далее</Button>
+                        className="signup__modal__form__btn__wrapper__submit__btn" ghost htmlType='submit'>{t(`next.${lang}`)}</Button>
                     </div>
                   </Form>
                 )
@@ -518,9 +540,16 @@ const AuthModal = (props: IAuthModal) => {
         }
       </Modal>
 
-      <Modal width={550} className={"signup__modal"} visible={isOpenSignUp} onCancel={onCancelSignUp} footer={null} >
+      <Modal
+        width={550}
+        className={"signup__modal"}
+        visible={isOpenSignUp}
+        onCancel={onCancelSignUp}
+        footer={null}
+        wrapClassName="auth__modal"
+      >
         <h3 className="signup__modal__title">
-          Создание аккаунта
+          {t(`createProfile.${lang}`)}
         </h3>
         <Steps
           current={current}
@@ -541,7 +570,7 @@ const AuthModal = (props: IAuthModal) => {
               form={signUp1Form}
             >
               <Form.Item
-                label="Номер телефона"
+                label={t(`phoneNumber.${lang}`)}
                 name="phone"
                 rules={[{ required: true }]}
               >
@@ -559,7 +588,7 @@ const AuthModal = (props: IAuthModal) => {
                 <button></button>
                 <Button className="signup__modal__form__btn__wrapper__submit__btn" ghost
                   loading={isLoadings.signUpPhone}
-                  htmlType='submit'>Далее</Button>
+                  htmlType='submit'>{t(`next.${lang}`)}</Button>
               </div>
             </Form>
           )
@@ -587,20 +616,12 @@ const AuthModal = (props: IAuthModal) => {
                 rules={[{ required: true }]}
               >
                 <Input.Password
-                  placeholder={"Введите полученный код"}
+                  placeholder={t(`enterRecSmsCode.${lang}`)}
                   maxLength={4}
                 />
               </Form.Item>
               <span className="auth__error__text">{signUpErrors.codeErr}</span>
-              <div className="signup__modal__form__resend_btn_wrapper">
-                <button
-                  onClick={() => resendCode(enterPhoneUrl)}
-                  type="button"
-                  className="signup__modal__form__resend_btn_wrapper__code"
-                >
-                  Отправить код еще раз
-                </button>
-              </div>
+              <CountDownComp url={enterPhoneUrl} repiteCode={resendCode} />
               <div
                 className="signup__modal__form__btn__wrapper"
               >
@@ -618,7 +639,7 @@ const AuthModal = (props: IAuthModal) => {
                   htmlType='submit'
                   loading={isLoadings.signUpCode}
                 >
-                  Далее
+                  {t(`next.${lang}`)}
                 </Button>
               </div>
             </Form>
@@ -639,7 +660,7 @@ const AuthModal = (props: IAuthModal) => {
                 rules={[{ required: true }]}
               >
                 <Input
-                  placeholder='Имя'
+                  placeholder={t(`yourFirstName.${lang}`)}
                 />
               </Form.Item>
               <Form.Item
@@ -647,7 +668,7 @@ const AuthModal = (props: IAuthModal) => {
                 rules={[{ required: true }]}
               >
                 <Input
-                  placeholder='Фамилия'
+                  placeholder={t(`yourLastName.${lang}`)}
                 />
               </Form.Item>
               <Form.Item
@@ -655,7 +676,7 @@ const AuthModal = (props: IAuthModal) => {
                 rules={[{ required: true }]}
               >
                 <Input.Password
-                  placeholder='Пароль'
+                  placeholder={t(`password.${lang}`)}
                 />
               </Form.Item>
               <Form.Item
@@ -663,7 +684,7 @@ const AuthModal = (props: IAuthModal) => {
                 rules={[{ required: true }]}
               >
                 <Input.Password
-                  placeholder='Павторите пароль'
+                  placeholder={t(`repeatPassword.${lang}`)}
                 />
               </Form.Item>
               <span className="auth__error__text">{signUpErrors.pswErr}</span>
@@ -681,13 +702,12 @@ const AuthModal = (props: IAuthModal) => {
 
                 <Button className="signup__modal__form__btn__wrapper__submit__btn" ghost
                   loading={isLoadings.signUpPsw}
-                  htmlType='submit'>Далее</Button>
+                  htmlType='submit'>{t(`next.${lang}`)}</Button>
               </div>
             </Form>
           )
         }
       </Modal >
-
     </>
 
   )

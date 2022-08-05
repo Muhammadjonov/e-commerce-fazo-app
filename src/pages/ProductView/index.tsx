@@ -5,6 +5,7 @@ import { LoadingContext } from 'react-router-loading';
 import { productDetailUrl } from '../../api/apiUrls';
 import baseAPI from '../../api/baseAPI';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
+import { useT } from '../../custom/hooks/useT';
 import { ProductDetailInfoType, ProductDetailResType } from '../../types';
 import ProductDescription from './ProductDescription';
 import ProductViewCarusel from './ProductViewCarusel';
@@ -13,8 +14,8 @@ import RecentlyWatched from './RecentlyWatched';
 
 import "./_style.scss";
 
-
 function ProductView() {
+  const { t, lang } = useT();
   let { product_slug } = useParams();
   const [productDetail, setProductDetail] = useState<ProductDetailInfoType>({} as ProductDetailInfoType);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +31,10 @@ function ProductView() {
           loadingContext.done();
         }
       })
+      .catch((err) => console.log("err", err))
+      .finally(() => {
+        loadingContext.done();
+      })
   }, [])
 
   useEffect(() => {
@@ -41,26 +46,29 @@ function ProductView() {
     {
       id: "1",
       toUrl: "/",
-      text: "Главная"
+      text: t(`home.${lang}`),
+      className: ""
     },
     {
-      id: productDetail?.categorySlug,
+      id: "2",
       toUrl: "#",
-      text: productDetail?.category
+      text: productDetail?.category,
+      className: ""
     },
     {
-      id: productDetail?.subCategorySlug,
+      id: "3",
       toUrl: `/category/${productDetail?.subCategorySlug}`,
-      text: productDetail?.subCategory
+      text: productDetail?.subCategory,
+      className: "last__one"
     },
     {
-      id: productDetail?.name,
+      id: "4",
       toUrl: `#`,
-      text: productDetail?.name
+      text: productDetail?.name,
+      className: ""
     }
   ]
 
-  const { characterAssigns, meta_description, delivery_price } = productDetail;
 
   return (
     <section className="product_view">
@@ -68,20 +76,20 @@ function ProductView() {
         <div className="breadcrumb_area">
           <BreadcrumbComp breadcrumbs={breadcrumbs} />
         </div>
-        <Row gutter={[30, 30]}>
+        <Row gutter={[{ lg: 30, md: 20, sm: 10, xs: 10 }, { lg: 30, md: 20, sm: 10, xs: 10 }]}>
           <Col xs={24} lg={7}>
             <ProductViewCarusel image={productDetail?.images} />
           </Col>
 
           <Col xs={24} lg={17}>
-            <Row>
-              <Col xs={24} lg={17}>
+            <Row gutter={[20, 20]}>
+              <Col xs={24} lg={16}>
                 <ProductDescription
                   {...productDetail}
                 />
               </Col>
-              <Col xs={24} lg={7}>
-                <ProductViewRightInfo delivery_price={delivery_price} />
+              <Col xs={24} lg={8}>
+                <ProductViewRightInfo />
               </Col>
             </Row>
 

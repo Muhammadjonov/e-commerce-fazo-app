@@ -1,0 +1,44 @@
+.buy__now__modal.ant-modal {
+  .ant-modal-content {
+    .ant-modal-header {}
+
+    .ant-modal-body {
+      .buy__now__modal__form.ant-form {
+        .buy__now__modal__form__phone {
+          .react-tel-input {
+            .form-control {
+              width: 100%;
+            }
+          }
+        }
+
+        .buy__now__from__err {
+          display: block;
+          color  : var(--brand_color_red);
+          margin : 10px 0;
+        }
+
+        .buy__now__modal__form__btns {
+          display        : flex;
+          justify-content: space-between;
+          margin-top     : 35px;
+
+          .ant-btn.ant-btn-link {
+            color           : #fff;
+            background-color: var(--color_black2);
+            border-radius   : 5px;
+          }
+
+
+          .ant-btn.ant-btn-primary {
+            color           : #fff;
+            background-color: var(--brand_color_yellow);
+            border-radius   : 5px;
+            border-color    : var(--brand_color_yellow);
+          }
+        }
+      }
+    }
+  }
+
+}

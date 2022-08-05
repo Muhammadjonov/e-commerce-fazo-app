@@ -1,4 +1,4 @@
-import React from 'react'
+import { useT } from '../../custom/hooks/useT';
 import "./_style.scss";
 
 interface IProductCountComp {
@@ -8,11 +8,11 @@ interface IProductCountComp {
 
 function ProductCountComp(props: IProductCountComp) {
   const { total, perCount } = props;
-
+  const { t, lang } = useT();
   return (
     <div className="product_count">
       <p className="p16_regular">
-        Товаров {perCount} / {total}
+        {t(`products.${lang}`)} {perCount} / {total}
       </p>
     </div>
   )

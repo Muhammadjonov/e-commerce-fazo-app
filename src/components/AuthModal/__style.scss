@@ -76,19 +76,6 @@
       text-align: center;
     }
 
-    &__resend_btn_wrapper {
-      text-align   : center;
-      margin-bottom: 30px;
-
-      &__code {
-        color      : var(--brand_color_red);
-        text-align : center;
-        font-family: "GothamPro-Medium", sans-serif;
-        cursor     : pointer;
-      }
-
-    }
-
     &__btn__wrapper {
       display        : flex;
       justify-content: space-between;

@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd'
-import React from 'react'
 import { Link } from 'react-router-dom'
+import { useT } from '../../../custom/hooks/useT';
 
 interface IHomeCenterBannerCard {
   id: number,
@@ -22,6 +22,8 @@ function HomeCenterBannerCard(props: IHomeCenterBannerCard) {
     oldPrice,
     url
   } = props;
+
+  const { t, lang } = useT()
 
   return (
     <div className="center_banner_card">
@@ -47,14 +49,14 @@ function HomeCenterBannerCard(props: IHomeCenterBannerCard) {
           <div className="right">
             <div>
               <h1 className="price title42_extra_bold">
-                {price} Сум
+                {price} {t(`sum.${lang}`)}
               </h1>
-              <del className="old_price">
-                {oldPrice} Сум
-              </del>
+              {/* <del className="old_price">
+                {oldPrice} {t(`sum.${lang}`)}
+              </del> */}
             </div>
             <Link className="banner_link" to={url}>
-              Показать еще
+              {t(`viewMore.${lang}`)}
             </Link>
           </div>
         </Col>

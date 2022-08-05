@@ -1,6 +1,4 @@
 .installment_modal {
-  width    : 1146px !important;
-  max-width: 100%;
 
   .installment_modal_title {
     color: var(--brand_color_black);
@@ -20,33 +18,180 @@
   //     border: 1px solid $brand_color_red;
   //   }
   // }
+
+  .modal_top_wrapper {
+    margin-bottom: 60px;
+
+    .modal_top_flex_box {
+      display        : flex;
+      align-items    : center;
+      justify-content: space-between;
+      margin-bottom  : 40px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .modal_left_block {
+        display    : flex;
+        align-items: center;
+
+        .product__img {
+          width       : 150px;
+          height      : 100px;
+          margin-right: 16px;
+
+          img {
+            width     : 100%;
+            height    : 100%;
+            object-fit: contain;
+          }
+        }
+
+        //  justify-content: space-between;
+        .modal_name_box {
+
+          .modal_good_title {
+            color: var(--color_black2);
+          }
+
+          .modal_good_price {
+            color      : var(--brand_color_black);
+            line-height: 63px;
+          }
+        }
+      }
+
+      .modal_option_block {
+        margin-left: 60px;
+
+        .product__counter__wrapper {
+          display    : flex;
+          align-items: flex-end;
+
+          .decr {
+            background-color: transparent;
+            border          : 1px solid var(--gray4);
+            border-radius   : 8px;
+            width           : 32px;
+            height          : 32px;
+            line-height     : 32px;
+          }
+
+          .incr:disabled,
+          .decr:disabled {
+            cursor: not-allowed;
+          }
+
+          &__total {
+            margin       : 0px 10px;
+            width        : 35px;
+            height       : 35px;
+            border-radius: 8px;
+            border       : 1px solid var(--gray4);
+            color        : var(--brand_color_red);
+            display      : inline-block;
+            text-align   : center;
+            line-height  : 35px;
+          }
+
+          .incr {
+            background-color: transparent;
+            border          : 1px solid var(--gray4);
+            border-radius   : 8px;
+            width           : 32px;
+            height          : 32px;
+            line-height     : 32px;
+          }
+        }
+
+        .product__action__wrapper {
+          margin-top: 15px;
+          text-align: right;
+        }
+
+        img {
+          cursor: pointer;
+        }
+
+        .delete_icon {
+          margin-left: 30px;
+        }
+      }
+
+    }
+  }
+
+  .installment_modal_collapse {
+    border: none;
+
+    .ant-collapse-header {
+      display    : block !important;
+      user-select: none;
+
+      &-text {
+        .good_option_block {
+          .installment__brand__img {
+            width : 120px;
+            height: 35px;
+
+            img {
+              width     : 100%;
+              height    : 100%;
+              object-fit: contain;
+            }
+          }
+        }
+      }
+    }
+
+    .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+      display: block;
+    }
+
+    .ant-collapse-item.ant-collapse-item-active.installment_modal_collapse_modal {
+      border: 1px solid var(--brand_color_red);
+    }
+
+    .installment_modal_collapse_modal {
+      // margin-top: 20px;
+      border    : 1px solid #d9d9d9;
+      margin-top: 20px;
+      background: #fafafa;
+
+      .installment_modal_text {
+        color: var(--brand_color_black);
+      }
+
+    }
+
+    .ant-collapse-arrow {
+      padding         : 8px;
+      border          : 1px solid var(--gray6);
+      background-color: #fff;
+      border-radius   : 5px;
+    }
+
+  }
+
   .installment_Modal_buttons {
     margin-top     : 30px;
     margin-bottom  : 60px;
     display        : flex;
-    align-items    : center;
     justify-content: flex-end;
 
-    .modal_make_purchase {
+    .ant-btn.modal_make_purchase {
       background   : var(--brand_color_red);
       border-color : var(--brand_color_red);
       color        : #fff;
-      padding      : 8px 31px;
       border-radius: 4px;
-      outline      : none;
-      cursor       : pointer;
-      border       : none;
     }
 
-    .modal_continue_purchase {
+    .ant-btn.modal_continue_purchase {
       color        : var(--brand_color_red);
       border-color : var(--brand_color_red);
       border-radius: 4px;
-      padding      : 8px 31px;
       margin-right : 15px;
-      outline      : none;
-      cursor       : pointer;
-      border       : none;
     }
   }
 }
