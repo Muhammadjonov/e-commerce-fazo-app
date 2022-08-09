@@ -1,7 +1,8 @@
-import { Button, Collapse, Modal, Radio, Tooltip } from "antd";
+
+import { Button, Collapse, Modal, Radio, RadioChangeEvent, Tooltip } from "antd";
 import { useT } from "../../custom/hooks/useT";
 import { useAppDispatch, useAppSelector } from "../../Store/hooks";
-import { ProductType } from "../../types";
+import { AlifInfoType, AlifResType, ProductType } from "../../types";
 import { addToFavoutires, removeFromFavourites } from "../../features/favourites/favouritesSlice";
 import { decrement, deleteFromBasket, increment } from "../../features/basket/basketSlice";
 import GoodOption from "./GoodOption";
@@ -30,8 +31,9 @@ export default function InstallmentModal(props: IInstallmentModal) {
   const { data: favourites } = useAppSelector((state) => state.favourites);
   const { products, totalPrice, totalProductCount } = useAppSelector((store) => store.basket);
   const { onOpenSignInModal } = useContext(AuthContext);
-  const [alifData, setAlifData] = useState<any>();
 
+  const [alifData, setAlifData] = useState<AlifInfoType[]>([]);
+  const [installment, setInstallment] = useState<any>();
   const onFavouriteClick = (product: ProductType, isFavorite: boolean) => {
     if (auth.authorized) {
 
@@ -47,9 +49,15 @@ export default function InstallmentModal(props: IInstallmentModal) {
 
   // getAlif data
   const getAlifData = useCallback(() => {
-    baseAPI.fetchAll<any>(alifShopUrl)
+    baseAPI.fetchAll<AlifResType>(alifShopUrl)
       .then((res) => {
-        setAlifData(res.data.data);
+        setAlifData(res.data?.data);
+      })
+      .catch((e) => {
+        console.log("err", e);
+      })
+      .finally(() => {
+
       })
   }, [])
 
@@ -64,6 +72,12 @@ export default function InstallmentModal(props: IInstallmentModal) {
   const handleCancel = () => {
     onCloseInstallmentModal()
   };
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+  }
+
+
   return (
     <Modal
       footer={null}
@@ -142,6 +156,7 @@ export default function InstallmentModal(props: IInstallmentModal) {
         }
 
       </div>
+
       <Radio.Group >
         <Collapse
           className="installment_modal_collapse"
@@ -190,7 +205,8 @@ export default function InstallmentModal(props: IInstallmentModal) {
 
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel magni culpa explicabo!
           </Panel>
-        </Collapse>
+
+        </Collapse >
       </Radio.Group>
       <div className="installment_Modal_buttons">
         <Button
