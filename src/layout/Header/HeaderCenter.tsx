@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Badge, Button, Col, Collapse, Drawer, Dropdown, Menu, Row } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import MobileSearchComp from '../../components/MobileSearchComp';
 import SearchComp from '../../components/SearchComp';
@@ -34,7 +34,7 @@ function HeaderCenter(props: IHeaderCenter) {
   const authContext = useContext(AuthContext);
   const cartContext = useContext(CartContext);
   const mobileCategoriesContext = useContext(MobileCategoriesContext);
-
+  let navigate = useNavigate()
   const handleOpen = (value: boolean) => {
     let fazoWrapper = document.querySelector(".mixel_wrapper")!;
     setIsOpenHeaderCentrDrower(value);
@@ -62,6 +62,7 @@ function HeaderCenter(props: IHeaderCenter) {
     removeTokens();
     dispatch(logout());
     dispatch(deleteAllFavourites());
+    navigate("/", { replace: true })
   }
   // userDropdown menu
   const userMenu = (
@@ -76,10 +77,10 @@ function HeaderCenter(props: IHeaderCenter) {
           key: '2',
         },
         {
-          label: <Link
-            to="/"
+          label: <button
+            type='button'
             onClick={handleLogout}
-          >{t(`logout.${lang}`)}</Link>,
+          >{t(`logout.${lang}`)}</button>,
           key: '3',
         },
       ]}

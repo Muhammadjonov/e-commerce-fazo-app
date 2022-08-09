@@ -332,7 +332,14 @@ const AuthModal = (props: IAuthModal) => {
 
   return (
     <>
-      <Modal width={550} className={"signin__modal"} visible={isOpenSignIn} onCancel={onCancelSignIn} footer={null} >
+      <Modal
+        width={550}
+        className={"signin__modal"}
+        visible={isOpenSignIn}
+        onCancel={onCancelSignIn}
+        footer={null}
+        wrapClassName="auth__modal"
+      >
         {
           isSignIn ? (
             <>
@@ -533,7 +540,14 @@ const AuthModal = (props: IAuthModal) => {
         }
       </Modal>
 
-      <Modal width={550} className={"signup__modal"} visible={isOpenSignUp} onCancel={onCancelSignUp} footer={null} >
+      <Modal
+        width={550}
+        className={"signup__modal"}
+        visible={isOpenSignUp}
+        onCancel={onCancelSignUp}
+        footer={null}
+        wrapClassName="auth__modal"
+      >
         <h3 className="signup__modal__title">
           {t(`createProfile.${lang}`)}
         </h3>
@@ -694,7 +708,6 @@ const AuthModal = (props: IAuthModal) => {
           )
         }
       </Modal >
-
     </>
 
   )

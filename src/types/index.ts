@@ -354,26 +354,14 @@ export type ProductDetailInfoType = {
 	delivery_price: number,
 	brandName: string,
 	category_id: number,
-	is_treaty: number
+	is_treaty: number,
+	code: string
 }
 
 export type ProductDetailResType = {
 	status: number,
 	message: string,
 	data: ProductDetailInfoType
-}
-
-export type ReturnExchangeInfoType = {
-	id: number,
-	url: string,
-	title: string,
-	description: string
-}
-
-export type ReturnExchangeResType = {
-	status: number,
-	message: string,
-	data: ReturnExchangeInfoType
 }
 
 export type PaymentListInfoType = {
@@ -399,18 +387,6 @@ export type AllNewProductsResType = {
 	data: {
 		products: AllNewProductsInfoType
 	}
-}
-
-export type HaveQuestionsInfoType = {
-	managers: string,
-	phonesNumbers: string,
-	emails: string
-}
-
-export type HaveQuestionsResType = {
-	status: number,
-	message: string,
-	data: HaveQuestionsInfoType
 }
 
 export type MyOrderInfoType = {
@@ -455,4 +431,18 @@ export type ComparesResType = {
 	status: number,
 	message: string,
 	data: ComparesInfoType
+}
+
+export type AlifInfoType = {
+	id: number,
+	amount: number,
+	month: number,
+	name: string,
+	status: number
+}
+
+export type AlifResType = {
+	status: number,
+	message: string,
+	data: AlifInfoType[]
 }

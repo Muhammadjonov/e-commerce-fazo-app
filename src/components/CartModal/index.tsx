@@ -1,6 +1,6 @@
-import { Button, Divider, Empty, Modal } from 'antd'
+import { Button, Divider, Modal } from 'antd'
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../App';
 import { useT } from '../../custom/hooks/useT';
 import { decrement, deleteFromBasket, increment } from '../../features/basket/basketSlice';
@@ -67,9 +67,14 @@ const CartModal = (props: ICartModal) => {
                 <React.Fragment key={product.id}>
                   <div className="cart__modal__product__card">
                     <div className="cart__modal__product__card__left">
-                      <figure className="cart__modal__product__card__left__img">
-                        <img src={product.imageUrl} alt={product.name} />
-                      </figure>
+                      <Link
+                        onClick={onCloseCartModal}
+                        to={`/product/detail/${product.slug}`}
+                      >
+                        <figure className="cart__modal__product__card__left__img">
+                          <img src={product.imageUrl} alt={product.name} />
+                        </figure>
+                      </Link>
                       <div className="cart__modal__product__card__left__info">
                         <h3 className="cart__modal__product__card__left__info__product__name">
                           {product.name}
@@ -126,7 +131,7 @@ const CartModal = (props: ICartModal) => {
 
             <div className="cart__modal__total__count__price">
               <p className="cart__modal__total__count__price__text">
-                <span className="p18_regular">{t(`total.${lang}`)} {totalProductCount} {t(`product.${lang}`)}</span> <span className="title24_bold">
+                <span className="p18_regular">{t(`total.${lang}`)} {totalProductCount} {t(`product.${lang}`)}:</span> <span className="title24_bold">
                   {formatPrice(totalPrice)} {t(`sum.${lang}`)}
                 </span>
               </p>

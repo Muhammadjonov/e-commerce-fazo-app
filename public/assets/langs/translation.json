@@ -71,6 +71,10 @@
     "ru": "Выйти",
     "uz": "Chiqish"
   },
+  "code": {
+    "ru": "Код №",
+    "uz": "Kod №"
+  },
   "signInOrCreateAccount": {
     "ru": " Войти или создать профиль",
     "uz": "Kirish yoki ro'yhatdan o'tish"
@@ -233,7 +237,7 @@
   },
   "balance": {
     "ru": "Сравнить",
-    "uz": "Таққослаш"
+    "uz": "Taqqoslash"
   },
   "addToCart": {
     "ru": "В корзину",
@@ -368,20 +372,12 @@
     "uz": "To'lov"
   },
   "paymentMethod": {
-    "ru": "Метод оплаты:",
+    "ru": "Условия оплаты:",
     "uz": "To'lov uslubi:"
   },
   "buyInstallment": {
     "ru": "Купить в рассрочку",
     "uz": "Muddatli to'lovga xarid"
-  },
-  "haveQuestions": {
-    "ru": "Есть вопросы?",
-    "uz": "Savollaringiz bormi?"
-  },
-  "moreAboutProgram": {
-    "ru": "Подробнее о программе.",
-    "uz": "Dastur haqida batafsil."
   },
   "continueShopping": {
     "ru": "Продолжить покупки",
@@ -470,5 +466,9 @@
   "acceptYourApp": {
     "ru": "Ваша заявка принята",
     "uz": "Arizangiz qabul qilindi"
+  },
+  "buyInInstallments": {
+    "ru": "Купить в рассрочку",
+    "uz": "Muddatli to'lovga harid"
   }
 }

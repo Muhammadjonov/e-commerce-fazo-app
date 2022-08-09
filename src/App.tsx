@@ -39,6 +39,8 @@ import ProtectedCheckout from './pages/Checkout/ProtectedCheckout';
 import ProtectedProfile from './pages/Profile/ProtectedProfile';
 import OrderHistory from './pages/Profile/OrderHistory';
 import ProtectedFavourites from './pages/Favourites/ProtectedFavourites';
+import ProtectedSearch from './pages/SearchResult/ProtectedSearch';
+import MoonLoading from './components/Loaders/MoonLoading';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -214,7 +216,11 @@ function App() {
                   <Route path="category/:category_slug" element={<Filter />} loading />
                   <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
                   <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
-                  <Route path="search" element={<SearchResult />} loading />
+                  <Route path="search" element={
+                    <ProtectedSearch>
+                      <SearchResult />
+                    </ProtectedSearch>
+                  } loading />
                   <Route path="product/detail/:product_slug" element={<ProductView />} loading />
                   <Route path="page" element={<HeaderTopMenus />} loading>
                     <Route path=":page_slug" element={<HeaderMenusContent />} loading />
@@ -248,7 +254,9 @@ function App() {
                   } />
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
-              ) : (<div style={{ height: "400px" }}></div>)
+              ) : (
+                <MoonLoading />
+              )
             }
 
             <Footer menuCategories={menuCategories} />

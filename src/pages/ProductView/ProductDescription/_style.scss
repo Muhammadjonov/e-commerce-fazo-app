@@ -3,6 +3,11 @@
 
   .product_name {
     color        : var(--brand_color_black);
+    margin-bottom: 5px;
+  }
+
+  &__code {
+    color        : var(--color_black2);
     margin-bottom: 30px;
   }
 
@@ -14,11 +19,6 @@
 
     .product_price {
       color: var(--brand_color_black);
-
-      img {
-        margin-left: 5px;
-      }
-
     }
 
     .right {
@@ -68,14 +68,6 @@
     }
   }
 
-  .vip_discount {
-    margin-bottom: 40px;
-
-    .vip_discount_text {
-      color: var(--color_black2);
-    }
-  }
-
   .button_area {
     display      : flex;
     flex-wrap    : wrap;
@@ -88,15 +80,19 @@
     }
   }
 
-  .title_contact {
-    .left {
+  &__area {
+    &__title {
       color        : var(--brand_color_black);
       margin-bottom: 10px;
 
     }
 
-    .right {
+    &__content {
       color: var(--brand_color_black);
+
+      table {
+        display: block;
+      }
     }
   }
 

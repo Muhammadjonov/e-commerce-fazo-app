@@ -31,13 +31,11 @@ function BurgerMenu(props: IBurgerMenu) {
   }
 
   // burger menu boshqa polya bosilganda yopilish logikasi
-
   useEffect(() => {
     const burgerMenu = document.getElementById("burger_menu")!;
     const openBtn = document.getElementById("caregory_open_btn")!;
     const cubcategoryLink = document.getElementsByClassName("subcategry_links")!;
     // const tabLink = document.getElementsByClassName("tablinks")!;
-
 
     document.body.addEventListener("click", function (e: any) {
       const clickedPlace = e.target as Node;
@@ -47,6 +45,20 @@ function BurgerMenu(props: IBurgerMenu) {
     });
   }, [setIsShowBurgerMenu]);
 
+  let body = document.querySelector("body")!;
+
+  useEffect(() => {
+    if (isOpen) {
+      body.style.overflowY = "hidden";
+    } else {
+      body.style.overflowY = "auto";
+    }
+
+
+    return () => {
+      body.style.overflowY = "auto";
+    }
+  }, [isOpen])
 
   return (
     <div className={`burger__menu ${isOpen ? "active" : ""}`}>
