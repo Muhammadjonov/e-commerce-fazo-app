@@ -174,9 +174,8 @@ export default function InstallmentModal(props: IInstallmentModal) {
                   <div className="intallment__brand__img">
                     <img src={"/assets/img/alif.png"} alt="alif" />
                   </div>
+                  <GoodOption installmentData={alifData} />
                 </Radio>
-
-                <GoodOption />
               </div>
             }
             key={1}
@@ -195,9 +194,8 @@ export default function InstallmentModal(props: IInstallmentModal) {
                   <div className="intallment__brand__img">
                     <img src={"/assets/img/alif.png"} alt="alif" />
                   </div>
+                  {/* <GoodOption /> */}
                 </Radio>
-
-                <GoodOption />
               </div>
             }
             key={2}
