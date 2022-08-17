@@ -1,31 +1,33 @@
 
-import { Button, Collapse, Modal, Radio, RadioChangeEvent, Tooltip } from "antd";
+import { Button, Collapse, Modal, Radio, RadioChangeEvent, Select, Tooltip } from "antd";
 import { useT } from "../../custom/hooks/useT";
 import { useAppDispatch, useAppSelector } from "../../Store/hooks";
 import { AlifInfoType, AlifResType, ProductType } from "../../types";
 import { addToFavoutires, removeFromFavourites } from "../../features/favourites/favouritesSlice";
 import { decrement, deleteFromBasket, increment } from "../../features/basket/basketSlice";
-import GoodOption from "./GoodOption";
-import "./_style.scss";
-import { AuthContext } from "../../App";
+import { AuthContext, MonthDataType } from "../../App";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { formatPrice, isFavourite } from "../../helpers";
 import baseAPI from "../../api/baseAPI";
 import { alifShopUrl } from "../../api/apiUrls";
 import { Link } from "react-router-dom";
+import "./_style.scss";
 
 let { Panel } = Collapse;
 interface IInstallmentModal {
   isOpenInstallmentModal: boolean,
-  onOpenInstallmentModal: () => void,
   onCloseInstallmentModal: () => void,
-  product: ProductType
+  installment: string,
+  setInstallment: React.Dispatch<React.SetStateAction<string>>,
+  monthData: MonthDataType,
+  setMonthData: React.Dispatch<React.SetStateAction<MonthDataType>>
 }
 
+let { Option } = Select;
 
 export default function InstallmentModal(props: IInstallmentModal) {
   const { t, lang } = useT();
-  const { isOpenInstallmentModal, onOpenInstallmentModal, onCloseInstallmentModal, product } = props;
+  const { isOpenInstallmentModal, onCloseInstallmentModal, installment, setInstallment, monthData, setMonthData } = props;
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
   const { data: favourites } = useAppSelector((state) => state.favourites);
@@ -33,7 +35,6 @@ export default function InstallmentModal(props: IInstallmentModal) {
   const { onOpenSignInModal } = useContext(AuthContext);
 
   const [alifData, setAlifData] = useState<AlifInfoType[]>([]);
-  const [installment, setInstallment] = useState<any>();
   const onFavouriteClick = (product: ProductType, isFavorite: boolean) => {
     if (auth.authorized) {
 
@@ -75,8 +76,14 @@ export default function InstallmentModal(props: IInstallmentModal) {
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
+    setInstallment(e.target.value);
   }
-
+  // alif
+  const handleAlifSelectChange = (value: any) => {
+    let values = value.split(",");
+    setMonthData({ alifMonthId: +values[0], alifAmount: +values[1], alifMonth: values[2] })
+    console.log("first", value)
+  };
 
   return (
     <Modal
@@ -157,7 +164,7 @@ export default function InstallmentModal(props: IInstallmentModal) {
 
       </div>
 
-      <Radio.Group >
+      <Radio.Group onChange={onChange} value={installment} >
         <Collapse
           className="installment_modal_collapse"
           expandIconPosition={"end"}
@@ -170,38 +177,60 @@ export default function InstallmentModal(props: IInstallmentModal) {
                 className="good_option_block"
               >
 
-                <Radio value={1} className="installment_radio">
+                <Radio value={"alif"} className="installment_radio">
                   <div className="intallment__brand__img">
                     <img src={"/assets/img/alif.png"} alt="alif" />
                   </div>
-                  <GoodOption installmentData={alifData} />
+                  <Select
+                    className="installment_selector_periud"
+                    placeholder="Срок рассрочки"
+                    onChange={handleAlifSelectChange}
+                  >
+                    {
+                      alifData?.map((item) => (
+                        <Option key={item.id} value={`${item.id},${item.amount},${item.month}`}>{item.name}</Option>
+                      ))
+                    }
+                  </Select>
+                  <p className="good_option_installment title20_bold">
+                    {formatPrice((totalPrice * ((100 + monthData.alifAmount) / 100)) / (monthData.alifMonth ?? 1))} {t(`sum.${lang}`)} /  месяц
+                  </p>
                 </Radio>
               </div>
             }
             key={1}
           >
-
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel magni culpa explicabo!
-          </Panel>
-          <Panel
-            header={
-              <div
-                onClick={(event) => event.stopPropagation()}
-                className="good_option_block"
-              >
-
-                <Radio value={2} className="installment_radio">
-                  <div className="intallment__brand__img">
-                    <img src={"/assets/img/alif.png"} alt="alif" />
-                  </div>
-                  {/* <GoodOption /> */}
-                </Radio>
+            <div className="installment__content">
+              <p className="installment__content__text">
+                Qulay qismli to'lov
+              </p>
+              <h4 className="installment__content__title">
+                To'lov miqdori: maksimal chegarani hisobga olgan holda
+              </h4>
+              <div className="installment__content__item">
+                <p className="item__title">Muddat (oylar)
+                </p>
+                <p className="item__value">
+                  {monthData.alifMonth ?? ""}
+                </p>
               </div>
-            }
-            key={2}
-          >
+              <div className="installment__content__item">
+                <p className="item__title">Oylik to'lov
+                </p>
+                <p className="item__value">
+                  oyiga {formatPrice((totalPrice * ((100 + monthData.alifAmount) / 100)) / (monthData.alifMonth ?? 1))} {t(`sum.${lang}`)}
+                </p>
+              </div>
+              <div className="installment__content__item">
+                <p className="item__title">
+                  Umumiy to'lov miqdori
+                </p>
+                <p className="item__value">
+                  {formatPrice((totalPrice * ((100 + monthData.alifAmount) / 100)))} {t(`sum.${lang}`)}
+                </p>
+              </div>
 
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel magni culpa explicabo!
+            </div>
           </Panel>
 
         </Collapse >
@@ -215,14 +244,16 @@ export default function InstallmentModal(props: IInstallmentModal) {
         >
           {t(`continueShopping.${lang}`)}
         </Button>
-        <Button
-          type="link"
-          className="modal_make_purchase"
-          onClick={handleOk}
-          size="large"
-        >
-          {t(`checkout.${lang}`)}
-        </Button>
+        <Link to={`/checkout?${new URLSearchParams({ duration: monthData.alifMonth.toString() })}`}>
+          <Button
+            type="link"
+            className="modal_make_purchase"
+            onClick={handleOk}
+            size="large"
+          >
+            {t(`checkout.${lang}`)}
+          </Button>
+        </Link>
       </div>
     </Modal >
 

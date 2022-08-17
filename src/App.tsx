@@ -41,6 +41,7 @@ import OrderHistory from './pages/Profile/OrderHistory';
 import ProtectedFavourites from './pages/Favourites/ProtectedFavourites';
 import ProtectedSearch from './pages/SearchResult/ProtectedSearch';
 import MoonLoading from './components/Loaders/MoonLoading';
+import InstallmentModal from './components/InstallmentModal';
 
 type AuthContextType = {
   isOpenSignInModal: boolean;
@@ -62,18 +63,32 @@ type MobileCategoriesContextType = {
   onCloseMobileCategories: () => void;
 }
 
+export type MonthDataType = {
+  alifMonthId: number,
+  alifAmount: number,
+  alifMonth: number
+}
+
+type InstallmentModalContextType = {
+  isOpenInstallmentModal: boolean;
+  onCloseInstallmentModal: () => void;
+  setIsOpenInstallmentModal: React.Dispatch<React.SetStateAction<boolean>>,
+  setInstallment: React.Dispatch<React.SetStateAction<string>>,
+  installment: string,
+  monthData: MonthDataType
+}
+
 export const AuthContext = createContext({} as AuthContextType);
 export const CartContext = createContext({} as CartContextType);
 export const MobileCategoriesContext = createContext({} as MobileCategoriesContextType);
+export const InstallmentModalContext = createContext({} as InstallmentModalContextType);
 
 function App() {
-  const [isOnline, setIsOnline] = useState<boolean>(false);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>();
   let { pathname } = useLocation();
 
   const auth = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
-  let accessToken = getAccessToken();
   useEffect(() => {
     const access_token = getAccessToken();
     if (access_token) {
@@ -189,6 +204,7 @@ function App() {
     onOpenCartModal,
     onCloseCartModal
   }
+  // mobilecategory
 
   const onOpenMobileCategories = () => {
     setIsOpenMobileCategories(true);
@@ -203,76 +219,102 @@ function App() {
     onCloseMobileCategories
   }
 
+  // installmentModal context
+
+  const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
+  const [installment, setInstallment] = useState<string>("alif");
+  const [monthData, setMonthData] = useState<MonthDataType>({} as MonthDataType);
+  const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
+
+  const installmentModalContextValue = {
+    isOpenInstallmentModal,
+    onCloseInstallmentModal,
+    setIsOpenInstallmentModal,
+    installment,
+    setInstallment,
+    monthData
+  }
+
   return (
     <AuthContext.Provider value={contextValue}>
       <CartContext.Provider value={cartContextValue}>
         <MobileCategoriesContext.Provider value={mobileCategoriesContextValue}>
-          <div className="mixel_wrapper">
-            <Header menuCategories={menuCategories} />
-            {
-              !isProfileLoading ? (
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="category/:category_slug" element={<Filter />} loading />
-                  <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
-                  <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
-                  <Route path="search" element={
-                    <ProtectedSearch>
-                      <SearchResult />
-                    </ProtectedSearch>
-                  } loading />
-                  <Route path="product/detail/:product_slug" element={<ProductView />} loading />
-                  <Route path="page" element={<HeaderTopMenus />} loading>
-                    <Route path=":page_slug" element={<HeaderMenusContent />} loading />
-                    <Route path="feedback/contact" element={<Feedback />} />
-                  </Route>
-                  <Route
-                    path="favourites"
-                    element={
-                      <ProtectedFavourites>
-                        <Favourites />
-                      </ProtectedFavourites>
-                    }
-                    loading
-                  />
-                  <Route path="balance" element={<ProductComparison />} loading />
-                  <Route path="profile" element={
-                    <ProtectedProfile>
-                      <Profile />
-                    </ProtectedProfile>
+          <InstallmentModalContext.Provider value={installmentModalContextValue}>
+            <div className="mixel_wrapper">
+              <Header menuCategories={menuCategories} />
+              {
+                !isProfileLoading ? (
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="category/:category_slug" element={<Filter />} loading />
+                    <Route path="more-products/:products_url" element={<BestsellerFilter />} loading />
+                    <Route path="more-products/newcommers" element={<AllNewCommersProduct />} loading />
+                    <Route path="search" element={
+                      <ProtectedSearch>
+                        <SearchResult />
+                      </ProtectedSearch>
+                    } loading />
+                    <Route path="product/detail/:product_slug" element={<ProductView />} loading />
+                    <Route path="page" element={<HeaderTopMenus />} loading>
+                      <Route path=":page_slug" element={<HeaderMenusContent />} loading />
+                      <Route path="feedback/contact" element={<Feedback />} />
+                    </Route>
+                    <Route
+                      path="favourites"
+                      element={
+                        <ProtectedFavourites>
+                          <Favourites />
+                        </ProtectedFavourites>
+                      }
+                      loading
+                    />
+                    <Route path="balance" element={<ProductComparison />} loading />
+                    <Route path="profile" element={
+                      <ProtectedProfile>
+                        <Profile />
+                      </ProtectedProfile>
 
-                  } >
-                    <Route index element={<ProfileInfoBody />} />
-                    <Route path="personal-data" element={<PersonalData />} />
-                    <Route path="order-history" element={<OrderHistory />} loading />
-                  </Route>
-                  <Route path="checkout" element={
-                    <ProtectedCheckout>
-                      <Checkout />
-                    </ProtectedCheckout>
+                    } >
+                      <Route index element={<ProfileInfoBody />} />
+                      <Route path="personal-data" element={<PersonalData />} />
+                      <Route path="order-history" element={<OrderHistory />} loading />
+                    </Route>
+                    <Route path="checkout" element={
+                      <ProtectedCheckout>
+                        <Checkout />
+                      </ProtectedCheckout>
 
-                  } />
-                  <Route path="*" element={<PageNotFound />} />
-                </Routes>
-              ) : (
-                <MoonLoading />
-              )
-            }
+                    } />
+                    <Route path="*" element={<PageNotFound />} />
+                  </Routes>
+                ) : (
+                  <MoonLoading />
+                )
+              }
 
-            <Footer menuCategories={menuCategories} />
-            <BackTop className="fazo__back__top" />
-            <AuthModal
-              isOpenSignUp={isOpenSignUpModal}
-              isOpenSignIn={isOpenSignInModal}
-              onCloseSignUpModal={onCloseSignUpModal}
-              onCloseSignInModal={onCloseSignInModal}
-            />
-            <CartModal
-              isOpenCart={isOpenCartModal}
-              onCloseCartModal={onCloseCartModal}
-              onOpenCartModal={onOpenCartModal}
-            />
-          </div>
+              <Footer menuCategories={menuCategories} />
+              <BackTop className="fazo__back__top" />
+              <AuthModal
+                isOpenSignUp={isOpenSignUpModal}
+                isOpenSignIn={isOpenSignInModal}
+                onCloseSignUpModal={onCloseSignUpModal}
+                onCloseSignInModal={onCloseSignInModal}
+              />
+              <CartModal
+                isOpenCart={isOpenCartModal}
+                onCloseCartModal={onCloseCartModal}
+                onOpenCartModal={onOpenCartModal}
+              />
+              <InstallmentModal
+                isOpenInstallmentModal={isOpenInstallmentModal}
+                onCloseInstallmentModal={onCloseInstallmentModal}
+                installment={installment}
+                setInstallment={setInstallment}
+                setMonthData={setMonthData}
+                monthData={monthData}
+              />
+            </div>
+          </InstallmentModalContext.Provider>
         </MobileCategoriesContext.Provider>
       </CartContext.Provider>
     </AuthContext.Provider>

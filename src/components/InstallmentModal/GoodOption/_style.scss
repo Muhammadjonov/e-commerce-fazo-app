@@ -1,19 +1,15 @@
-.ant-select .installment_selector_periud .ant-select-single .ant-select-show-arrow .ant-select-show-search {
-  border    : 1px solid var(--brand_color_red);
+.ant-select.installment_selector_periud {
+  border    : 1px solid var(--gray6);
   box-shadow: none;
-}
-
-.installment_selector_periud {
-  .ant-select-show-search {
-    border    : 1px solid var(--brand_color_red);
-    box-shadow: none;
-  }
 
   .ant-select-selector {
 
-    &:hover,
-    &:focus {
-      border: 1px solid var(--brand_color_red);
+    .ant-select-selection-item {
+      position: static;
     }
   }
+}
+
+.good_option_installment {
+  margin-left: 30px;
 }

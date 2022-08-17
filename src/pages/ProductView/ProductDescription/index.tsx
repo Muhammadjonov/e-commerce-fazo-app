@@ -2,11 +2,10 @@ import { Col, Row, Tooltip } from "antd";
 import ProductInfoComp from "./ProductInfoComp";
 import BuyButton from "./BuyButton";
 import { useContext, useState } from "react";
-import InstallmentModal from "../../../components/InstallmentModal";
 import { CharacterAssignsType, ProductDetailInfoType } from "../../../types";
 import BuyNowModal from "./BuyNowModal";
 import { useAppDispatch, useAppSelector } from "../../../Store/hooks";
-import { AuthContext } from "../../../App";
+import { AuthContext, InstallmentModalContext } from "../../../App";
 import { formatPrice, isFavourite, isInBasket, isInCompare } from "../../../helpers";
 import { addToFavoutires, removeFromFavourites } from "../../../features/favourites/favouritesSlice";
 import { addToBasket } from "../../../features/basket/basketSlice";
@@ -16,10 +15,10 @@ import "./_style.scss";
 
 const ProductDescription = (props: ProductDetailInfoType) => {
   const { id, name, brandName, slug, price, old_price, imageUrl, description, characterAssigns, category_id, is_treaty, code } = props;
-  const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
   const [isOpenBuyNowModal, setIsOpenBuyNowModal] = useState<boolean>(false);
   const onOpenBuyNowModal = () => setIsOpenBuyNowModal(true);
   const onCloseBuyNowModal = () => setIsOpenBuyNowModal(false);
+  const { setIsOpenInstallmentModal } = useContext(InstallmentModalContext);
 
   const dispatch = useAppDispatch();
   const auth = useAppSelector((store) => store.auth);
@@ -45,11 +44,8 @@ const ProductDescription = (props: ProductDetailInfoType) => {
     if (!isInBasket(products, id)) {
       dispatch(addToBasket({ ...product, count: 1 }))
     }
-
-
     setIsOpenInstallmentModal(true);
   }
-  const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
   const { t, lang } = useT();
 
   const onFavouriteClick = () => {
@@ -159,7 +155,7 @@ const ProductDescription = (props: ProductDetailInfoType) => {
         </Col>
       </Row>
       <BuyNowModal product_id={id} isOpenBuyNowModal={isOpenBuyNowModal} onOpenBuyNowModal={onOpenBuyNowModal} onCloseBuyNowModal={onCloseBuyNowModal} />
-      <InstallmentModal product={product} isOpenInstallmentModal={isOpenInstallmentModal} onOpenInstallmentModal={onOpenInstallmentModal} onCloseInstallmentModal={onCloseInstallmentModal} />
+
     </div >
   )
 }
