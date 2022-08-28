@@ -79,8 +79,13 @@ export const removeComparesFromLocalStorage = () => {
 }
 
 export const formatPrice = (num: number) => {
-  return num?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+  let isInt = Number.isInteger(num);
+  if (!isInt) {
+    let formated = (Math.round(num * 100) / 100).toFixed(2);
+    return formated?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
+  } else return num?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
 }
+
 
 export const onlyString = (value: any) => {
   return value.replace(/[^a-zA-Z ]/gi, "");

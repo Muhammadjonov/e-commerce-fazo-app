@@ -1,3 +1,4 @@
+import { number } from "yup"
 import { UserType } from "../features/authSlice"
 
 export type userType = {
@@ -445,4 +446,22 @@ export type AlifResType = {
 	status: number,
 	message: string,
 	data: AlifInfoType[]
+}
+
+export type IntendPricesType = {
+	duration: number,
+	price: number,
+	per_month: number
+}
+
+export type IntendInfoType = {
+	id: number,
+	original_price: number,
+	prices: IntendPricesType[]
+}
+
+export type IntendResType = {
+	status: number,
+	message: string,
+	data: IntendInfoType[]
 }

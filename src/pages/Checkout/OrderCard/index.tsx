@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { useT } from '../../../custom/hooks/useT';
 import useWindowSize from '../../../custom/hooks/useWindowSize';
 import { formatPrice } from '../../../helpers';
@@ -23,7 +24,8 @@ const OrderCard = (props: IOrderCard) => {
     imageUrl,
     name,
     count,
-    price
+    price,
+    slug
   } = props;
   const { width } = useWindowSize();
   const { t, lang } = useT();
@@ -31,7 +33,9 @@ const OrderCard = (props: IOrderCard) => {
   return (
     <div className="order__card">
       <div className="order__card__left">
-        <img className="order__card__left__img" src={imageUrl} alt={name} />
+        <Link to={`/product/detail/${slug}`}>
+          <img className="order__card__left__img" src={imageUrl} alt={name} />
+        </Link>
       </div>
       <div className="order__card__right">
         <div className="order__card__right__name">

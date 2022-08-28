@@ -1,9 +1,9 @@
 import { Button, Divider, Modal } from 'antd'
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../App';
 import { useT } from '../../custom/hooks/useT';
-import { decrement, deleteFromBasket, increment } from '../../features/basket/basketSlice';
+import { decrement, deleteFromBasket, increment, ProductTypeBasket } from '../../features/basket/basketSlice';
 import { addToFavoutires, removeFromFavourites } from '../../features/favourites/favouritesSlice';
 import { formatPrice, getBasketFromLocalStorage, isFavourite } from '../../helpers';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
@@ -18,6 +18,7 @@ interface ICartModal {
 
 const CartModal = (props: ICartModal) => {
   const { t, lang } = useT();
+  let { pathname } = useLocation();
   const { isOpenCart, onCloseCartModal, onOpenCartModal } = props;
   const data = getBasketFromLocalStorage();
   const dispatch = useAppDispatch();
@@ -48,6 +49,17 @@ const CartModal = (props: ICartModal) => {
     }
   }
 
+  // delete product
+
+  const deleteFrBasket = (product: ProductTypeBasket) => {
+    if (pathname === "/checkout") {
+      if (products.length > 1) {
+        dispatch(deleteFromBasket({ ...product }))
+      }
+    } else {
+      dispatch(deleteFromBasket({ ...product }))
+    }
+  }
 
   return (
     <Modal
@@ -115,7 +127,7 @@ const CartModal = (props: ICartModal) => {
                         <button
                           type='button'
                           className="cart__modal__product__card__right__btns__delete"
-                          onClick={() => dispatch(deleteFromBasket({ ...product }))}
+                          onClick={() => deleteFrBasket(product)}
                         >
                           <img src={`/assets/icons/delete.svg`} alt="delete" />
                         </button>

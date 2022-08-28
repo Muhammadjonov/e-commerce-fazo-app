@@ -127,6 +127,80 @@
         }
       }
 
+      .payment-type-content {
+        color: var(--brand_color_black);
+
+        .payment-type {
+          margin-bottom: 15px;
+          margin-top   : 20px;
+          font-weight  : 700;
+        }
+
+        .item-1 {
+          margin-bottom: 15px;
+        }
+
+        .payment-type-item {
+          .payment__type__phone__input {
+            margin-right: 20px;
+
+            .react-tel-input {
+
+              .selected-flag {
+                display: none;
+              }
+
+              .form-control {
+                height      : 40px;
+                width       : 100%;
+                padding-left: 17px;
+              }
+            }
+          }
+
+          .payment__type__password {
+            .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+              border-color: #d9d9d9;
+            }
+
+            .ant-input-affix-wrapper:focus,
+            .ant-input-affix-wrapper-focused {
+              border-color: #d9d9d9;
+              box-shadow  : none;
+            }
+          }
+
+          .ant-form-item {
+            display: inline-block;
+
+          }
+
+          .register-not {
+            color    : rgb(233, 22, 22) !important;
+            font-size: 12px;
+
+            a {
+              color: #2d63ce;
+            }
+          }
+
+          .register-not.mt-5 {
+            margin-top: 5px;
+          }
+
+          span:last-child {
+            color      : #393b3f;
+            font-weight: 600;
+          }
+        }
+
+        .outline__custom__btn {
+          border-color: var(--gray5);
+          color       : var(--brand_color_black);
+          margin-top  : 15px;
+        }
+      }
+
       .howto__obtain {
         margin-top: 25px;
 

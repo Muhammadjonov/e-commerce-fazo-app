@@ -1,40 +1,40 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Col, Row, Radio, Space, Divider, Button, Select, DatePicker, DatePickerProps } from 'antd';
+import { Col, Row, Radio, Space, Divider, Button, Select, DatePicker, DatePickerProps, Input, Form } from 'antd';
 import BreadcrumbComp from '../../components/BreadcrumbComp';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import "./_style.scss";
 import InputComp from '../../components/Form/InputComp';
 import TopTitleArea from './TopTitleArea';
 import OutlineBtn from '../../components/Buttons/OutlineBtn';
 import OrderCard from './OrderCard';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
-import { CartContext } from '../../App';
+import { CartContext, InstallmentModalContext } from '../../App';
 import { useT } from '../../custom/hooks/useT';
 import { formatPrice, getBasketFromLocalStorage, removeBasketFromLocalStorage } from '../../helpers';
 import baseAPI from '../../api/baseAPI';
-import { districtsUrl, orderPaymentTypesUrl, orderUrl, regionsUrl } from '../../api/apiUrls';
+import { alifOrderUrl, alifUserCheckUrl, alifValCodeUrl, districtsUrl, orderPaymentTypesUrl, orderUrl, regionsUrl } from '../../api/apiUrls';
 import { useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2';
 import { dropBasket } from '../../features/basket/basketSlice';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import "./_style.scss";
 
 const { Option } = Select;
 
 const Checkout = () => {
   const { t, lang } = useT();
   const { onOpenCartModal } = useContext(CartContext);
-  const { user } = useAppSelector((state) => state.auth);
+  const { setIsOpenInstallmentModal, installmentData } = useContext(InstallmentModalContext);
   const [paymentTypes, setPaymentTypes] = useState<any>({});
   const [regions, setRegions] = useState<any>({});
   const [districts, setDistricts] = useState<any>({});
   const [delivery_date, setDeliveryDate] = useState<string>("");
   const { products: inBasketProducts, totalProductCount, totalPrice } = getBasketFromLocalStorage();
   const [isOrderLoading, setIsOrderLoading] = useState<boolean>();
-  const [orderError, setOrderError] = useState<string>("")
+  const [orderError, setOrderError] = useState<string>("");
+
   const { control, register, handleSubmit, watch, formState: { errors } } = useForm<any>({
     defaultValues: {
-      phone: user?.username,
-      first_name: user?.first_name,
-      last_name: user?.last_name,
+      payment_type: installmentData.installment !== undefined ? "3" : "1"
     }
   });
   const dispatch = useAppDispatch();
@@ -93,38 +93,115 @@ const Checkout = () => {
       })
     });
     setIsOrderLoading(true);
-    baseAPI.create<any>(orderUrl, { ...data, products, delivery_date })
-      .then((res) => {
-        if (res.data.status === 200) {
-          window.open(
-            res.data.data?.url,
-            "_blank"
-          );
-          navigate("/");
-          dispatch(dropBasket)
-          removeBasketFromLocalStorage();
-          window.location.reload();
-        } else if (res.data.status === 403) {
-          setOrderError(res.data.message)
-        }
-      })
-      .catch((e) => {
-        console.log("err", e);
-      })
-      .finally(() => {
-        setIsOrderLoading(false);
-      })
+    let { payment_type } = data;
+    if (payment_type === "3") {
+      if (installmentData.installment === "1") {
+        baseAPI.create<any>(alifOrderUrl, { ...data, products, delivery_date, otp: +alifValCode, monthId: installmentData.alifMonthId ?? 1 })
+          .then((res) => {
+            if (res.data?.status === 200) {
+              navigate("/");
+              dispatch(dropBasket)
+              removeBasketFromLocalStorage();
+              window.location.reload();
+            }
+          })
+          .catch((e) => console.log("err", e))
+          .finally(() => {
+            setIsOrderLoading(false);
+          })
+      } else if (installmentData.installment === "2") {
+        // baseAPI.create<any>()
+      }
+    } else (
+      baseAPI.create<any>(orderUrl, { ...data, products, delivery_date })
+        .then((res) => {
+          if (res.data.status === 200) {
+            window.open(
+              res.data.data?.url,
+              "_blank"
+            );
+            navigate("/");
+            dispatch(dropBasket)
+            removeBasketFromLocalStorage();
+            window.location.reload();
+          } else if (res.data.status === 403) {
+            setOrderError(res.data.message)
+          }
+        })
+        .catch((e) => {
+          console.log("err", e);
+        })
+        .finally(() => {
+          setIsOrderLoading(false);
+        })
+    )
 
   };
 
   useEffect(() => {
-
-
     return () => {
       setOrderError("");
     }
   }, [])
 
+  // Alif user check
+  const [alifUserPhonenumberCheck, setAlifUserPhonenumberCheck] =
+    useState<string>("");
+  const [alifUserPhonenumberCheckMessage, setAlifUserPhonenumberCheckMessage] =
+    useState<string>("");
+  const [alifValCode, setAlifValCode] = useState<string>("");
+  const [isAlifCheckLoading, setAlifCheckIsLoading] = useState<boolean>(true);
+  const [alifValCodeMesg, setAlifValMesg] = useState<string>("");
+
+  // handle alif sms code 
+  const handleChangeAlifValCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value: inputValue } = e.target;
+    setAlifValCode(inputValue)
+  }
+
+  const handleCheckAlifUser = (value: string) => {
+
+    if (value.length > 11) {
+      setAlifCheckIsLoading(true);
+      baseAPI
+        .createWithParams<any>(alifUserCheckUrl, null, {
+          phone: `+${value}`
+        })
+        .then((res) => {
+          if (res.data.status === 200) {
+            setAlifUserPhonenumberCheckMessage(res.data?.data?.message);
+            setAlifCheckIsLoading(false);
+            // alifValCode
+            baseAPI.createWithParams<any>(alifValCodeUrl, null, { phone: `+${value}` })
+              .then((res) => {
+                if (res.data.status === 200) {
+                  setAlifValMesg(res.data?.data?.message);
+                } else if (res.data.status === 403) {
+                  setAlifValMesg(res.data?.message?.message)
+                }
+              })
+              .catch((e) => console.log("er", e))
+              .finally(() => {
+
+              })
+          } else if (res.data.status === 403) {
+            setAlifUserPhonenumberCheckMessage(res.data?.message?.message);
+          }
+        }
+        )
+        .catch((e) => console.log(e))
+        .finally(() => {
+        })
+
+      setAlifUserPhonenumberCheck(value);
+    }
+  }
+
+  // installment modal
+
+  const onOpenInstallmentModal = () => {
+    setIsOpenInstallmentModal(true)
+  }
 
   // breadcrumb
   const breadcrumbs = [
@@ -206,9 +283,24 @@ const Checkout = () => {
                           {...field} className="payment__types__radios">
                           <Space style={{ width: "100%" }} size={[0, 15]} direction="vertical">
                             {
-                              Object.keys(paymentTypes)?.map((paymentType) => (
-                                <Radio key={paymentType} value={paymentType}>{paymentTypes[paymentType]} </Radio>
-                              ))
+                              Object.keys(paymentTypes)?.map((paymentType) => {
+                                if (paymentType === "3") {
+                                  return (
+                                    <Radio
+                                      key={paymentType}
+                                      value={paymentType}
+                                      onClick={onOpenInstallmentModal}
+                                    >
+                                      {paymentTypes[paymentType]}
+                                    </Radio>
+                                  )
+                                } else {
+                                  return (
+                                    <Radio key={paymentType} value={paymentType}>{paymentTypes[paymentType]} </Radio>
+                                  )
+                                }
+                              }
+                              )
                             }
                           </Space>
                         </Radio.Group>
@@ -217,6 +309,87 @@ const Checkout = () => {
                     {errors["payment_type"] && <span className='error__message'>{t(`requiredErrMessage.${lang}`)}</span>}
                   </div>
 
+                  {/* alif user check */}
+                  {
+                    watch("payment_type") === "3" && (
+                      <>
+                        <div className="payment-type-content">
+                          <h4 className="payment-type">
+                            {t(`installmentType.${lang}`)}: {installmentData.installment === "1" ? "Alif" : "Intend"}
+                          </h4>
+                          <div className="payment-type-item item-1">
+                            <span>{t(`installmentPeriod.${lang}`)}:</span> <br />
+                            <span>{installmentData.installment === "1" ? installmentData.alifMonth : installmentData.intendMonth} {lang === "ru" ? "мес." : "oy"}</span>
+                          </div>
+                          <div className="payment-type-item">
+                            <span>{t(`monthlyPayment.${lang}`)}:</span> <br />
+                            {
+                              lang === "ru" ? (
+                                <span>
+                                  {installmentData.installment === "1" ?
+                                    formatPrice((totalPrice * ((100 + (installmentData.alifAmount ?? 0)) / 100)) / (installmentData.alifMonth ?? 1)) : 1
+                                  } cум / месяц
+                                </span>
+                              ) : (
+                                <span>
+                                  oyiga {installmentData.installment === "1" ?
+                                    formatPrice((totalPrice * ((100 + (installmentData.alifAmount ?? 0)) / 100)) / (installmentData.alifMonth ?? 1)) : null
+                                  } so'm
+                                </span>
+                              )
+                            }
+
+                          </div>
+                          <OutlineBtn onClick={onOpenInstallmentModal} text={t(`edit.${lang}`)} />
+                        </div>
+                        <Divider />
+                        <div className="payment-type-content">
+                          <h4 className="payment-type">
+                            {lang === "ru" ? `Авторизация верифицированного пользователя ${installmentData.installment === "1" ? "Alif" : "Intend"}` : `${installmentData.installment === "1" ? "Alif" : "Intend"} foydalanuvchisini ro'yxatdan o'tganligini tekshirish`}
+                          </h4>
+                          <div className="payment-type-item item-1">
+                            <Form.Item
+                              className="payment__type__phone__input"
+                              label={t(`enterPhoneNumber.${lang}`)}
+                            >
+                              <PhoneInput
+                                country={"uz"}
+                                onlyCountries={["uz"]}
+                                countryCodeEditable={false}
+                                disableDropdown={true}
+                                onChange={handleCheckAlifUser}
+                              />
+                              <div className="register-not">
+                                {alifUserPhonenumberCheckMessage}
+                              </div>
+                              <div className="register-not mt-5">
+                                {t(`notRegistered.${lang}`)},{" "}
+                                <a href="https://alifnasiya.uz/auth/registration?source=https%3A%2F%2Fmobile.tmart.uz%2Fkr%2Fshop%2Fcheckout" target="_blank" rel="noopener noreferrer">{lang === "ru" ? `пройдите регистрацию в Alif` : `Alif da ro'yxatdan o'ting`}</a>
+                              </div>
+                            </Form.Item>
+                            {
+                              !isAlifCheckLoading && (
+                                <Form.Item
+                                  label={"Sms kod"}
+                                  className="payment__type__password"
+                                >
+                                  <Input.Password
+                                    onChange={handleChangeAlifValCode}
+                                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                                    size="large"
+                                    maxLength={4}
+                                  />
+                                  <div className="register-not">
+                                    {alifValCodeMesg}
+                                  </div>
+                                </Form.Item>
+                              )
+                            }
+                          </div>
+                        </div>
+                        <Divider />
+                      </>
+                    )}
                   {/* how to obtain */}
 
                   <div className="howto__obtain">
@@ -344,7 +517,7 @@ const Checkout = () => {
                       {t(`totalPayment.${lang}`)}
                     </p>
                     <h3 className="title18_bold">
-                      {formatPrice(totalPrc)} {t(`sum.${lang}`)}
+                      {formatPrice(+totalPrc)}{` `} {t(`sum.${lang}`)}
                     </h3>
                   </div>
 

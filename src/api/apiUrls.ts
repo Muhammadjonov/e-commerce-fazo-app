@@ -46,3 +46,7 @@ export const myOrderUrl = "profile-manager/order/my-order";
 export const comparesUrl = "profile-manager/balance/index/";
 export const b2bUrl = "site/b2b-contact/";
 export const alifShopUrl = "v2/alif/alifs/";
+export const intendUrl = "v2/intend/calc/";
+export const alifUserCheckUrl = "v2/alif/check-buyer";
+export const alifValCodeUrl = "v2/alif/request-otp/";
+export const alifOrderUrl = "v2/alif/credit-verify/";

@@ -63,19 +63,20 @@ type MobileCategoriesContextType = {
   onCloseMobileCategories: () => void;
 }
 
-export type MonthDataType = {
+export type InstallmentDataType = {
   alifMonthId: number,
   alifAmount: number,
-  alifMonth: number
+  alifMonth: number,
+  intendMonth: number,
+  installment: string
 }
 
 type InstallmentModalContextType = {
   isOpenInstallmentModal: boolean;
   onCloseInstallmentModal: () => void;
   setIsOpenInstallmentModal: React.Dispatch<React.SetStateAction<boolean>>,
-  setInstallment: React.Dispatch<React.SetStateAction<string>>,
-  installment: string,
-  monthData: MonthDataType
+  installmentData: InstallmentDataType,
+  setInstallmentData: React.Dispatch<React.SetStateAction<InstallmentDataType>>
 }
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -220,19 +221,16 @@ function App() {
   }
 
   // installmentModal context
-
+  const [installmentData, setInstallmentData] = useState<InstallmentDataType>({} as InstallmentDataType);
   const [isOpenInstallmentModal, setIsOpenInstallmentModal] = useState<boolean>(false);
-  const [installment, setInstallment] = useState<string>("alif");
-  const [monthData, setMonthData] = useState<MonthDataType>({} as MonthDataType);
   const onCloseInstallmentModal = () => setIsOpenInstallmentModal(false);
 
   const installmentModalContextValue = {
     isOpenInstallmentModal,
     onCloseInstallmentModal,
     setIsOpenInstallmentModal,
-    installment,
-    setInstallment,
-    monthData
+    installmentData,
+    setInstallmentData
   }
 
   return (
@@ -308,10 +306,8 @@ function App() {
               <InstallmentModal
                 isOpenInstallmentModal={isOpenInstallmentModal}
                 onCloseInstallmentModal={onCloseInstallmentModal}
-                installment={installment}
-                setInstallment={setInstallment}
-                setMonthData={setMonthData}
-                monthData={monthData}
+                installmentData={installmentData}
+                setInstallmentData={setInstallmentData}
               />
             </div>
           </InstallmentModalContext.Provider>

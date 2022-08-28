@@ -9,7 +9,6 @@ const enterButton = (
   <img src="/assets/icons/search.svg" alt="search" />
 );
 
-
 function MobileSearchComp() {
   const [searchValues, setSearchValues] = useState({
     category: "all",
