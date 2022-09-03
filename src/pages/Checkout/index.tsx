@@ -96,7 +96,7 @@ const Checkout = () => {
     let { payment_type } = data;
     if (payment_type === "3") {
       if (installmentData.installment === "1") {
-        baseAPI.create<any>(alifOrderUrl, { ...data, products, delivery_date, otp: +alifValCode, monthId: installmentData.alifMonthId ?? 1 })
+        baseAPI.create<any>(alifOrderUrl, { ...data, phone: alifUserPhonenumberCheck, products, delivery_date, otp: +alifValCode, monthId: installmentData.alifMonthId ?? 1 })
           .then((res) => {
             if (res.data?.status === 200) {
               navigate("/");
@@ -180,7 +180,7 @@ const Checkout = () => {
                   setAlifValMesg(res.data?.message?.message)
                 }
               })
-              .catch((e) => console.log("er", e))
+              .catch((e) => console.log("err", e))
               .finally(() => {
 
               })
